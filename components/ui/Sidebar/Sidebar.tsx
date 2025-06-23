@@ -53,6 +53,8 @@ export function Sidebar() {
       const { data } = await supabase.auth.getUser();
       return data.user;
     },
+    retryDelay: 20000, // Настраиваем задержку перед повторной попыткой (в миллисекундах)
+    staleTime: 5 * 60 * 1000, // Время, в течение которого данные считаются свежими
   });
 
   console.log({ user });
@@ -66,6 +68,8 @@ export function Sidebar() {
       return data;
     },
     enabled: isAuth,
+    retryDelay: 20000, // Настраиваем задержку перед повторной попыткой (в миллисекундах)
+    staleTime: 5 * 60 * 1000, // Время, в течение которого данные считаются свежими
   });
 
   console.log({ projects });
@@ -167,7 +171,7 @@ export function Sidebar() {
               leftSection={
                 <div
                   style={{ backgroundColor: project.color }}
-                  className={styles.project_circle}
+                  className={"project_circle"}
                 ></div>
               }
               rightSection={
