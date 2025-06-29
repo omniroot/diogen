@@ -1,0 +1,15 @@
+.task_item {
+  display: flex;
+  justify-content: space-between;
+
+  .content,
+  .actions {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .actions {
+    justify-content: flex-end;
+  }
+}
