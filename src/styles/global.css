@@ -1,36 +1,36 @@
 html,
 body {
-  /* display: flex; */
-  /* gap: 12px; */
-  /* background-color: var(--chakra-colors-surface); */
-  /* transition:
+	/* display: flex; */
+	/* gap: 12px; */
+	/* background-color: var(--chakra-colors-surface); */
+	/* transition:
     background-color 200ms,
     color 200ms !important; */
-  color-scheme: light dark;
-  font-synthesis: none;
-  text-rendering: optimizeLegibility;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  /* --color-primary: #44634c;
+	color-scheme: light dark;
+	font-synthesis: none;
+	text-rendering: optimizeLegibility;
+	-webkit-font-smoothing: antialiased;
+	-moz-osx-font-smoothing: grayscale;
+	/* --color-primary: #44634c;
   --color-surface: #131315;
   --color-surface-container: #191a1c;
   --color-surface-container-high: #1d1e20;
   --color-surface-container-highest: #232428; */
 }
 #root {
-  width: 100%;
-  height: 100%;
-  padding: 24px;
+	width: 100%;
+	height: 100%;
+	padding: 24px;
 
-  gap: 12px;
-  display: flex;
+	gap: 12px;
+	display: flex;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 100%;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 100%;
 
-  gap: 12px;
+	gap: 12px;
 }

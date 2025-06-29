@@ -1,4 +1,4 @@
-import { Database } from "./supabase.types";
+import type { Database } from "./supabase.types";
 
 export type ITask = Database["public"]["Tables"]["tasks"]["Row"];
 export type ITaskInsert = Database["public"]["Tables"]["tasks"]["Insert"];
