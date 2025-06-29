@@ -1,6 +1,6 @@
 import { ProjectsList } from "@/components/business/Sidebar/_components/ProjectsList/ProjectsList.tsx";
 import { useColorMode } from "@/components/ui/color-mode";
-import { Checkbox, HStack, IconButton, Text, VStack } from "@chakra-ui/react";
+import { HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { FC, ReactNode } from "react";
 import { LuCalendar, LuPlus, LuSettings2 } from "react-icons/lu";

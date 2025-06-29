@@ -1,4 +1,3 @@
-import { useGetProject } from "@/api/queries/projects.api.ts";
 import { IModule } from "@/api/supabase.interface.ts";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { Text, VStack } from "@chakra-ui/react";
@@ -9,13 +8,13 @@ interface IModuleItemProps {
   module: IModule;
 }
 export const ModuleItem: FC<IModuleItemProps> = ({ module }) => {
-  const { project_id } = useGlobalStore();
+  const { custom_id } = useGlobalStore();
   // const {} = useGetProject({variables: {custom_id}});
   return (
     <VStack w={"150px"} bg={"surface_container"} asChild>
       <Link
         to="/projects/$custom_id/modules/$module_id"
-        params={{ custom_id: 1, module_id: String(module.id) }}
+        params={{ custom_id, module_id: String(module.id) }}
       >
         <Text color="text" fontSize={"lg"}>
           {module.title}
