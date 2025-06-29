@@ -1,39 +1,39 @@
+import { Separator, VStack } from "@chakra-ui/react";
 import { SidebarContent } from "@/components/business/Sidebar/_components/SidebarContent/SidebarContent.tsx";
 import { SidebarFooter } from "@/components/business/Sidebar/_components/SidebarFooter/SidebarFooter.tsx";
 import { SidebarHeader } from "@/components/business/Sidebar/_components/SidebarHeader/SidebarHeader.tsx";
 import { SidebarSearch } from "@/components/business/Sidebar/_components/SidebarSearch/SidebarSearch.tsx";
 import { useHeader } from "@/stores/header.store";
-import { Separator, VStack } from "@chakra-ui/react";
 
 export function Sidebar() {
-  const { isCollapsed } = useHeader();
+	const { isCollapsed } = useHeader();
 
-  return (
-    <VStack
-      w={"350px"}
-      h={isCollapsed ? "76px" : "95dvh"}
-      transition={"height 200ms"}
-      p={"12px"}
-      borderColor={"surface_container_highest"}
-      borderRadius={"24px"}
-      borderWidth={"2px"}
-      gap={"12px"}
-      bg={"surface_container"}
-      // bg={"bg.subtle"}
-    >
-      {/* HEADER */}
-      <SidebarHeader />
-      {!isCollapsed && (
-        <>
-          <Separator w={"100%"} h={"3px"} />
-          <SidebarSearch />
-          <SidebarContent />
-          <Separator w={"100%"} h={"3px"} />
-          <SidebarFooter />
-        </>
-      )}
+	return (
+		<VStack
+			w={"350px"}
+			h={isCollapsed ? "76px" : "95dvh"}
+			transition={"height 200ms"}
+			p={"12px"}
+			borderColor={"surface_container_highest"}
+			borderRadius={"24px"}
+			borderWidth={"2px"}
+			gap={"12px"}
+			bg={"surface_container"}
+			// bg={"bg.subtle"}
+		>
+			{/* HEADER */}
+			<SidebarHeader />
+			{!isCollapsed && (
+				<>
+					<Separator w={"100%"} h={"3px"} />
+					<SidebarSearch />
+					<SidebarContent />
+					<Separator w={"100%"} h={"3px"} />
+					<SidebarFooter />
+				</>
+			)}
 
-      {/* <TextInput
+			{/* <TextInput
         placeholder="Search"
         size="xs"
         // leftSection={<IconSearch size={12} stroke={1.5} />}
@@ -43,8 +43,8 @@ export function Sidebar() {
         mb="sm"
       /> */}
 
-      {/* MENU LIST */}
-      {/* <div className={styles.item}>
+			{/* MENU LIST */}
+			{/* <div className={styles.item}>
         <div className={styles.content}>
           <Text fw={"bold"} c={"dark.2"}>
             Menu
@@ -70,7 +70,7 @@ export function Sidebar() {
         leftSection={<ListTodoIcon />}
         p={"xs"}
       /> */}
-      {/* <Space /> */}
-    </VStack>
-  );
+			{/* <Space /> */}
+		</VStack>
+	);
 }
