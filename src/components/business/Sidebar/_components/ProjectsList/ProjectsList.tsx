@@ -6,14 +6,15 @@ import { ProjectItem } from "@/components/business/Sidebar/_components/ProjectIt
 type IProps = {};
 
 export const ProjectsList: FC<IProps> = ({}) => {
-	const { data: projects } = useGetProjects();
+  const { data: projects } = useGetProjects({ variables: {} });
+  console.log(projects);
 
-	if (!projects) return null;
-	return (
-		<VStack w="100%">
-			{projects.map((project) => (
-				<ProjectItem key={project.id} project={project} />
-			))}
-		</VStack>
-	);
+  if (!projects) return null;
+  return (
+    <VStack w="100%">
+      {projects.map((project) => (
+        <ProjectItem key={project.id} project={project} />
+      ))}
+    </VStack>
+  );
 };
