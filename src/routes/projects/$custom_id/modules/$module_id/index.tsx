@@ -1,20 +1,26 @@
-import { HStack } from "@chakra-ui/react";
-import { createFileRoute } from "@tanstack/react-router";
 import { useGetModule } from "@/api/queries/modules.api.ts";
+import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
+import { Text, VStack } from "@chakra-ui/react";
+import { createFileRoute } from "@tanstack/react-router";
 
 export const Route = createFileRoute(
-	"/projects/$custom_id/modules/$module_id/",
+  "/projects/$custom_id/modules/$module_id/"
 )({
-	component: RouteComponent,
+  component: RouteComponent,
 });
 
 function RouteComponent() {
-	const { module_id } = Route.useParams();
-	const { project_id } = useGlobalStore();
-	const { data: module } = useGetModule({
-		variables: { project_id, module_id: Number(module_id) },
-	});
+  const { module_id } = Route.useParams();
+  const { project_id } = useGlobalStore();
+  const { data: module } = useGetModule({
+    variables: { project_id, module_id: Number(module_id) },
+  });
 
-	return <HStack>{module?.title}</HStack>;
+  return (
+    <VStack>
+      <Text>{module?.title}</Text>
+      <TasksList project_id={project_id} module_id={Number(module_id)} />
+    </VStack>
+  );
 }

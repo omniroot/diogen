@@ -34,3 +34,11 @@ body {
 
 	gap: 12px;
 }
+
+
+@media screen and (max-width:800px ){
+
+  #root {
+    flex-direction: column;
+  }
+   }
