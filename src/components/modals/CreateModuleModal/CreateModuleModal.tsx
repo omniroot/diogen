@@ -1,21 +1,21 @@
-import { useCreateTask, useGetTasks } from "@/api/queries/tasks.api.ts";
+import { useCreateModule, useGetModules } from "@/api/queries/modules.api.ts";
 import { client } from "@/api/query.client.ts";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { Button, Dialog, Field, Input, Portal, Stack } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 
 interface IFormValues {
   title: string;
   description: string;
+  status: string;
 }
 
 export const CreateModuleModal = () => {
   const { project_id } = useGlobalStore();
-  const { mutate: createTask } = useCreateTask({
+  const { mutate: createModule } = useCreateModule({
     onSuccess: () => {
-      client.refetchQueries({ queryKey: useGetTasks.getKey() });
+      client.refetchQueries({ queryKey: useGetModules.getKey() });
     },
   });
   const {
@@ -25,20 +25,15 @@ export const CreateModuleModal = () => {
     formState: { errors },
   } = useForm<IFormValues>();
 
-  console.log({ errors });
-
   const onSubmit = (values: IFormValues) => {
-    createTask({
+    createModule({
       title: values.title,
       description: values.description,
+      status: values.status,
       project_id,
     });
     reset();
   };
-
-  useEffect(() => {
-    console.log({ errors });
-  }, [errors]);
 
   return (
     <Dialog.Root>
@@ -75,6 +70,10 @@ export const CreateModuleModal = () => {
                       placeholder="Description"
                       {...register("description")}
                     />
+                  </Field.Root>
+                  <Field.Root>
+                    <Field.Label>Status</Field.Label>
+                    <Input placeholder="Status" {...register("status")} />
                   </Field.Root>
                 </Stack>
               </Dialog.Body>
