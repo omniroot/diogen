@@ -130,7 +130,7 @@ export const createSupabaseInsert = <TVariables>({
 export const createSupabaseUpdate = <TVariables>({
   name,
   table,
-}: IUseSupabaseInsert) => {
+}: IUseSupabaseUpdate) => {
   return createMutation<null, { id: number; data: TVariables }>({
     mutationKey: ["create", name, "to", table],
     mutationFn: async ({ id, data }) => {
