@@ -14,6 +14,7 @@
 	},
 	"dependencies": {
 		"@chakra-ui/react": "^3.21.1",
+		"@chakra-ui/cli": "^3.21.1",
 		"@emotion/react": "^11.14.0",
 		"@supabase/supabase-js": "^2.50.2",
 		"@tanstack/react-query": "^5.81.5",
