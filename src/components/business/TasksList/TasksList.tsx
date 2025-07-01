@@ -8,11 +8,16 @@ import { useState, type FC } from "react";
 import { LuCalendarArrowDown, LuCalendarArrowUp } from "react-icons/lu";
 
 interface ITaskListProps {
-  project_id?: number;
-  module_id?: number;
+  project_id?: number | null;
+  module_id?: number | null;
+  empty_module_id?: boolean;
 }
 
-export const TasksList: FC<ITaskListProps> = ({ project_id, module_id }) => {
+export const TasksList: FC<ITaskListProps> = ({
+  project_id,
+  module_id,
+  empty_module_id = false,
+}) => {
   const [sortType, setSortType] = useState(true);
   const {
     data: tasks,
@@ -23,7 +28,9 @@ export const TasksList: FC<ITaskListProps> = ({ project_id, module_id }) => {
       project_id: project_id ?? null,
       module_id: module_id ?? null,
       sortByCreatedAt: sortType ? "desc" : "asc",
+      empty_module_id: empty_module_id,
     },
+
     placeholderData: () => {
       const data = client.getQueryData<ITask[]>([useGetTasks.getKey()]);
       return data;
@@ -34,7 +41,10 @@ export const TasksList: FC<ITaskListProps> = ({ project_id, module_id }) => {
     <VStack w="100%">
       <HStack w="100%" justifyContent={"space-between"} p="8px">
         <HStack>
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
+          <Text
+            fontSize={{ base: "2xl", sm: "xl", md: "2xl" }}
+            fontWeight={"bold"}
+          >
             Tasks
           </Text>
         </HStack>
@@ -49,11 +59,13 @@ export const TasksList: FC<ITaskListProps> = ({ project_id, module_id }) => {
           <CreateTaskModal />
         </HStack>
       </HStack>
-      {tasksIsFetching && <Text>Loading...</Text>}
-      {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
-      {tasks?.map((task) => {
-        return <TaskItem key={task.id} task={task} />;
-      })}
+      <VStack w="100%">
+        {tasksIsFetching && <Text>Loading...</Text>}
+        {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
+        {tasks?.map((task) => {
+          return <TaskItem key={task.id} task={task} />;
+        })}
+      </VStack>
     </VStack>
   );
 };

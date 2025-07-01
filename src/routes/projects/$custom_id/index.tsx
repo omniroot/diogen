@@ -29,7 +29,7 @@ function RouteComponent() {
   if (!project) return "Not found";
   return (
     <>
-      <VStack w="100%" bg={"surface_container"} p="12px" borderRadius={"24px"}>
+      <VStack w="100%" bg={"surface_container"} p="24px" borderRadius={"24px"}>
         <HStack w="100%">
           <ProjectCircle color={project.color} />
           <Text as={"h1"} fontWeight={"bold"} color={"text"}>
@@ -44,22 +44,9 @@ function RouteComponent() {
         </HStack>
       </VStack>
 
-      <HStack justifyContent={"space-between"} p="8px">
-        <HStack>
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
-            Modules
-          </Text>
-        </HStack>
-        <HStack>
-          <Button variant={"outline"}>
-            <LuPlus />
-            Create module
-          </Button>
-        </HStack>
-      </HStack>
       <ModulesList project={project} />
 
-      <TasksList project_id={project.id} />
+      <TasksList project_id={project.id} empty_module_id />
     </>
   );
 }

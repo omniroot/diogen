@@ -1,4 +1,5 @@
-import { useCreateTask } from "@/api/queries/tasks.api.ts";
+import { useCreateTask, useGetTasks } from "@/api/queries/tasks.api.ts";
+import { client } from "@/api/query.client.ts";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { Button, Dialog, Field, Input, Portal, Stack } from "@chakra-ui/react";
 import { useEffect } from "react";
@@ -12,7 +13,11 @@ interface IFormValues {
 
 export const CreateTaskModal = () => {
   const { project_id } = useGlobalStore();
-  const { mutate: createTask } = useCreateTask({});
+  const { mutate: createTask } = useCreateTask({
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: useGetTasks.getKey() });
+    },
+  });
   const {
     register,
     handleSubmit,
