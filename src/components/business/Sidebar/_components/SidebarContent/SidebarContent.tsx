@@ -18,7 +18,7 @@ export const SidebarContent: FC<ISidebarContentProps> = () => {
       w={"100%"}
       h={"100%"}
       alignItems={"flex-start"}
-      overflowY={{ sm: "scroll" }}
+      // overflowY={{ sm: "scroll" }}
     >
       <HStack w="100%" p={"12px"} justifyContent={"space-between"}>
         <HStack>
