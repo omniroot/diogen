@@ -12,7 +12,7 @@ interface IFormValues {
 }
 
 export const CreateTaskModal = () => {
-  const { project_id } = useGlobalStore();
+  const { project_id, module_id } = useGlobalStore();
   const { mutate: createTask } = useCreateTask({
     onSuccess: () => {
       client.refetchQueries({ queryKey: useGetTasks.getKey() });
@@ -31,6 +31,7 @@ export const CreateTaskModal = () => {
     createTask({
       title: values.title,
       description: values.description,
+      module_id,
       project_id,
     });
     reset();

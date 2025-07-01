@@ -1,13 +1,17 @@
-import { supabase } from "@/api/supabase";
-import type { ITask, ITaskUpdate } from "@/api/supabase.interface";
+import { useGetProject } from "@/api/queries/projects.api";
+import {
+  useDeleteTask,
+  useGetTasks,
+  useUpdateTask,
+} from "@/api/queries/tasks.api.ts";
+import { client } from "@/api/query.client.ts";
+import type { ITask } from "@/api/supabase.interface";
+import { useGlobalStore } from "@/stores/global.store";
 import { Button, Checkbox, HStack, IconButton, Text } from "@chakra-ui/react";
-import { useMutation } from "@tanstack/react-query";
+import { Link } from "@tanstack/react-router";
 import { type FC, useState } from "react";
 import { LuTrash } from "react-icons/lu";
 import styles from "./TaskItem.module.css";
-import { useGetProject } from "@/api/queries/projects.api";
-import { useGlobalStore } from "@/stores/global.store";
-import { Link } from "@tanstack/react-router";
 
 interface ITaskItemProps {
   task: ITask;
@@ -17,40 +21,32 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   const [checked, setChecked] = useState(task.completed);
   const { project_id } = useGlobalStore();
   const { data: project } = useGetProject({ variables: { id: project_id } });
-  const { mutate: updateTask } = useMutation<
-    ITask | undefined,
-    unknown,
-    boolean
-  >({
-    mutationKey: ["update-task", task.id],
-    mutationFn: async (variable) => {
-      const newTask: ITaskUpdate = {
-        completed: variable,
-      };
-      const { data } = await supabase
-        .from("tasks")
-        .update(newTask)
-        .eq("id", task.id)
-        .select();
-      return data?.[0];
+  const { mutate: deleteTask } = useDeleteTask({
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: useGetTasks.getKey() });
     },
   });
+  const { mutate: updateTask } = useUpdateTask();
 
-  const onTaskClick = () => {
-    // setChecked(prev => !prev)
+  const onDeleteTaskClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
+    deleteTask({ id: task.id });
   };
 
-  const onTaskChecked = () => {
+  const onTaskChecked = (event: React.FormEvent<HTMLLabelElement>) => {
+    event.stopPropagation();
     const nextState = !checked;
     setChecked(nextState);
-    updateTask(nextState);
+    updateTask({ id: task.id, data: { completed: nextState } });
   };
 
   return (
     <HStack
       w="100%"
       justifyContent={"space-between"}
-      onClick={onTaskClick}
+      // onClick={onTaskClick}
       p="8px"
       borderRadius={"8px"}
       borderWidth={"2px"}
@@ -87,7 +83,7 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
           >
             {project?.title}
           </Button>
-          <IconButton variant="outline" size={"xs"}>
+          <IconButton variant="outline" size={"xs"} onClick={onDeleteTaskClick}>
             <LuTrash />
           </IconButton>
         </HStack>

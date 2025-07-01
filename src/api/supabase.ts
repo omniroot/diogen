@@ -35,7 +35,12 @@ interface IUseSupabaseQuery {
   count?: "all" | "first";
 }
 
-interface IUseSupabaseMutation {
+interface IUseSupabaseInsert {
+  name: string;
+  table: keyof ITables;
+}
+
+interface IUseSupabaseUpdate {
   name: string;
   table: keyof ITables;
 }
@@ -108,10 +113,10 @@ export const createSupabaseQuery = <TResult>({
   });
 };
 
-export const createSupabaseMutation = <TVariables>({
+export const createSupabaseInsert = <TVariables>({
   name,
   table,
-}: IUseSupabaseMutation) => {
+}: IUseSupabaseInsert) => {
   return createMutation<null, TVariables>({
     mutationKey: ["create", name, "to", table],
     mutationFn: async (newData) => {
@@ -119,7 +124,30 @@ export const createSupabaseMutation = <TVariables>({
       await supabase.from(table).insert(newData);
       return null;
     },
-    onSuccess: () => {},
+  });
+};
+
+export const createSupabaseUpdate = <TVariables>({
+  name,
+  table,
+}: IUseSupabaseUpdate) => {
+  return createMutation<null, { id: number; data: TVariables }>({
+    mutationKey: ["create", name, "to", table],
+    mutationFn: async ({ id, data }) => {
+      // @ts-ignore
+      await supabase.from(table).update(data).eq("id", id);
+      return null;
+    },
+  });
+};
+
+export const createSupabaseDelete = ({ name, table }: IUseSupabaseInsert) => {
+  return createMutation<null, { id: number }>({
+    mutationKey: ["delete", name, "from", table],
+    mutationFn: async ({ id }) => {
+      await supabase.from(table).delete().eq("id", id);
+      return null;
+    },
   });
 };
 
