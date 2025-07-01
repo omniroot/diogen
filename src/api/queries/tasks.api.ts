@@ -1,5 +1,10 @@
-import { createSupabaseMutation, createSupabaseQuery } from "@/api/supabase";
-import type { ITask, ITaskInsert } from "@/api/supabase.interface";
+import {
+  createSupabaseDelete,
+  createSupabaseInsert,
+  createSupabaseQuery,
+  createSupabaseUpdate,
+} from "@/api/supabase";
+import type { ITask, ITaskInsert, ITaskUpdate } from "@/api/supabase.interface";
 
 export const useGetTasks = createSupabaseQuery<ITask[]>({
   name: "tasks",
@@ -12,7 +17,17 @@ export const useGetTask = createSupabaseQuery<ITask>({
   count: "first",
 });
 
-export const useCreateTask = createSupabaseMutation<ITaskInsert>({
+export const useCreateTask = createSupabaseInsert<ITaskInsert>({
+  name: "task",
+  table: "tasks",
+});
+
+export const useUpdateTask = createSupabaseUpdate<ITaskUpdate>({
+  name: "task",
+  table: "tasks",
+});
+
+export const useDeleteTask = createSupabaseDelete({
   name: "task",
   table: "tasks",
 });

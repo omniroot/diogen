@@ -1,5 +1,14 @@
-import { createSupabaseMutation, createSupabaseQuery } from "@/api/supabase";
-import type { IModule, IModuleInsert } from "@/api/supabase.interface";
+import {
+  createSupabaseDelete,
+  createSupabaseInsert,
+  createSupabaseQuery,
+  createSupabaseUpdate,
+} from "@/api/supabase";
+import type {
+  IModule,
+  IModuleInsert,
+  IModuleUpdate,
+} from "@/api/supabase.interface";
 
 export const useGetModules = createSupabaseQuery<IModule[]>({
   name: "modules",
@@ -12,7 +21,17 @@ export const useGetModule = createSupabaseQuery<IModule>({
   count: "first",
 });
 
-export const useCreateModule = createSupabaseMutation<IModuleInsert>({
+export const useCreateModule = createSupabaseInsert<IModuleInsert>({
+  name: "module",
+  table: "modules",
+});
+
+export const useDeleteModule = createSupabaseDelete({
+  name: "module",
+  table: "modules",
+});
+
+export const useUpdateModule = createSupabaseUpdate<IModuleUpdate>({
   name: "module",
   table: "modules",
 });
