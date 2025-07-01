@@ -3,10 +3,10 @@ import { ModulesList } from "@/components/business/ModulesList/ModulesList.tsx";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LuPlus } from "react-icons/lu";
+
 export const Route = createFileRoute("/projects/$custom_id/")({
   component: RouteComponent,
 });

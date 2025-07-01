@@ -1,5 +1,5 @@
 import { useGetTask } from "@/api/queries/tasks.api.ts";
-import { Stat, Text, VStack } from "@chakra-ui/react";
+import { Stat, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { formatDistance } from "date-fns";
 

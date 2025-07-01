@@ -1,7 +1,3 @@
-import { useGetModules } from "@/api/queries/modules.api.ts";
-import { useGetProjects } from "@/api/queries/projects.api.ts";
-import { useGetTasks } from "@/api/queries/tasks.api.ts";
-import { client } from "@/api/query.client.ts";
 import type { ITables } from "@/api/supabase.interface.ts";
 import type { Database } from "@/api/supabase.types";
 import { createClient } from "@supabase/supabase-js";

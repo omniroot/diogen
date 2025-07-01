@@ -1,9 +1,9 @@
-import { ButtonGroup, HStack, IconButton, Text } from "@chakra-ui/react";
-import type { FC, ReactNode } from "react";
-import { LuArrowUpDown } from "react-icons/lu";
 import { ColorModeButton } from "@/components/ui/color-mode";
 import { useHeader } from "@/stores/header.store";
+import { ButtonGroup, HStack, IconButton, Text } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import type { FC, ReactNode } from "react";
+import { LuArrowUpDown } from "react-icons/lu";
 
 interface ISidebarHeaderProps {
   children?: ReactNode;
@@ -21,7 +21,7 @@ export const SidebarHeader: FC<ISidebarHeaderProps> = () => {
       </HStack>
       <HStack>
         <ButtonGroup>
-          <IconButton variant={"outline"} onClick={toggleIsCollapsed}>
+          <IconButton variant={"outline"} onClick={() => toggleIsCollapsed()}>
             <LuArrowUpDown />
           </IconButton>
           <IconButton variant={"outline"} asChild>
