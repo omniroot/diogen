@@ -1,7 +1,7 @@
 import type { ITables } from "@/api/supabase.interface.ts";
 import type { Database } from "@/api/supabase.types";
 import { createClient } from "@supabase/supabase-js";
-import { createQuery } from "react-query-kit";
+import { createMutation, createQuery } from "react-query-kit";
 
 // const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 // const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -19,6 +19,7 @@ interface IFilters {
   custom_id?: string | null;
   project_id?: number | null;
   module_id?: number | null;
+  empty_module_id?: boolean;
 
   completed?: boolean | null;
 }
@@ -32,6 +33,11 @@ interface IUseSupabaseQuery {
   name: string;
   table: keyof ITables;
   count?: "all" | "first";
+}
+
+interface IUseSupabaseMutation {
+  name: string;
+  table: keyof ITables;
 }
 
 // Хук useSupabaseQuery
@@ -48,20 +54,11 @@ export const createSupabaseQuery = <TResult>({
       custom_id,
       module_id,
       project_id,
+      empty_module_id = false,
       sortByCreatedAt,
       sortByUpdatedAt,
     }) => {
       let query = supabase.from(table).select("*");
-
-      console.log({
-        id,
-        completed,
-        custom_id,
-        module_id,
-        project_id,
-        sortByCreatedAt,
-        sortByUpdatedAt,
-      });
 
       // FILTERS
       // This is look like a suck because i suck in typescript
@@ -80,6 +77,10 @@ export const createSupabaseQuery = <TResult>({
       }
       if (project_id) {
         query = query.eq("project_id", project_id);
+      }
+
+      if (empty_module_id) {
+        query = query.is("module_id", null);
       }
 
       // SORTINGS
@@ -104,6 +105,21 @@ export const createSupabaseQuery = <TResult>({
       }
       return data as TResult;
     },
+  });
+};
+
+export const createSupabaseMutation = <TVariables>({
+  name,
+  table,
+}: IUseSupabaseMutation) => {
+  return createMutation<null, TVariables>({
+    mutationKey: ["create", name, "to", table],
+    mutationFn: async (newData) => {
+      // @ts-ignore
+      await supabase.from(table).insert(newData);
+      return null;
+    },
+    onSuccess: () => {},
   });
 };
 

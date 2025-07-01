@@ -3,10 +3,10 @@ import { ModulesList } from "@/components/business/ModulesList/ModulesList.tsx";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { LuPlus } from "react-icons/lu";
+
 export const Route = createFileRoute("/projects/$custom_id/")({
   component: RouteComponent,
 });
@@ -29,7 +29,7 @@ function RouteComponent() {
   if (!project) return "Not found";
   return (
     <>
-      <VStack w="100%" bg={"surface_container"} p="12px" borderRadius={"24px"}>
+      <VStack w="100%" bg={"surface_container"} p="24px" borderRadius={"24px"}>
         <HStack w="100%">
           <ProjectCircle color={project.color} />
           <Text as={"h1"} fontWeight={"bold"} color={"text"}>
@@ -44,22 +44,9 @@ function RouteComponent() {
         </HStack>
       </VStack>
 
-      <HStack justifyContent={"space-between"} p="8px">
-        <HStack>
-          <Text fontSize={"2xl"} fontWeight={"bold"}>
-            Modules
-          </Text>
-        </HStack>
-        <HStack>
-          <Button variant={"outline"}>
-            <LuPlus />
-            Create module
-          </Button>
-        </HStack>
-      </HStack>
       <ModulesList project={project} />
 
-      <TasksList project_id={project.id} />
+      <TasksList project_id={project.id} empty_module_id />
     </>
   );
 }

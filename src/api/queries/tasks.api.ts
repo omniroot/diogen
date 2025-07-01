@@ -1,7 +1,5 @@
-import { client } from "@/api/query.client.ts";
-import { createSupabaseQuery, supabase } from "@/api/supabase";
+import { createSupabaseMutation, createSupabaseQuery } from "@/api/supabase";
 import type { ITask, ITaskInsert } from "@/api/supabase.interface";
-import { createMutation } from "react-query-kit";
 
 export const useGetTasks = createSupabaseQuery<ITask[]>({
   name: "tasks",
@@ -14,13 +12,7 @@ export const useGetTask = createSupabaseQuery<ITask>({
   count: "first",
 });
 
-export const useCreateTask = createMutation<null, ITaskInsert>({
-  mutationKey: ["create-task"],
-  mutationFn: async (newTask) => {
-    const { data } = await supabase.from("tasks").insert(newTask);
-    return data;
-  },
-  onSuccess: () => {
-    client.refetchQueries({ queryKey: useGetTasks.getKey() });
-  },
+export const useCreateTask = createSupabaseMutation<ITaskInsert>({
+  name: "task",
+  table: "tasks",
 });

@@ -7,6 +7,7 @@ import { LuTrash } from "react-icons/lu";
 import styles from "./TaskItem.module.css";
 import { useGetProject } from "@/api/queries/projects.api";
 import { useGlobalStore } from "@/stores/global.store";
+import { Link } from "@tanstack/react-router";
 
 interface ITaskItemProps {
   task: ITask;
@@ -15,7 +16,7 @@ interface ITaskItemProps {
 export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   const [checked, setChecked] = useState(task.completed);
   const { project_id } = useGlobalStore();
-  const { data: project } = useGetProject({ variables: { id: project_id } })
+  const { data: project } = useGetProject({ variables: { id: project_id } });
   const { mutate: updateTask } = useMutation<
     ITask | undefined,
     unknown,
@@ -59,25 +60,38 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
       }}
       bg={{ base: "surface", _hover: "surface_container" }}
       cursor={"pointer"}
+      asChild
     >
-      <HStack>
-        <Checkbox.Root
-          checked={checked}
-          onChange={onTaskChecked}
-          variant={"solid"}
-        >
-          <Checkbox.HiddenInput />
-          <Checkbox.Control cursor={"pointer"} colorPalette={"orange"} />
-        </Checkbox.Root>
-        <Text color={"text_variant"}>{task.id}</Text>
-        <Text color="text">{task.title}</Text>
-      </HStack>
-      <HStack className={styles.actions}>
-        <Button variant={"outline"} size={"xs"} w="fit-content" borderRadius={"12px"} minW={"80px"} borderColor={project?.color} borderWidth={"2px"}>{project?.title}</Button>
-        <IconButton variant="outline" size={"xs"}>
-          <LuTrash />
-        </IconButton>
-      </HStack>
-    </HStack >
+      <Link to="/tasks/$task_id" params={{ task_id: String(task?.id) }}>
+        <HStack>
+          <Checkbox.Root
+            checked={checked}
+            onChange={onTaskChecked}
+            variant={"solid"}
+          >
+            <Checkbox.HiddenInput />
+            <Checkbox.Control cursor={"pointer"} colorPalette={"orange"} />
+          </Checkbox.Root>
+          <Text color={"text_variant"}>{task.id}</Text>
+          <Text color="text">{task.title}</Text>
+        </HStack>
+        <HStack className={styles.actions}>
+          <Button
+            variant={"outline"}
+            size={"xs"}
+            w="fit-content"
+            borderRadius={"12px"}
+            minW={"80px"}
+            borderColor={project?.color}
+            borderWidth={"2px"}
+          >
+            {project?.title}
+          </Button>
+          <IconButton variant="outline" size={"xs"}>
+            <LuTrash />
+          </IconButton>
+        </HStack>
+      </Link>
+    </HStack>
   );
 };

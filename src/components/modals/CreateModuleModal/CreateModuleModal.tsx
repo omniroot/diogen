@@ -11,7 +11,7 @@ interface IFormValues {
   description: string;
 }
 
-export const CreateTaskModal = () => {
+export const CreateModuleModal = () => {
   const { project_id } = useGlobalStore();
   const { mutate: createTask } = useCreateTask({
     onSuccess: () => {
@@ -45,7 +45,7 @@ export const CreateTaskModal = () => {
       <Dialog.Trigger asChild>
         <Button variant={"outline"}>
           <LuPlus />
-          Create task
+          Create module
         </Button>
       </Dialog.Trigger>
       <Portal>
@@ -54,7 +54,7 @@ export const CreateTaskModal = () => {
           <Dialog.Content>
             <form onSubmit={handleSubmit(onSubmit)}>
               <Dialog.Header>
-                <Dialog.Title>Create task</Dialog.Title>
+                <Dialog.Title>Create module</Dialog.Title>
               </Dialog.Header>
               <Dialog.Body pb="4">
                 <Stack gap="4">
