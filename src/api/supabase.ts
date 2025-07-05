@@ -117,7 +117,7 @@ export const createSupabaseInsert = <TVariables>({
   name,
   table,
 }: IUseSupabaseInsert) => {
-  return createMutation<null, TVariables>({
+  return createMutation<null, Partial<TVariables>>({
     mutationKey: ["create", name, "to", table],
     mutationFn: async (newData) => {
       // @ts-ignore

@@ -2,10 +2,10 @@ html,
 body {
   /* display: flex; */
   /* gap: 12px; */
-  /* background-color: var(--chakra-colors-surface); */
-  /* transition:
+  background-color: var(--chakra-colors-surface);
+  transition:
     background-color 200ms,
-    color 200ms !important; */
+    color 200ms !important;
   color-scheme: light dark;
   font-synthesis: none;
   text-rendering: optimizeLegibility;

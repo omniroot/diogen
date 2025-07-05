@@ -82,12 +82,7 @@ export const CreateModuleModal = () => {
                   <Button bg={"red.500"}>Cancel</Button>
                 </Dialog.ActionTrigger>
                 <Dialog.ActionTrigger asChild>
-                  <Button
-                    color={"black"}
-                    bg={"green.400"}
-                    fontWeight={"bold"}
-                    type="submit"
-                  >
+                  <Button color={"black"} fontWeight={"bold"} type="submit">
                     Create
                   </Button>
                 </Dialog.ActionTrigger>

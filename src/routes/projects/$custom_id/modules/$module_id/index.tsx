@@ -20,6 +20,8 @@ function RouteComponent() {
 
   useEffect(() => {
     setModuleId(Number(module_id));
+
+    return () => setModuleId(null);
   }, []);
 
   return (
