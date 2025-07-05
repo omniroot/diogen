@@ -37,6 +37,18 @@ export const colors = defineSemanticTokens.colors({
       _dark: "{colors.surface_container_highest_dark}",
     },
   },
+  outline: {
+    value: {
+      _light: "{colors.outline_dark}",
+      _dark: "{colors.outline_dark}",
+    },
+  },
+  outline_variant: {
+    value: {
+      _light: "{colors.outline_variant_dark}",
+      _dark: "{colors.outline_variant_dark}",
+    },
+  },
   bg: {
     DEFAULT: {
       value: {

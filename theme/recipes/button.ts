@@ -22,12 +22,16 @@ export const buttonRecipe = defineRecipe({
     fontWeight: "medium",
     transitionProperty: "common",
     transitionDuration: "moderate",
+    transition: "scale 200ms, background 200ms",
     focusVisibleRing: "outside",
     _disabled: {
       layerStyle: "disabled",
     },
     _icon: {
       flexShrink: "0",
+    },
+    _active: {
+      scale: "1.1 1",
     },
   },
   variants: {
@@ -111,6 +115,10 @@ export const buttonRecipe = defineRecipe({
       },
     },
     variant: {
+      primary: {
+        bg: "{colors.primary}",
+        color: "colorPalette.contrast",
+      },
       solid: {
         bg: "colorPalette.solid",
         color: "colorPalette.contrast",
@@ -148,10 +156,10 @@ export const buttonRecipe = defineRecipe({
       },
       outline: {
         borderWidth: "1px",
-        borderColor: "colorPalette.muted",
+        borderColor: "{colors.outline_variant}",
         color: "colorPalette.fg",
         _hover: {
-          bg: "colorPalette.subtle",
+          bg: "{colors.outline_variant}",
         },
         _expanded: {
           bg: "colorPalette.subtle",
@@ -161,7 +169,7 @@ export const buttonRecipe = defineRecipe({
         bg: "transparent",
         color: "colorPalette.fg",
         _hover: {
-          bg: "colorPalette.subtle",
+          bg: "{colors.outline_variant}",
         },
         _expanded: {
           bg: "colorPalette.subtle",
@@ -174,6 +182,6 @@ export const buttonRecipe = defineRecipe({
   },
   defaultVariants: {
     size: "md",
-    variant: "solid",
+    variant: "primary",
   },
 });

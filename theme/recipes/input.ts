@@ -1,4 +1,4 @@
-import { defineRecipe } from "@chakra-ui/react"
+import { defineRecipe } from "@chakra-ui/react";
 
 export const inputRecipe = defineRecipe({
   className: "chakra-input",
@@ -13,6 +13,7 @@ export const inputRecipe = defineRecipe({
     _disabled: {
       layerStyle: "disabled",
     },
+    transition: "border 150ms",
     height: "var(--input-height)",
     minW: "var(--input-height)",
     "--focus-color": "colors.colorPalette.focusRing",
@@ -64,9 +65,12 @@ export const inputRecipe = defineRecipe({
       outline: {
         bg: "transparent",
         borderWidth: "1px",
-        borderColor: "border",
+        borderColor: "{colors.outline_variant}",
         focusVisibleRing: "inside",
-        focusRingColor: "var(--focus-color)",
+        focusRingColor: "{colors.primary}",
+        _hover: {
+          borderColor: "{colors.outline}",
+        },
       },
       subtle: {
         borderWidth: "1px",
@@ -96,4 +100,4 @@ export const inputRecipe = defineRecipe({
     size: "md",
     variant: "outline",
   },
-})
+});

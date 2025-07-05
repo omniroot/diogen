@@ -1,11 +1,11 @@
-import { defineRecipe } from "@chakra-ui/react"
+import { defineRecipe } from "@chakra-ui/react";
 
 export const badgeRecipe = defineRecipe({
   className: "chakra-badge",
   base: {
     display: "inline-flex",
     alignItems: "center",
-    borderRadius: "l2",
+    borderRadius: "2xl",
     gap: "1",
     fontWeight: "medium",
     fontVariantNumeric: "tabular-nums",
@@ -15,8 +15,8 @@ export const badgeRecipe = defineRecipe({
   variants: {
     variant: {
       solid: {
-        bg: "colorPalette.solid",
-        color: "colorPalette.contrast",
+        bg: "surface_container",
+        color: "text",
       },
       subtle: {
         bg: "colorPalette.subtle",
@@ -64,4 +64,4 @@ export const badgeRecipe = defineRecipe({
     variant: "subtle",
     size: "sm",
   },
-})
+});

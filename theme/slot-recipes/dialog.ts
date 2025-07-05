@@ -1,7 +1,19 @@
-import { defineSlotRecipe } from "@chakra-ui/react"
+import { defineSlotRecipe } from "@chakra-ui/react";
 
 export const dialogSlotRecipe = defineSlotRecipe({
-  slots: ["trigger", "backdrop", "positioner", "content", "title", "description", "closeTrigger", "header", "body", "footer", "backdrop"],
+  slots: [
+    "trigger",
+    "backdrop",
+    "positioner",
+    "content",
+    "title",
+    "description",
+    "closeTrigger",
+    "header",
+    "body",
+    "footer",
+    "backdrop",
+  ],
   className: "chakra-dialog",
   base: {
     backdrop: {
@@ -44,7 +56,7 @@ export const dialogSlotRecipe = defineSlotRecipe({
       my: "var(--dialog-margin, var(--dialog-base-margin))",
       "--dialog-z-index": "zIndex.modal",
       zIndex: "calc(var(--dialog-z-index) + var(--layer-index, 0))",
-      bg: "bg.panel",
+      bg: "surface_container",
       boxShadow: "lg",
       _open: {
         animationDuration: "moderate",
@@ -243,4 +255,4 @@ export const dialogSlotRecipe = defineSlotRecipe({
     placement: "top",
     motionPreset: "scale",
   },
-})
+});
