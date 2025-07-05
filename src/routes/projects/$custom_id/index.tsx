@@ -35,6 +35,9 @@ function RouteComponent() {
   }, [project, setCustomId, setProjectId]);
 
   const onDragEnd = (event: DragEndEvent) => {
+    console.log({ event });
+
+    if (!event.over) return;
     updateTask({
       id: event.active.data.current?.task_id,
       data: {
