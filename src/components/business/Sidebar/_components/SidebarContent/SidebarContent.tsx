@@ -1,9 +1,10 @@
+import { ProjectsList } from "@/components/business/Sidebar/_components/ProjectsList/ProjectsList.tsx";
+import { CreateProjectModal } from "@/components/modals/CreateProjectModal/CreateProjectModal.tsx";
+import { useColorMode } from "@/components/ui/color-mode";
 import { HStack, IconButton, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import type { FC, ReactNode } from "react";
-import { LuCalendar, LuPlus, LuSettings2 } from "react-icons/lu";
-import { ProjectsList } from "@/components/business/Sidebar/_components/ProjectsList/ProjectsList.tsx";
-import { useColorMode } from "@/components/ui/color-mode";
+import { LuCalendar, LuSettings2 } from "react-icons/lu";
 
 interface ISidebarContentProps {
   children?: ReactNode;
@@ -49,9 +50,7 @@ export const SidebarContent: FC<ISidebarContentProps> = () => {
           <Text color={"text_variant"}>Projects</Text>
         </HStack>
         <HStack>
-          <IconButton variant={"ghost"} color={"text_variant"} size={"xs"}>
-            <LuPlus />
-          </IconButton>
+          <CreateProjectModal />
         </HStack>
       </HStack>
       <ProjectsList />
