@@ -2,7 +2,6 @@ import { useCreateTask, useGetTasks } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { Button, Dialog, Field, Input, Portal, Stack } from "@chakra-ui/react";
-import { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 
