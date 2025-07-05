@@ -37,10 +37,6 @@ export const CreateTaskModal = () => {
     reset();
   };
 
-  useEffect(() => {
-    console.log({ errors });
-  }, [errors]);
-
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
