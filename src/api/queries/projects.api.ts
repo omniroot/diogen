@@ -1,5 +1,6 @@
 import {
   createSupabaseDelete,
+  createSupabaseInsert,
   createSupabaseQuery,
   createSupabaseUpdate,
 } from "@/api/supabase";
@@ -14,6 +15,11 @@ export const useGetProject = createSupabaseQuery<IProject>({
   name: "project",
   table: "projects",
   count: "first",
+});
+
+export const useCreateProject = createSupabaseInsert<IProject>({
+  name: "project",
+  table: "projects",
 });
 
 export const useDeleteProject = createSupabaseDelete({
