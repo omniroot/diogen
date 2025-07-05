@@ -1,12 +1,12 @@
 import { create } from "zustand";
 
 interface IStore {
-  project_id: number;
-  module_id: number;
-  custom_id: string;
-  setProjectId: (project_id: number) => void;
-  setModuleId: (module_id: number) => void;
-  setCustomId: (custom_id: string) => void;
+  project_id: number | null;
+  module_id: number | null;
+  custom_id: string | null;
+  setProjectId: (project_id: number | null) => void;
+  setModuleId: (module_id: number | null) => void;
+  setCustomId: (custom_id: string | null) => void;
 }
 
 export const useGlobalStore = create<IStore>((set) => ({
