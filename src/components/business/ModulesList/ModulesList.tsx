@@ -2,14 +2,14 @@ import { useGetModules } from "@/api/queries/modules.api.ts";
 import type { IProject } from "@/api/supabase.interface.ts";
 import { ModuleItem } from "@/components/business/ModuleItem/ModuleItem.tsx";
 import { CreateModuleModal } from "@/components/modals/CreateModuleModal/CreateModuleModal.tsx";
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Badge, HStack, Text, VStack } from "@chakra-ui/react";
 import type { FC } from "react";
 
 interface IModulesListProps {
   project: IProject;
 }
 export const ModulesList: FC<IModulesListProps> = ({ project }) => {
-  const { data: modules } = useGetModules({
+  const { data: modules, isFetching } = useGetModules({
     variables: { project_id: project?.id },
   });
 
@@ -24,20 +24,21 @@ export const ModulesList: FC<IModulesListProps> = ({ project }) => {
           >
             Modules
           </Text>
+          <Badge
+            size={"lg"}
+            variant={"solid"}
+            transition={"opacity 200ms"}
+            opacity={isFetching ? 1 : 0}
+          >
+            Sync
+          </Badge>
         </HStack>
 
         <HStack>
-          {/* <Button
-            variant={"outline"}
-            onClick={() => setSortType((prev) => !prev)}
-          >
-            {sortType ? <LuCalendarArrowDown /> : <LuCalendarArrowUp />}
-          </Button> */}
           <CreateModuleModal />
         </HStack>
       </HStack>
       <HStack w="100%" overflowX={"auto"}>
-        {/* {tasksIsFetching && <Text>Loading...</Text>} */}
         {modules?.map((module) => {
           return <ModuleItem key={module.id} module={module} />;
         })}

@@ -3,7 +3,7 @@ import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
 import { TaskItem } from "@/components/business/TaskItem/TaskItem";
 import { CreateTaskModal } from "@/components/modals/CreateTaskModal/CreateTaskModal.tsx";
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
+import { Badge, Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { useState, type FC } from "react";
 import { LuCalendarArrowDown, LuCalendarArrowUp } from "react-icons/lu";
 
@@ -47,6 +47,14 @@ export const TasksList: FC<ITaskListProps> = ({
           >
             Tasks
           </Text>
+          <Badge
+            size={"lg"}
+            variant={"solid"}
+            transition={"opacity 200ms"}
+            opacity={tasksIsFetching ? 1 : 0}
+          >
+            Sync
+          </Badge>
         </HStack>
 
         <HStack>
@@ -60,7 +68,6 @@ export const TasksList: FC<ITaskListProps> = ({
         </HStack>
       </HStack>
       <VStack w="100%">
-        {tasksIsFetching && <Text>Loading...</Text>}
         {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
         {tasks?.map((task) => {
           return <TaskItem key={task.id} task={task} />;
