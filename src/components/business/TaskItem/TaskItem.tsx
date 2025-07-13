@@ -5,7 +5,18 @@ import {
 } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
-import { Checkbox, HStack, IconButton, Text } from "@chakra-ui/react";
+import { LabelMenu } from "@/components/business/TaskItem/LabelMenu/LabelMenu.tsx";
+import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
+import { DatePicker } from "@/components/business/TaskItem/StartDatePicker/StartDatePicker.tsx";
+import { useTaskbarStore } from "@/stores/taskbar.store";
+import {
+  Checkbox,
+  Editable,
+  EditableValueChangeDetails,
+  HStack,
+  IconButton,
+  Text,
+} from "@chakra-ui/react";
 import { useDraggable } from "@dnd-kit/core";
 import { type FC, useState } from "react";
 import { LuTrash } from "react-icons/lu";
@@ -15,8 +26,19 @@ interface ITaskItemProps {
   task: ITask;
 }
 
+// type IPriority = null | "low" | "medium" | "high";
+
+// const getTaskHoverColor = (priority: IPriority) => {
+//   if (priority === "high") return "red.500";
+//   if (priority === "medium") return "orange.500";
+//   if (priority === "low") return "blue.500";
+//   return "surface_container_high";
+// };
+
 export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   const [checked, setChecked] = useState(task.completed);
+  const setTaskId = useTaskbarStore().setTaskId;
+  const toggleTaskbar = useTaskbarStore().toggleOpen;
   // const { project_id } = useGlobalStore();
   // const { data: project } = useGetProject({ variables: { id: project_id } });
   const { mutate: deleteTask } = useDeleteTask({
@@ -26,8 +48,10 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   });
   const { mutate: updateTask } = useUpdateTask();
 
-  const onDeleteTaskClick = () => {
-    // event.stopPropagation();
+  const onDeleteTaskClick = (
+    event: React.MouseEvent<HTMLButtonElement, MouseEvent>
+  ) => {
+    event.stopPropagation();
     deleteTask({ id: task.id });
   };
 
@@ -36,6 +60,17 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
     const nextState = !checked;
     setChecked(nextState);
     updateTask({ id: task.id, data: { completed: nextState } });
+  };
+
+  const onTitleChange = (value: EditableValueChangeDetails) => {
+    if (value) {
+      updateTask({ id: task.id, data: { title: value.value } });
+    }
+  };
+
+  const onTaskClick = () => {
+    setTaskId(task.id);
+    toggleTaskbar(true);
   };
 
   const { attributes, listeners, setNodeRef, transform } = useDraggable({
@@ -54,6 +89,7 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   return (
     <HStack
       w="100%"
+      minH={"56px"}
       justifyContent={"space-between"}
       // onClick={onTaskClick}
       p="8px"
@@ -61,7 +97,9 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
       borderWidth={"2px"}
       borderColor={{
         base: "surface_container",
-        _hover: "surface_container_highest",
+        _hover: "surface_container_high",
+        // base: getTaskColor(task.priority as IPriority),
+        // _hover: getTaskHoverColor(task.priority as IPriority),
       }}
       bg={{ base: "surface", _hover: "surface_container" }}
       cursor={"pointer"}
@@ -69,21 +107,33 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
       {...listeners}
       {...attributes}
       style={style}
+      onClick={onTaskClick}
       // draggable
     >
-      <HStack>
+      <HStack onClick={(e) => e.stopPropagation()}>
         <Checkbox.Root
           checked={checked}
           onChange={onTaskChecked}
           variant={"solid"}
         >
           <Checkbox.HiddenInput />
-          <Checkbox.Control cursor={"pointer"} colorPalette={"orange"} />
+          <Checkbox.Control cursor={"pointer"} />
         </Checkbox.Root>
         <Text color={"text_variant"}>{task.id}</Text>
-        <Text color="text">{task.title}</Text>
+        <Editable.Root
+          textAlign="start"
+          defaultValue={task.title}
+          onValueCommit={onTitleChange}
+        >
+          <Editable.Preview />
+          <Editable.Input color="text" />
+        </Editable.Root>
       </HStack>
-      <HStack className={styles.actions}>
+      <HStack className={styles.actions} onClick={(e) => e.stopPropagation()}>
+        <DatePicker task={task} type="start" isShow={!!task.start_date} />
+        <DatePicker task={task} type="end" isShow={!!task.end_date} />
+        <LabelMenu task={task} isShow={!!task.label} />
+        <PriorityMenu task={task} isShow={!!task.priority} />
         {/* <Button
           variant={"outline"}
           size={"xs"}
@@ -95,6 +145,8 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
         >
           {project?.title}
         </Button> */}
+
+        {/* <Badge size={"lg"} variant={"solid"}></Badge> */}
         <IconButton variant="ghost" size={"xs"} onClick={onDeleteTaskClick}>
           <LuTrash />
         </IconButton>
