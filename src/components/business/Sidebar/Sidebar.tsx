@@ -11,8 +11,8 @@ export function Sidebar() {
     <VStack
       w={{ sm: "100%", md: "350px" }}
       h={{
-        base: isCollapsed ? "76px" : "60dvh",
-        sm: isCollapsed ? "76px" : "60dvh",
+        base: isCollapsed ? "76px" : "90dvh",
+        // sm: isCollapsed ? "76px" : "90dvh",
         md: isCollapsed ? "76px" : "95dvh",
       }}
       // h={isCollapsed ? "76px" : "95dvh"}
