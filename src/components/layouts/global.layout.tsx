@@ -6,6 +6,7 @@ import { Float, Spacer, Text } from "@chakra-ui/react";
 
 import { useLocation } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
+import { Taskbar } from "../business/Taskbar/Taskbar";
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   const path = useLocation().href;
@@ -27,6 +28,7 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
     <>
       <Sidebar />
       <main className="main">{children}</main>
+      <Taskbar />
       <Float
         pos={"fixed"}
         top={"unset"}
