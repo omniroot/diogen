@@ -4,7 +4,7 @@ import { Providers } from "@/providers/global.provider.tsx";
 import "./styles/global.css";
 
 createRoot(document.getElementById("root")!).render(
-	<StrictMode>
-		<Providers />
-	</StrictMode>,
+  <StrictMode>
+    <Providers />
+  </StrictMode>
 );
