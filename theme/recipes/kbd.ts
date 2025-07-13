@@ -1,4 +1,4 @@
-import { defineRecipe } from "@chakra-ui/react"
+import { defineRecipe } from "@chakra-ui/react";
 
 export const kbdRecipe = defineRecipe({
   className: "chakra-kbd",
@@ -17,11 +17,11 @@ export const kbdRecipe = defineRecipe({
   variants: {
     variant: {
       raised: {
-        bg: "colorPalette.subtle",
+        bg: "surface_container_high",
         color: "colorPalette.fg",
         borderWidth: "1px",
         borderBottomWidth: "2px",
-        borderColor: "colorPalette.muted",
+        borderColor: "outline_variant",
       },
       outline: {
         borderWidth: "1px",
@@ -54,4 +54,4 @@ export const kbdRecipe = defineRecipe({
     size: "md",
     variant: "raised",
   },
-})
+});
