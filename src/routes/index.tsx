@@ -1,8 +1,10 @@
 // src/routes/index.tsx
+import { Modal } from "@/components/ui/modal.tsx";
 import {
   Button,
   Checkbox,
   type CheckboxCheckedChangeDetails,
+  Input,
   Text,
   VStack,
 } from "@chakra-ui/react";
@@ -31,6 +33,9 @@ function Home() {
         <Checkbox.Control />
         <Checkbox.Label>Accept terms and conditions</Checkbox.Label>
       </Checkbox.Root>
+      <Modal trigger={<Button>Open modal</Button>}>
+        <Input />
+      </Modal>
     </VStack>
   );
 }
