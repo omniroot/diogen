@@ -1,7 +1,17 @@
 import { useCreateTask, useGetTasks } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { Button, Dialog, Field, Input, Portal, Stack } from "@chakra-ui/react";
+import {
+  Button,
+  Dialog,
+  Field,
+  Input,
+  Kbd,
+  Portal,
+  Stack,
+} from "@chakra-ui/react";
+import { useKeyPress } from "@siberiacancode/reactuse";
+import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 
@@ -11,6 +21,10 @@ interface IFormValues {
 }
 
 export const CreateTaskModal = () => {
+  const [open, setOpen] = useState(false);
+  useKeyPress("n", () => {
+    setOpen(true);
+  });
   const { project_id, module_id } = useGlobalStore();
   const { mutate: createTask } = useCreateTask({
     onSuccess: () => {
@@ -37,11 +51,12 @@ export const CreateTaskModal = () => {
   };
 
   return (
-    <Dialog.Root>
+    <Dialog.Root lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
       <Dialog.Trigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={"outline"} size={{ base: "md" }}>
           <LuPlus />
           Create task
+          <Kbd>n</Kbd>
         </Button>
       </Dialog.Trigger>
       <Portal>
