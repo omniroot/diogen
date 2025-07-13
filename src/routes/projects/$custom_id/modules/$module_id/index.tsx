@@ -15,7 +15,7 @@ function RouteComponent() {
   const { module_id } = Route.useParams();
   const { project_id, setModuleId } = useGlobalStore();
   const { data: module } = useGetModule({
-    variables: { project_id, module_id: Number(module_id) },
+    variables: { project_id, id: Number(module_id) },
   });
 
   useEffect(() => {

@@ -6,7 +6,7 @@ export const SidebarSearch = () => {
       placeholder="Search"
       size={"2xl"}
       color={{ _placeholder: "text_variant" }}
-      _hover={{ borderColor: "primary" }}
+      // _hover={{ borderColor: "primary" }}
     />
   );
 };

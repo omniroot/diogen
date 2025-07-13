@@ -1,4 +1,4 @@
-import { defineSlotRecipe } from "@chakra-ui/react"
+import { defineSlotRecipe } from "@chakra-ui/react";
 
 export const menuSlotRecipe = defineSlotRecipe({
   className: "chakra-menu",
@@ -22,7 +22,9 @@ export const menuSlotRecipe = defineSlotRecipe({
   base: {
     content: {
       outline: 0,
-      bg: "bg.panel",
+      bg: "surface",
+      borderColor: "surface_container",
+      borderWidth: "1px",
       boxShadow: "lg",
       color: "fg",
       maxHeight: "var(--available-height)",
@@ -53,6 +55,9 @@ export const menuSlotRecipe = defineSlotRecipe({
       position: "relative",
       flex: "0 0 auto",
       outline: 0,
+      _hover: {
+        bg: "surface_container_high",
+      },
       _disabled: {
         layerStyle: "disabled",
       },
@@ -145,4 +150,4 @@ export const menuSlotRecipe = defineSlotRecipe({
     size: "md",
     variant: "subtle",
   },
-})
+});

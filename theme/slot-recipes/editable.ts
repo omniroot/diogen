@@ -1,7 +1,18 @@
-import { defineSlotRecipe } from "@chakra-ui/react"
+import { defineSlotRecipe } from "@chakra-ui/react";
 
 export const editableSlotRecipe = defineSlotRecipe({
-  slots: ["root", "area", "label", "preview", "input", "editTrigger", "submitTrigger", "cancelTrigger", "control", "textarea"],
+  slots: [
+    "root",
+    "area",
+    "label",
+    "preview",
+    "input",
+    "editTrigger",
+    "submitTrigger",
+    "cancelTrigger",
+    "control",
+    "textarea",
+  ],
   className: "chakra-editable",
   base: {
     root: {
@@ -25,7 +36,7 @@ export const editableSlotRecipe = defineSlotRecipe({
       transitionDuration: "normal",
       cursor: "text",
       _hover: {
-        bg: "bg.muted",
+        bg: "surface_container_high",
       },
       _disabled: {
         userSelect: "none",
@@ -37,6 +48,7 @@ export const editableSlotRecipe = defineSlotRecipe({
       textAlign: "inherit",
       bg: "transparent",
       borderRadius: "l2",
+
       outline: "0",
       py: "1",
       px: "1",
@@ -45,6 +57,11 @@ export const editableSlotRecipe = defineSlotRecipe({
       width: "full",
       focusVisibleRing: "inside",
       focusRingWidth: "2px",
+      _focus: {
+        outline: "0",
+        borderWidth: "2px",
+        borderColor: "outline",
+      },
       _placeholder: {
         opacity: 0.6,
       },
@@ -95,4 +112,4 @@ export const editableSlotRecipe = defineSlotRecipe({
   defaultVariants: {
     size: "md",
   },
-})
+});

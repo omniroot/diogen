@@ -38,7 +38,7 @@ export const CreateModuleModal = () => {
   return (
     <Dialog.Root>
       <Dialog.Trigger asChild>
-        <Button variant={"outline"}>
+        <Button variant={"outline"} size={{ base: "md" }}>
           <LuPlus />
           Create module
         </Button>

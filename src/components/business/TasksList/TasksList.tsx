@@ -41,10 +41,7 @@ export const TasksList: FC<ITaskListProps> = ({
     <VStack w="100%">
       <HStack w="100%" justifyContent={"space-between"} p="8px">
         <HStack>
-          <Text
-            fontSize={{ base: "2xl", sm: "xl", md: "2xl" }}
-            fontWeight={"bold"}
-          >
+          <Text fontSize={{ base: "xl", sm: "2xl" }} fontWeight={"bold"}>
             Tasks
           </Text>
           <Badge

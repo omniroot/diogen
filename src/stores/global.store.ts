@@ -10,8 +10,8 @@ interface IStore {
 }
 
 export const useGlobalStore = create<IStore>((set) => ({
-  project_id: 0,
-  module_id: 0,
+  project_id: null,
+  module_id: null,
   custom_id: "null",
   setProjectId: (project_id) => set(() => ({ project_id })),
   setModuleId: (module_id) => set(() => ({ module_id })),

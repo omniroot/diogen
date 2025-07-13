@@ -53,6 +53,7 @@ export const createSupabaseQuery = <TResult>({
 }: IUseSupabaseQuery) => {
   return createQuery<TResult, Partial<IFilters & ISortings>>({
     queryKey: ["get", name, "from", table],
+
     fetcher: async ({
       id,
       completed,

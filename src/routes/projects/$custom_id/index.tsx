@@ -1,12 +1,9 @@
 import { useGetProject } from "@/api/queries/projects.api.ts";
-import { useGetTasks, useUpdateTask } from "@/api/queries/tasks.api.ts";
-import { client } from "@/api/query.client.ts";
 import { ModulesList } from "@/components/business/ModulesList/ModulesList.tsx";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { HStack, Text, VStack } from "@chakra-ui/react";
-import { DndContext, DragEndEvent } from "@dnd-kit/core";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -21,27 +18,31 @@ function RouteComponent() {
     variables: { custom_id },
   });
 
-  const { mutate: updateTask } = useUpdateTask({
-    onSuccess: () => {
-      client.refetchQueries({ queryKey: useGetTasks.getKey() });
-    },
-  });
+  // const { mutate: updateTask } = useUpdateTask({
+  //   onSuccess: () => {
+  //     client.refetchQueries({ queryKey: useGetTasks.getKey() });
+  //   },
+  // });
 
   useEffect(() => {
     if (project) {
       setCustomId(project.custom_id);
       setProjectId(project.id);
+      document.title = `Diogen - ${project.title}`;
     }
   }, [project, setCustomId, setProjectId]);
 
-  const onDragEnd = (event: DragEndEvent) => {
-    updateTask({
-      id: event.active.data.current?.task_id,
-      data: {
-        module_id: event.over?.data.current?.module_id,
-      },
-    });
-  };
+  // const onDragEnd = (event: DragEndEvent) => {
+  //   console.log({ event });
+
+  //   if (!event.over) return;
+  //   updateTask({
+  //     id: event.active.data.current?.task_id,
+  //     data: {
+  //       module_id: event.over?.data.current?.module_id,
+  //     },
+  //   });
+  // };
 
   if (projectIsFetching) return "Loading...";
   if (!project) return "Not found";
@@ -62,11 +63,11 @@ function RouteComponent() {
         </HStack>
       </VStack>
 
-      <DndContext onDragEnd={onDragEnd}>
-        <ModulesList project={project} />
+      {/* <DndContext onDragEnd={onDragEnd}> */}
+      <ModulesList project={project} />
 
-        <TasksList project_id={project.id} empty_module_id />
-      </DndContext>
+      <TasksList project_id={project.id} empty_module_id />
+      {/* </DndContext> */}
     </>
   );
 }

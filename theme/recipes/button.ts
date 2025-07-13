@@ -33,6 +33,9 @@ export const buttonRecipe = defineRecipe({
     _active: {
       scale: "1.1 1",
     },
+    _expanded: {
+      bg: "outline_variant",
+    },
   },
   variants: {
     size: {
@@ -160,9 +163,6 @@ export const buttonRecipe = defineRecipe({
         color: "colorPalette.fg",
         _hover: {
           bg: "{colors.outline_variant}",
-        },
-        _expanded: {
-          bg: "colorPalette.subtle",
         },
       },
       ghost: {
