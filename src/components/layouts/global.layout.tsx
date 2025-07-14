@@ -2,11 +2,12 @@ import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 import { useMedia } from "@/hooks/useMedia.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { useHeader } from "@/stores/header.store.ts";
-import { Float, Spacer, Text } from "@chakra-ui/react";
+import { Breadcrumb, Float, Spacer, Text, VStack } from "@chakra-ui/react";
 
-import { useLocation } from "@tanstack/react-router";
+import { Link, useLocation } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Taskbar } from "../business/Taskbar/Taskbar";
+import { Breadcrumbs } from "@/components/ui/Breadcrumbs.tsx";
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   const path = useLocation().href;
@@ -27,7 +28,10 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   return (
     <>
       <Sidebar />
-      <main className="main">{children}</main>
+      <VStack w="100%">
+        <Breadcrumbs />
+        <main className="main">{children}</main>
+      </VStack>
       <Taskbar />
       <Float
         pos={"fixed"}
