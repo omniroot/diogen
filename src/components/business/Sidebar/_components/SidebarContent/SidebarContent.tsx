@@ -38,7 +38,7 @@ export const SidebarContent: FC<ISidebarContentProps> = () => {
         p="12px"
         cursor={"pointer"}
       >
-        <Link color={"text"} to={`/`}>
+        <Link color={"text"} to={`/calendar`}>
           <LuCalendar />
           <Text fontWeight={"semibold"}>Calendar</Text>
         </Link>
