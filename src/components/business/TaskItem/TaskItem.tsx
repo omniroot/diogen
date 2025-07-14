@@ -124,7 +124,7 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
               <Checkbox.HiddenInput />
               <Checkbox.Control cursor={"pointer"} />
             </Checkbox.Root>
-            <Text color={"text_variant"}>{task.id}</Text>
+            <Text color={"text_variant"}>{task.custom_id || task.id}</Text>
             <Editable.Root
               textAlign="start"
               defaultValue={task.title}
