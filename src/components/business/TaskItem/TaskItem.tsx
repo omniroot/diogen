@@ -8,6 +8,7 @@ import type { ITask } from "@/api/supabase.interface";
 import { LabelMenu } from "@/components/business/TaskItem/LabelMenu/LabelMenu.tsx";
 import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
 import { DatePicker } from "@/components/business/TaskItem/StartDatePicker/StartDatePicker.tsx";
+import { TaskContextMenu } from "@/components/business/TaskItem/TaskContextMenu/TaskContextMenu";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Checkbox,
@@ -15,6 +16,8 @@ import {
   EditableValueChangeDetails,
   HStack,
   IconButton,
+  Menu,
+  Portal,
   Text,
 } from "@chakra-ui/react";
 import { useDraggable } from "@dnd-kit/core";
@@ -87,54 +90,59 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
     : undefined;
 
   return (
-    <HStack
-      w="100%"
-      minH={"56px"}
-      justifyContent={"space-between"}
-      // onClick={onTaskClick}
-      p="8px"
-      borderRadius={"8px"}
-      borderWidth={"2px"}
-      borderColor={{
-        base: "surface_container",
-        _hover: "surface_container_high",
-        // base: getTaskColor(task.priority as IPriority),
-        // _hover: getTaskHoverColor(task.priority as IPriority),
-      }}
-      bg={{ base: "surface", _hover: "surface_container" }}
-      cursor={"pointer"}
-      ref={setNodeRef}
-      {...listeners}
-      {...attributes}
-      style={style}
-      onClick={onTaskClick}
-      // draggable
-    >
-      <HStack onClick={(e) => e.stopPropagation()}>
-        <Checkbox.Root
-          checked={checked}
-          onChange={onTaskChecked}
-          variant={"solid"}
+    <Menu.Root>
+      <Menu.ContextTrigger width="full">
+        <HStack
+          w="100%"
+          minH={"56px"}
+          justifyContent={"space-between"}
+          // onClick={onTaskClick}
+          p="8px"
+          borderRadius={"8px"}
+          borderWidth={"2px"}
+          borderColor={{
+            base: "surface_container",
+            _hover: "surface_container_high",
+            // base: getTaskColor(task.priority as IPriority),
+            // _hover: getTaskHoverColor(task.priority as IPriority),
+          }}
+          bg={{ base: "surface", _hover: "surface_container" }}
+          cursor={"pointer"}
+          ref={setNodeRef}
+          {...listeners}
+          {...attributes}
+          style={style}
+          onClick={onTaskClick}
+          // draggable
         >
-          <Checkbox.HiddenInput />
-          <Checkbox.Control cursor={"pointer"} />
-        </Checkbox.Root>
-        <Text color={"text_variant"}>{task.id}</Text>
-        <Editable.Root
-          textAlign="start"
-          defaultValue={task.title}
-          onValueCommit={onTitleChange}
-        >
-          <Editable.Preview />
-          <Editable.Input color="text" />
-        </Editable.Root>
-      </HStack>
-      <HStack className={styles.actions} onClick={(e) => e.stopPropagation()}>
-        <DatePicker task={task} type="start" isShow={!!task.start_date} />
-        <DatePicker task={task} type="end" isShow={!!task.end_date} />
-        <LabelMenu task={task} isShow={!!task.label} />
-        <PriorityMenu task={task} isShow={!!task.priority} />
-        {/* <Button
+          <HStack onClick={(e) => e.stopPropagation()}>
+            <Checkbox.Root
+              checked={checked}
+              onChange={onTaskChecked}
+              variant={"solid"}
+            >
+              <Checkbox.HiddenInput />
+              <Checkbox.Control cursor={"pointer"} />
+            </Checkbox.Root>
+            <Text color={"text_variant"}>{task.custom_id || task.id}</Text>
+            <Editable.Root
+              textAlign="start"
+              defaultValue={task.title}
+              onValueCommit={onTitleChange}
+            >
+              <Editable.Preview />
+              <Editable.Input color="text" />
+            </Editable.Root>
+          </HStack>
+          <HStack
+            className={styles.actions}
+            onClick={(e) => e.stopPropagation()}
+          >
+            <DatePicker task={task} type="start" isShow={!!task.start_date} />
+            <DatePicker task={task} type="end" isShow={!!task.end_date} />
+            <LabelMenu task={task} isShow={!!task.label} />
+            <PriorityMenu task={task} isShow={!!task.priority} />
+            {/* <Button
           variant={"outline"}
           size={"xs"}
           w="fit-content"
@@ -146,11 +154,20 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
           {project?.title}
         </Button> */}
 
-        {/* <Badge size={"lg"} variant={"solid"}></Badge> */}
-        <IconButton variant="ghost" size={"xs"} onClick={onDeleteTaskClick}>
-          <LuTrash />
-        </IconButton>
-      </HStack>
-    </HStack>
+            {/* <Badge size={"lg"} variant={"solid"}></Badge> */}
+            <IconButton variant="ghost" size={"xs"} onClick={onDeleteTaskClick}>
+              <LuTrash />
+            </IconButton>
+          </HStack>
+        </HStack>
+      </Menu.ContextTrigger>
+      <Portal>
+        <Menu.Positioner>
+          <Menu.Content>
+            <TaskContextMenu task={task} />
+          </Menu.Content>
+        </Menu.Positioner>
+      </Portal>
+    </Menu.Root>
   );
 };

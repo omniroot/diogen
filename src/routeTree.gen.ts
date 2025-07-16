@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from "./routes/__root"
 import { Route as IndexRouteImport } from "./routes/index"
 import { Route as ProjectsIndexRouteImport } from "./routes/projects/index"
+import { Route as CalendarIndexRouteImport } from "./routes/calendar/index"
 import { Route as TasksTask_idRouteImport } from "./routes/tasks/$task_id"
 import { Route as ProjectsCustom_idIndexRouteImport } from "./routes/projects/$custom_id/index"
 import { Route as ProjectsCustom_idModulesIndexRouteImport } from "./routes/projects/$custom_id/modules/index"
@@ -24,6 +25,11 @@ const IndexRoute = IndexRouteImport.update({
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   id: "/projects/",
   path: "/projects/",
+  getParentRoute: () => rootRouteImport,
+} as any)
+const CalendarIndexRoute = CalendarIndexRouteImport.update({
+  id: "/calendar/",
+  path: "/calendar/",
   getParentRoute: () => rootRouteImport,
 } as any)
 const TasksTask_idRoute = TasksTask_idRouteImport.update({
@@ -52,6 +58,7 @@ const ProjectsCustom_idModulesModule_idIndexRoute =
 export interface FileRoutesByFullPath {
   "/": typeof IndexRoute
   "/tasks/$task_id": typeof TasksTask_idRoute
+  "/calendar": typeof CalendarIndexRoute
   "/projects": typeof ProjectsIndexRoute
   "/projects/$custom_id": typeof ProjectsCustom_idIndexRoute
   "/projects/$custom_id/modules": typeof ProjectsCustom_idModulesIndexRoute
@@ -60,6 +67,7 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   "/": typeof IndexRoute
   "/tasks/$task_id": typeof TasksTask_idRoute
+  "/calendar": typeof CalendarIndexRoute
   "/projects": typeof ProjectsIndexRoute
   "/projects/$custom_id": typeof ProjectsCustom_idIndexRoute
   "/projects/$custom_id/modules": typeof ProjectsCustom_idModulesIndexRoute
@@ -69,6 +77,7 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   "/": typeof IndexRoute
   "/tasks/$task_id": typeof TasksTask_idRoute
+  "/calendar/": typeof CalendarIndexRoute
   "/projects/": typeof ProjectsIndexRoute
   "/projects/$custom_id/": typeof ProjectsCustom_idIndexRoute
   "/projects/$custom_id/modules/": typeof ProjectsCustom_idModulesIndexRoute
@@ -79,6 +88,7 @@ export interface FileRouteTypes {
   fullPaths:
     | "/"
     | "/tasks/$task_id"
+    | "/calendar"
     | "/projects"
     | "/projects/$custom_id"
     | "/projects/$custom_id/modules"
@@ -87,6 +97,7 @@ export interface FileRouteTypes {
   to:
     | "/"
     | "/tasks/$task_id"
+    | "/calendar"
     | "/projects"
     | "/projects/$custom_id"
     | "/projects/$custom_id/modules"
@@ -95,6 +106,7 @@ export interface FileRouteTypes {
     | "__root__"
     | "/"
     | "/tasks/$task_id"
+    | "/calendar/"
     | "/projects/"
     | "/projects/$custom_id/"
     | "/projects/$custom_id/modules/"
@@ -104,6 +116,7 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   TasksTask_idRoute: typeof TasksTask_idRoute
+  CalendarIndexRoute: typeof CalendarIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
   ProjectsCustom_idModulesIndexRoute: typeof ProjectsCustom_idModulesIndexRoute
@@ -124,6 +137,13 @@ declare module "@tanstack/react-router" {
       path: "/projects"
       fullPath: "/projects"
       preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    "/calendar/": {
+      id: "/calendar/"
+      path: "/calendar"
+      fullPath: "/calendar"
+      preLoaderRoute: typeof CalendarIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     "/tasks/$task_id": {
@@ -160,6 +180,7 @@ declare module "@tanstack/react-router" {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   TasksTask_idRoute: TasksTask_idRoute,
+  CalendarIndexRoute: CalendarIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
   ProjectsCustom_idModulesIndexRoute: ProjectsCustom_idModulesIndexRoute,

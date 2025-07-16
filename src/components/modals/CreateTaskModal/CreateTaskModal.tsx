@@ -5,10 +5,12 @@ import {
   Button,
   Dialog,
   Field,
+  HStack,
   Input,
   Kbd,
   Portal,
   Stack,
+  Text,
 } from "@chakra-ui/react";
 import { useKeyPress } from "@siberiacancode/reactuse";
 import { useState } from "react";
@@ -22,14 +24,9 @@ interface IFormValues {
 
 export const CreateTaskModal = () => {
   const [open, setOpen] = useState(false);
+  const [error, setError] = useState("");
   useKeyPress("n", () => {
     setOpen(true);
-  });
-  const { project_id, module_id } = useGlobalStore();
-  const { mutate: createTask } = useCreateTask({
-    onSuccess: () => {
-      client.refetchQueries({ queryKey: useGetTasks.getKey() });
-    },
   });
   const {
     register,
@@ -37,6 +34,17 @@ export const CreateTaskModal = () => {
     reset,
     formState: { errors },
   } = useForm<IFormValues>();
+  const { project_id, module_id } = useGlobalStore();
+  const { mutate: createTask } = useCreateTask({
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: useGetTasks.getKey() });
+      setOpen(false);
+      reset();
+    },
+    onError: (error) => {
+      setError(error.message);
+    },
+  });
 
   console.log({ errors });
 
@@ -47,7 +55,6 @@ export const CreateTaskModal = () => {
       module_id,
       project_id,
     });
-    reset();
   };
 
   return (
@@ -87,17 +94,23 @@ export const CreateTaskModal = () => {
                       {...register("description")}
                     />
                   </Field.Root>
+                  {error && (
+                    <HStack>
+                      {/* <Text>Error:</Text> */}
+                      <Text color={"red.600"}>{error}</Text>
+                    </HStack>
+                  )}
                 </Stack>
               </Dialog.Body>
               <Dialog.Footer justifyContent={"space-between"}>
                 <Dialog.ActionTrigger asChild>
                   <Button bg={"red.500"}>Cancel</Button>
                 </Dialog.ActionTrigger>
-                <Dialog.ActionTrigger asChild>
-                  <Button color={"black"} fontWeight={"bold"} type="submit">
-                    Create
-                  </Button>
-                </Dialog.ActionTrigger>
+                {/* <Dialog.ActionTrigger asChild> */}
+                <Button color={"black"} fontWeight={"bold"} type="submit">
+                  Create
+                </Button>
+                {/* </Dialog.ActionTrigger> */}
               </Dialog.Footer>
             </form>
           </Dialog.Content>

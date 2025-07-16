@@ -122,8 +122,12 @@ export const createSupabaseInsert = <TVariables>({
     mutationKey: ["create", name, "to", table],
     mutationFn: async (newData) => {
       // @ts-ignore
-      await supabase.from(table).insert(newData);
-      return null;
+      const result = await supabase.from(table).insert(newData);
+      // if (result.error) throw result.error;
+      return result.data;
+    },
+    onError: (error) => {
+      console.log("insert error ", { error });
     },
   });
 };

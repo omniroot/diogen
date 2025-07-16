@@ -52,6 +52,32 @@ export type Database = {
           },
         ]
       }
+      project_counters: {
+        Row: {
+          created_at: string
+          last_task_number: number | null
+          project_id: number
+        }
+        Insert: {
+          created_at?: string
+          last_task_number?: number | null
+          project_id: number
+        }
+        Update: {
+          created_at?: string
+          last_task_number?: number | null
+          project_id?: number
+        }
+        Relationships: [
+          {
+            foreignKeyName: "project_counters_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: true
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       projects: {
         Row: {
           color: string
@@ -59,6 +85,7 @@ export type Database = {
           custom_id: string
           description: string
           id: number
+          prefix: string
           title: string
           updated_at: string
         }
@@ -68,6 +95,7 @@ export type Database = {
           custom_id: string
           description: string
           id?: number
+          prefix?: string
           title: string
           updated_at?: string
         }
@@ -77,6 +105,7 @@ export type Database = {
           custom_id?: string
           description?: string
           id?: number
+          prefix?: string
           title?: string
           updated_at?: string
         }
@@ -86,6 +115,7 @@ export type Database = {
         Row: {
           completed: boolean
           created_at: string
+          custom_id: string | null
           description: string | null
           end_date: string | null
           id: number
@@ -100,6 +130,7 @@ export type Database = {
         Insert: {
           completed?: boolean
           created_at?: string
+          custom_id?: string | null
           description?: string | null
           end_date?: string | null
           id?: number
@@ -114,6 +145,7 @@ export type Database = {
         Update: {
           completed?: boolean
           created_at?: string
+          custom_id?: string | null
           description?: string | null
           end_date?: string | null
           id?: number
