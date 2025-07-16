@@ -8,6 +8,10 @@ import { Menu, Portal } from "@chakra-ui/react";
 import { FC } from "react";
 import { LuChevronRight } from "react-icons/lu";
 
+const getGitCommitName = (task: ITask) => {
+  return `${task.custom_id}-${task.title.toLowerCase().replaceAll(" ", "-")}`;
+};
+
 interface IProps {
   task: ITask;
 }
@@ -69,6 +73,13 @@ export const TaskContextMenu: FC<IProps> = ({ task }) => {
           </Menu.Positioner>
         </Portal>
       </Menu.Root>
+      <Menu.Item
+        value={`copy-git-commit-name`}
+        // onSelect={() => navigator.clipboard.writeText(getGitCommitName(task))}
+        onSelect={() => alert(getGitCommitName(task))}
+      >
+        Copy git commit name
+      </Menu.Item>
     </>
   );
 };
