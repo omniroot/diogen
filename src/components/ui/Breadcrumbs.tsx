@@ -11,7 +11,7 @@ const getBreadcrumbs = (pathname: string) => {
     .split("/")
     .filter((e) => e)
     .reduce<IBreadcrumb[]>(
-      (acc, current, index) => {
+      (acc, current) => {
         const nextBread: IBreadcrumb = {
           title: current,
           path: acc[acc.length - 1].path + current + "/",

@@ -1,13 +1,11 @@
 import {
   createSupabaseDelete,
-  createSupabaseInsert,
   createSupabaseQuery,
   createSupabaseUpdate,
   supabase,
 } from "@/api/supabase";
 import type { ITask, ITaskInsert, ITaskUpdate } from "@/api/supabase.interface";
-import { table } from "console";
-import { createMutation, createQuery } from "react-query-kit";
+import { createMutation } from "react-query-kit";
 
 export const useGetTasks = createSupabaseQuery<ITask[]>({
   name: "tasks",
