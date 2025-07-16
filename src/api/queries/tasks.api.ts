@@ -3,8 +3,11 @@ import {
   createSupabaseInsert,
   createSupabaseQuery,
   createSupabaseUpdate,
+  supabase,
 } from "@/api/supabase";
 import type { ITask, ITaskInsert, ITaskUpdate } from "@/api/supabase.interface";
+import { table } from "console";
+import { createMutation, createQuery } from "react-query-kit";
 
 export const useGetTasks = createSupabaseQuery<ITask[]>({
   name: "tasks",
@@ -17,9 +20,13 @@ export const useGetTask = createSupabaseQuery<ITask>({
   count: "first",
 });
 
-export const useCreateTask = createSupabaseInsert<ITaskInsert>({
-  name: "task",
-  table: "tasks",
+export const useCreateTask = createMutation<null, ITaskInsert>({
+  mutationKey: ["create-task"],
+  mutationFn: async (newData) => {
+    const { data, error } = await supabase.from("tasks").insert(newData);
+    if (error) throw error;
+    return data;
+  },
 });
 
 export const useUpdateTask = createSupabaseUpdate<ITaskUpdate>({
