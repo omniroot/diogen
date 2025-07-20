@@ -7,7 +7,7 @@ import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
 import { LabelMenu } from "@/components/business/TaskItem/LabelMenu/LabelMenu.tsx";
 import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
-import { DatePicker } from "@/components/business/TaskItem/StartDatePicker/StartDatePicker.tsx";
+import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
 import { TaskContextMenu } from "@/components/business/TaskItem/TaskContextMenu/TaskContextMenu";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
@@ -142,22 +142,10 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
             <DatePicker task={task} type="end" isShow={!!task.end_date} />
             <LabelMenu task={task} isShow={!!task.label} />
             <PriorityMenu task={task} isShow={!!task.priority} />
-            {/* <Button
-          variant={"outline"}
-          size={"xs"}
-          w="fit-content"
-          borderRadius={"12px"}
-          minW={"80px"}
-          borderColor={project?.color}
-          borderWidth={"2px"}
-        >
-          {project?.title}
-        </Button> */}
-
-            {/* <Badge size={"lg"} variant={"solid"}></Badge> */}
             <IconButton variant="ghost" size={"xs"} onClick={onDeleteTaskClick}>
               <LuTrash />
             </IconButton>
+            {/* {JSON.stringify(`${task.label} - ${task.priority}`)} */}
           </HStack>
         </HStack>
       </Menu.ContextTrigger>
