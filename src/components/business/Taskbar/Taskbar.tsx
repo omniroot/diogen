@@ -1,6 +1,6 @@
 import { useGetTask } from "@/api/queries/tasks.api";
 import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
-import { DatePicker } from "@/components/business/TaskItem/StartDatePicker/StartDatePicker.tsx";
+import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Button,
@@ -16,11 +16,16 @@ import {
 import { useKeyPress } from "@siberiacancode/reactuse";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import { LabelMenu } from "../TaskItem/LabelMenu/LabelMenu";
+import { useLocation, useSearch } from "@tanstack/react-router";
 
 export const Taskbar = () => {
+  const { search }: { search: { modal: boolean } } = useLocation();
+
   const { task_id, isOpen, toggleOpen } = useTaskbarStore();
   useKeyPress("o", (isPressed) => {
-    if (isPressed) toggleOpen(!isOpen);
+    if (!search.modal) {
+      if (isPressed) toggleOpen(!isOpen);
+    }
   });
 
   const { data: task, isFetching } = useGetTask({
