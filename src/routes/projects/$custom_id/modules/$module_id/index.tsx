@@ -1,7 +1,8 @@
 import { useGetModule } from "@/api/queries/modules.api.ts";
+import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { Text, VStack } from "@chakra-ui/react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -25,8 +26,22 @@ function RouteComponent() {
   }, []);
 
   return (
-    <VStack>
-      <Text>{module?.title}</Text>
+    <VStack alignItems={"flex-start"}>
+      <VStack
+        alignItems={"flex-start"}
+        w="100%"
+        bg={"surface_container"}
+        p="12px"
+        borderRadius={"12px"}
+      >
+        <Text fontSize={"2xl"} fontWeight={"bold"} color={"text"}>
+          {module?.title}
+        </Text>
+        <Text fontSize={"md"} fontWeight={"bold"} color={"text_variant"}>
+          {module?.description}
+        </Text>
+      </VStack>
+
       <TasksList project_id={project_id} module_id={Number(module_id)} />
     </VStack>
   );
