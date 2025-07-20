@@ -49,7 +49,11 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
       client.refetchQueries({ queryKey: useGetTasks.getKey() });
     },
   });
-  const { mutate: updateTask } = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTask({
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: useGetTasks.getKey() });
+    },
+  });
 
   const onDeleteTaskClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>

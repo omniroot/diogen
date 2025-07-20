@@ -3,6 +3,7 @@ import { useGetProjects } from "@/api/queries/projects.api.ts";
 import { useGetTasks, useUpdateTask } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import { ITask } from "@/api/supabase.interface.ts";
+import { toaster } from "@/components/ui/toaster.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import { Menu, Portal } from "@chakra-ui/react";
 import { FC } from "react";
@@ -75,8 +76,15 @@ export const TaskContextMenu: FC<IProps> = ({ task }) => {
       </Menu.Root>
       <Menu.Item
         value={`copy-git-commit-name`}
-        // onSelect={() => navigator.clipboard.writeText(getGitCommitName(task))}
-        onSelect={() => alert(getGitCommitName(task))}
+        onSelect={() => {
+          const gitName = getGitCommitName(task);
+          navigator.clipboard.writeText(gitName);
+          toaster.create({
+            title: "Git name copied",
+            description: gitName,
+          });
+        }}
+        // onSelect={() => alert(getGitCommitName(task))}
       >
         Copy git commit name
       </Menu.Item>
