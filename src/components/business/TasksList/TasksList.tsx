@@ -3,9 +3,25 @@ import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
 import { TaskItem } from "@/components/business/TaskItem/TaskItem";
 import { CreateTaskModal } from "@/components/modals/CreateTaskModal/CreateTaskModal.tsx";
-import { Badge, Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { useState, type FC } from "react";
-import { LuCalendarArrowDown, LuCalendarArrowUp } from "react-icons/lu";
+import {
+  Badge,
+  Button,
+  HStack,
+  Menu,
+  Portal,
+  Text,
+  useCheckboxGroup,
+  VStack,
+} from "@chakra-ui/react";
+import { useEffect, useState, type FC } from "react";
+import { LuCalendarArrowDown, LuFilter } from "react-icons/lu";
+
+const sortItems = [
+  { label: "Ascending", value: "asc" },
+  { label: "Descending", value: "desc" },
+];
+
+const filterItems = [{ title: "Hide completed", value: "hidecompleted" }];
 
 interface ITaskListProps {
   project_id?: number | null;
@@ -18,17 +34,22 @@ export const TasksList: FC<ITaskListProps> = ({
   module_id,
   empty_module_id = false,
 }) => {
-  const [sortType, setSortType] = useState(true);
+  const [sort, setSort] = useState("desc");
+  const filterGroup = useCheckboxGroup({ defaultValue: ["hidecompleted"] });
+
+  // const [hideCompleted, setHideCompleted] = useState(true);
   const {
     data: tasks,
     isFetching: tasksIsFetching,
     isFetched: tasksIsFetched,
+    refetch,
   } = useGetTasks({
     variables: {
       project_id: project_id ?? null,
       module_id: module_id ?? null,
-      sortByCreatedAt: sortType ? "desc" : "asc",
+      sortByCreatedAt: sort,
       empty_module_id: empty_module_id,
+      // completed: !hideCompleted,
     },
 
     placeholderData: () => {
@@ -36,6 +57,19 @@ export const TasksList: FC<ITaskListProps> = ({
       return data;
     },
   });
+
+  let _tasks = tasks?.filter((task) => {
+    if (filterGroup.isChecked("hidecompleted")) {
+      return task.completed === false && task;
+    }
+    return task;
+  });
+
+  // useEffect(() => {
+  //   refetch();
+  // }, [sort]);
+
+  console.log({ _tasks });
 
   return (
     <VStack w="100%">
@@ -55,18 +89,73 @@ export const TasksList: FC<ITaskListProps> = ({
         </HStack>
 
         <HStack>
-          <Button
+          <Menu.Root>
+            <Menu.Trigger asChild>
+              <Button variant="outline">
+                <LuFilter />
+              </Button>
+            </Menu.Trigger>
+            <Portal>
+              <Menu.Positioner>
+                <Menu.Content minW="10rem">
+                  <Menu.RadioItemGroup
+                    value={sort}
+                    onValueChange={(e) => setSort(e.value)}
+                  >
+                    <Menu.ItemGroupLabel>Sort</Menu.ItemGroupLabel>
+                    {sortItems.map((item) => (
+                      <Menu.RadioItem key={item.value} value={item.value}>
+                        {item.label}
+                        <Menu.ItemIndicator />
+                      </Menu.RadioItem>
+                    ))}
+                  </Menu.RadioItemGroup>
+                  {/* <Menu.ItemGroup>
+                    <Menu.ItemGroupLabel>Sort</Menu.ItemGroupLabel>
+                    <Menu.Item value="bold">Bold</Menu.Item>
+                    <Menu.Item value="underline">Underline</Menu.Item>
+                  </Menu.ItemGroup> */}
+                  <Menu.ItemGroup>
+                    <Menu.ItemGroupLabel>Filter</Menu.ItemGroupLabel>
+                    {filterItems.map(({ title, value }) => (
+                      <Menu.CheckboxItem
+                        key={value}
+                        value={value}
+                        checked={filterGroup.isChecked(value)}
+                        onCheckedChange={() => filterGroup.toggleValue(value)}
+                      >
+                        {title}
+                        <Menu.ItemIndicator />
+                      </Menu.CheckboxItem>
+                    ))}
+                  </Menu.ItemGroup>
+                  {/* <Menu.RadioItemGroup
+                    value={value}
+                    onValueChange={(e) => setValue(e.value)}
+                  >
+                    {items.map((item) => (
+                      <Menu.RadioItem key={item.value} value={item.value}>
+                        {item.label}
+                        <Menu.ItemIndicator />
+                      </Menu.RadioItem>
+                    ))}
+                  </Menu.RadioItemGroup> */}
+                </Menu.Content>
+              </Menu.Positioner>
+            </Portal>
+          </Menu.Root>
+          {/* <Button
             variant={"outline"}
             onClick={() => setSortType((prev) => !prev)}
           >
             {sortType ? <LuCalendarArrowDown /> : <LuCalendarArrowUp />}
-          </Button>
+          </Button> */}
           <CreateTaskModal />
         </HStack>
       </HStack>
       <VStack w="100%">
         {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
-        {tasks?.map((task) => {
+        {_tasks?.map((task) => {
           return <TaskItem key={task.id} task={task} />;
         })}
       </VStack>
