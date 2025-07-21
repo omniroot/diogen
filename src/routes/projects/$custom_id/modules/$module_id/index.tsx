@@ -1,8 +1,8 @@
 import { useGetModule } from "@/api/queries/modules.api.ts";
-import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
+import { useGetProject } from "@/api/queries/projects.api.ts";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -13,8 +13,11 @@ export const Route = createFileRoute(
 });
 
 function RouteComponent() {
-  const { module_id } = Route.useParams();
+  const { custom_id, module_id } = Route.useParams();
   const { project_id, setModuleId } = useGlobalStore();
+  const { data: project } = useGetProject({
+    variables: { custom_id },
+  });
   const { data: module } = useGetModule({
     variables: { project_id, id: Number(module_id) },
   });
@@ -42,7 +45,7 @@ function RouteComponent() {
         </Text>
       </VStack>
 
-      <TasksList project_id={project_id} module_id={Number(module_id)} />
+      <TasksList project_id={project?.id} module_id={Number(module_id)} />
     </VStack>
   );
 }

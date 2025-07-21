@@ -1,4 +1,6 @@
+import { useGetProject } from "@/api/queries/projects.api.ts";
 import { useGetTasks } from "@/api/queries/tasks.api.ts";
+import { useGetUser } from "@/api/queries/users.api.ts";
 import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
 import { TaskItem } from "@/components/business/TaskItem/TaskItem";
@@ -13,8 +15,8 @@ import {
   useCheckboxGroup,
   VStack,
 } from "@chakra-ui/react";
-import { useEffect, useState, type FC } from "react";
-import { LuCalendarArrowDown, LuFilter } from "react-icons/lu";
+import { useState, type FC } from "react";
+import { LuFilter } from "react-icons/lu";
 
 const sortItems = [
   { label: "Ascending", value: "asc" },
@@ -24,7 +26,7 @@ const sortItems = [
 const filterItems = [{ title: "Hide completed", value: "hidecompleted" }];
 
 interface ITaskListProps {
-  project_id?: number | null;
+  project_id?: number | undefined;
   module_id?: number | null;
   empty_module_id?: boolean;
 }
@@ -34,19 +36,21 @@ export const TasksList: FC<ITaskListProps> = ({
   module_id,
   empty_module_id = false,
 }) => {
+  const { data: project } = useGetProject();
   const [sort, setSort] = useState("desc");
   const filterGroup = useCheckboxGroup({ defaultValue: ["hidecompleted"] });
+  const { data: user } = useGetUser({});
 
   // const [hideCompleted, setHideCompleted] = useState(true);
   const {
     data: tasks,
     isFetching: tasksIsFetching,
     isFetched: tasksIsFetched,
-    refetch,
   } = useGetTasks({
     variables: {
       project_id: project_id ?? null,
       module_id: module_id ?? null,
+      user_id: user?.id,
       sortByCreatedAt: sort,
       empty_module_id: empty_module_id,
       // completed: !hideCompleted,
@@ -78,6 +82,7 @@ export const TasksList: FC<ITaskListProps> = ({
           <Text fontSize={{ base: "xl", sm: "2xl" }} fontWeight={"bold"}>
             Tasks
           </Text>
+          <Text>{JSON.stringify(`${project_id} - ${module_id}`)}</Text>
           <Badge
             size={"lg"}
             variant={"solid"}
