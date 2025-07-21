@@ -1,3 +1,4 @@
+import { SidebarBadge } from "@/components/business/Sidebar/_components/SidebarBadge/SidebarBadge.tsx";
 import { SidebarContent } from "@/components/business/Sidebar/_components/SidebarContent/SidebarContent.tsx";
 import { SidebarFooter } from "@/components/business/Sidebar/_components/SidebarFooter/SidebarFooter.tsx";
 import { SidebarHeader } from "@/components/business/Sidebar/_components/SidebarHeader/SidebarHeader.tsx";
@@ -30,6 +31,7 @@ export function Sidebar() {
       {!isCollapsed && (
         <>
           <Separator w={"100%"} h={"3px"} />
+          <SidebarBadge />
           <SidebarSearch />
           <SidebarContent />
           <Separator w={"100%"} h={"3px"} />

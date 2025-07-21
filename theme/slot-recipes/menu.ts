@@ -29,7 +29,8 @@ export const menuSlotRecipe = defineSlotRecipe({
       color: "fg",
       maxHeight: "var(--available-height)",
       "--menu-z-index": "zIndex.dropdown",
-      zIndex: "calc(var(--menu-z-index) + var(--layer-index, 0))",
+      // zIndex: "calc(var(--menu-z-index) + var(--layer-index, 0))",
+      zIndex: "max",
       borderRadius: "l2",
       overflow: "hidden",
       overflowY: "auto",
@@ -96,7 +97,7 @@ export const menuSlotRecipe = defineSlotRecipe({
     },
     separator: {
       height: "1px",
-      bg: "bg.muted",
+      bg: "outline_variant",
       my: "1",
       mx: "-1",
     },

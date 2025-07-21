@@ -6,7 +6,7 @@ import { Badge, HStack, Text, VStack } from "@chakra-ui/react";
 import type { FC } from "react";
 
 interface IModulesListProps {
-  project: IProject;
+  project?: IProject;
 }
 export const ModulesList: FC<IModulesListProps> = ({ project }) => {
   const { data: modules, isFetching } = useGetModules({

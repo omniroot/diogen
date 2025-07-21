@@ -1,7 +1,7 @@
 import { Button, Menu, Portal, Skeleton } from "@chakra-ui/react";
 import { FC } from "react";
 import Calendar from "react-calendar";
-import "./StartDatePicker.css";
+import "./DatePicker.css";
 import {
   useGetTask,
   useGetTasks,
@@ -39,6 +39,8 @@ export const DatePicker: FC<IProps> = ({ task, type, isShow = true }) => {
       });
   };
 
+  if (!isShow) return null;
+
   return (
     <Menu.Root>
       <Menu.Trigger asChild>
@@ -67,7 +69,7 @@ export const DatePicker: FC<IProps> = ({ task, type, isShow = true }) => {
       <Portal>
         <Menu.Positioner>
           <Menu.Content>
-            <Calendar onClickDay={onDayClick} />;
+            <Calendar onClickDay={onDayClick} />
           </Menu.Content>
         </Menu.Positioner>
       </Portal>

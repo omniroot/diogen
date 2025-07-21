@@ -8,6 +8,7 @@ import { Breadcrumbs } from "@/components/ui/Breadcrumbs.tsx";
 import { useLocation } from "@tanstack/react-router";
 import { useEffect, type ReactNode } from "react";
 import { Taskbar } from "../business/Taskbar/Taskbar";
+import { Toaster } from "@/components/ui/toaster.tsx";
 
 export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   const path = useLocation().href;
@@ -27,6 +28,7 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
 
   return (
     <>
+      <Toaster />
       <Sidebar />
       <VStack w="100%">
         <Breadcrumbs />
