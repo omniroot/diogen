@@ -25,8 +25,8 @@ interface IFilters {
 }
 
 interface ISortings {
-  sortByCreatedAt?: "asc" | "desc" | null;
-  sortByUpdatedAt?: "asc" | "desc" | null;
+  sortByCreatedAt?: "asc" | "desc" | string | null;
+  sortByUpdatedAt?: "asc" | "desc" | string | null;
 }
 
 interface IUseSupabaseQuery {
