@@ -95,7 +95,7 @@ export const TasksList: FC<ITaskListProps> = ({
         <HStack>
           <Menu.Root>
             <Menu.Trigger asChild>
-              <Button variant="outline">
+              <Button variant="outline" size={{ base: "sm", sm: "md" }}>
                 <LuFilter />
               </Button>
             </Menu.Trigger>

@@ -100,7 +100,7 @@ export const CreateTaskModal = () => {
   return (
     <Dialog.Root lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
       <Dialog.Trigger asChild>
-        <Button variant={"outline"} size={{ base: "md" }}>
+        <Button variant={"outline"} size={{ base: "sm", sm: "md" }}>
           <LuPlus />
           Create task
           <Kbd>n</Kbd>
