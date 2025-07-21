@@ -36,7 +36,6 @@ export const TasksList: FC<ITaskListProps> = ({
   module_id,
   empty_module_id = false,
 }) => {
-  const { data: project } = useGetProject();
   const [sort, setSort] = useState("desc");
   const filterGroup = useCheckboxGroup({ defaultValue: ["hidecompleted"] });
   const { data: user } = useGetUser({});
@@ -82,7 +81,7 @@ export const TasksList: FC<ITaskListProps> = ({
           <Text fontSize={{ base: "xl", sm: "2xl" }} fontWeight={"bold"}>
             Tasks
           </Text>
-          <Text>{JSON.stringify(`${project_id} - ${module_id}`)}</Text>
+          {/* <Text>{JSON.stringify(`${project_id} - ${module_id}`)}</Text> */}
           <Badge
             size={"lg"}
             variant={"solid"}
