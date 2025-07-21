@@ -1,4 +1,3 @@
-import { useGetProject } from "@/api/queries/projects.api.ts";
 import { useGetTasks } from "@/api/queries/tasks.api.ts";
 import { useGetUser } from "@/api/queries/users.api.ts";
 import { client } from "@/api/query.client.ts";
@@ -11,6 +10,7 @@ import {
   HStack,
   Menu,
   Portal,
+  Skeleton,
   Text,
   useCheckboxGroup,
   VStack,
@@ -43,7 +43,7 @@ export const TasksList: FC<ITaskListProps> = ({
   // const [hideCompleted, setHideCompleted] = useState(true);
   const {
     data: tasks,
-    isFetching: tasksIsFetching,
+    isFetching: tasksIsLoading,
     isFetched: tasksIsFetched,
   } = useGetTasks({
     variables: {
@@ -86,7 +86,7 @@ export const TasksList: FC<ITaskListProps> = ({
             size={"lg"}
             variant={"solid"}
             transition={"opacity 200ms"}
-            opacity={tasksIsFetching ? 1 : 0}
+            opacity={tasksIsLoading ? 1 : 0}
           >
             Sync
           </Badge>
@@ -159,9 +159,11 @@ export const TasksList: FC<ITaskListProps> = ({
       </HStack>
       <VStack w="100%">
         {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
-        {_tasks?.map((task) => {
-          return <TaskItem key={task.id} task={task} />;
-        })}
+        <Skeleton w="100%" loading={tasksIsLoading}>
+          {_tasks?.map((task) => {
+            return <TaskItem key={task.id} task={task} />;
+          })}
+        </Skeleton>
       </VStack>
     </VStack>
   );
