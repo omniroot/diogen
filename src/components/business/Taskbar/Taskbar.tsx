@@ -1,6 +1,6 @@
 import { useGetTask } from "@/api/queries/tasks.api";
-import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
 import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
+import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Button,
@@ -14,9 +14,9 @@ import {
   VStack,
 } from "@chakra-ui/react";
 import { useKeyPress } from "@siberiacancode/reactuse";
+import { useLocation } from "@tanstack/react-router";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import { LabelMenu } from "../TaskItem/LabelMenu/LabelMenu";
-import { useLocation, useSearch } from "@tanstack/react-router";
 
 export const Taskbar = () => {
   const { search }: { search: { modal: boolean } } = useLocation();
@@ -51,15 +51,7 @@ export const Taskbar = () => {
       key={task?.id}
       // hidden={!isOpen}
     >
-      <HStack justifyContent={"space-between"} alignItems={"center"}>
-        <IconButton variant={"ghost"} onClick={() => toggleOpen()}>
-          <LuArrowLeftToLine
-            style={{
-              rotate: isOpen ? "0deg" : "180deg",
-              transition: "rotate 250ms",
-            }}
-          />
-        </IconButton>
+      <HStack w="100%" justifyContent={"space-between"} alignItems={"center"}>
         {isOpen && (
           <Skeleton loading={isFetching}>
             <Text color={"text"} fontSize={"md"} fontWeight={"bold"}>
@@ -68,6 +60,14 @@ export const Taskbar = () => {
             </Text>
           </Skeleton>
         )}
+        <IconButton variant={"ghost"} onClick={() => toggleOpen()}>
+          <LuArrowLeftToLine
+            style={{
+              rotate: isOpen ? "0deg" : "180deg",
+              transition: "rotate 250ms",
+            }}
+          />
+        </IconButton>
       </HStack>
       <VStack w="100%" alignItems={"flex-start"} gap={"12px"} hidden={!isOpen}>
         {task && (
