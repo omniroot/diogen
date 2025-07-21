@@ -4,22 +4,28 @@ import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/Priori
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Button,
+  CloseButton,
+  Drawer,
   Editable,
   Grid,
   GridItem,
   HStack,
   IconButton,
+  Portal,
   Skeleton,
   Text,
   VStack,
 } from "@chakra-ui/react";
-import { useKeyPress } from "@siberiacancode/reactuse";
+import { useKeyPress, useMediaQuery } from "@siberiacancode/reactuse";
 import { useLocation } from "@tanstack/react-router";
 import { LuArrowLeftToLine } from "react-icons/lu";
 import { LabelMenu } from "../TaskItem/LabelMenu/LabelMenu";
 
 export const Taskbar = () => {
   const { search }: { search: { modal: boolean } } = useLocation();
+  const isMobile = useMediaQuery("(max-width: 924px)");
+
+  console.log({ isMobile });
 
   const { task_id, isOpen, toggleOpen } = useTaskbarStore();
   useKeyPress("o", (isPressed) => {
@@ -33,24 +39,8 @@ export const Taskbar = () => {
     enabled: !!task_id,
   });
 
-  // console.log(`@Task_id: ${task?.id},`, task);
-
-  // if (!isOpen) return null;
-  return (
-    <VStack
-      alignItems={"flex-start"}
-      gap={"12px"}
-      w={isOpen ? "500px" : "80px"}
-      h={isOpen ? "95dvh" : "70px"}
-      bg={"surface_container"}
-      p={"12px"}
-      borderWidth={"2px"}
-      borderRadius={"24px"}
-      borderColor={"surface_container_highest"}
-      transition={"width 200ms, height 200ms"}
-      key={task?.id}
-      // hidden={!isOpen}
-    >
+  const content = (
+    <>
       <HStack w="100%" justifyContent={"space-between"} alignItems={"center"}>
         {isOpen && (
           <Skeleton loading={isFetching}>
@@ -125,6 +115,62 @@ export const Taskbar = () => {
           </>
         )}
       </VStack>
-    </VStack>
+    </>
   );
+
+  // console.log(`@Task_id: ${task?.id},`, task);
+
+  // if (!isOpen) return null;
+
+  if (isMobile && isOpen) {
+    return (
+      <Drawer.Root
+        placement={"bottom"}
+        open={isOpen}
+        defaultOpen
+        onOpenChange={(e) => toggleOpen(!isOpen)}
+      >
+        <Portal>
+          <Drawer.Backdrop />
+          <Drawer.Positioner>
+            <Drawer.Content>
+              <Drawer.Header>
+                <Drawer.Title>{task?.title}</Drawer.Title>
+              </Drawer.Header>
+              <Drawer.Body>{content}</Drawer.Body>
+              <Drawer.Footer>
+                <Drawer.ActionTrigger asChild>
+                  <Button variant="outline">Cancel</Button>
+                </Drawer.ActionTrigger>
+                <Button>Save</Button>
+              </Drawer.Footer>
+              <Drawer.CloseTrigger asChild>
+                <CloseButton size="sm" />
+              </Drawer.CloseTrigger>
+            </Drawer.Content>
+          </Drawer.Positioner>
+        </Portal>
+      </Drawer.Root>
+    );
+  } else {
+    return (
+      <VStack
+        alignItems={"flex-start"}
+        gap={"12px"}
+        w={isOpen ? "500px" : "80px"}
+        h={isOpen ? "95dvh" : "70px"}
+        bg={"surface_container"}
+        p={"12px"}
+        borderWidth={"2px"}
+        borderRadius={"24px"}
+        borderColor={"surface_container_highest"}
+        transition={"width 200ms, height 200ms"}
+        key={task?.id}
+        // hidden={!isOpen}
+      >
+        desktop
+        {content}
+      </VStack>
+    );
+  }
 };
