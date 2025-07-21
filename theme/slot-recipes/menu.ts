@@ -96,7 +96,7 @@ export const menuSlotRecipe = defineSlotRecipe({
     },
     separator: {
       height: "1px",
-      bg: "bg.muted",
+      bg: "outline_variant",
       my: "1",
       mx: "-1",
     },
