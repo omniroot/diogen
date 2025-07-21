@@ -5,14 +5,13 @@ import {
 } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
+import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
 import { LabelMenu } from "@/components/business/TaskItem/LabelMenu/LabelMenu.tsx";
 import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
-import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
 import { TaskContextMenu } from "@/components/business/TaskItem/TaskContextMenu/TaskContextMenu";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Checkbox,
-  Editable,
   EditableValueChangeDetails,
   HStack,
   IconButton,
@@ -119,8 +118,9 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
           onClick={onTaskClick}
           // draggable
         >
-          <HStack onClick={(e) => e.stopPropagation()}>
+          <HStack>
             <Checkbox.Root
+              onClick={(e) => e.stopPropagation()}
               checked={checked}
               onChange={onTaskChecked}
               variant={"solid"}
@@ -129,14 +129,17 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
               <Checkbox.Control cursor={"pointer"} />
             </Checkbox.Root>
             <Text color={"text_variant"}>{task.custom_id || task.id}</Text>
-            <Editable.Root
+            <Text w="100%" textAlign={"start"}>
+              {task.title}
+            </Text>
+            {/* <Editable.Root
               textAlign="start"
               defaultValue={task.title}
               onValueCommit={onTitleChange}
             >
               <Editable.Preview />
               <Editable.Input color="text" />
-            </Editable.Root>
+            </Editable.Root> */}
           </HStack>
           <HStack
             className={styles.actions}
