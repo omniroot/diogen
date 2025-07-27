@@ -12,7 +12,6 @@ import { TaskContextMenu } from "@/components/business/TaskItem/TaskContextMenu/
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Checkbox,
-  EditableValueChangeDetails,
   HStack,
   IconButton,
   Menu,
@@ -68,11 +67,11 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
     updateTask({ id: task.id, data: { completed: nextState } });
   };
 
-  const onTitleChange = (value: EditableValueChangeDetails) => {
-    if (value) {
-      updateTask({ id: task.id, data: { title: value.value } });
-    }
-  };
+  // const onTitleChange = (value: EditableValueChangeDetails) => {
+  //   if (value) {
+  //     updateTask({ id: task.id, data: { title: value.value } });
+  //   }
+  // };
 
   const onTaskClick = () => {
     setTaskId(task.id);

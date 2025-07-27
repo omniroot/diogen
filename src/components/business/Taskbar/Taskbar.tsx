@@ -128,7 +128,7 @@ export const Taskbar = () => {
         placement={"bottom"}
         open={isOpen}
         defaultOpen
-        onOpenChange={(e) => toggleOpen(!isOpen)}
+        onOpenChange={() => toggleOpen(!isOpen)}
       >
         <Portal>
           <Drawer.Backdrop />

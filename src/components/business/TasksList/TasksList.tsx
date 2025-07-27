@@ -10,7 +10,6 @@ import {
   HStack,
   Menu,
   Portal,
-  Skeleton,
   Text,
   useCheckboxGroup,
   VStack,

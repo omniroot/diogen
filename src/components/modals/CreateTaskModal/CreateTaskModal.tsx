@@ -14,15 +14,7 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useKeyPress } from "@siberiacancode/reactuse";
-import {
-  getRouteApi,
-  useLocation,
-  useNavigate,
-  useParams,
-  useRouter,
-  useSearch,
-} from "@tanstack/react-router";
-import { title } from "process";
+import { useNavigate } from "@tanstack/react-router";
 import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
