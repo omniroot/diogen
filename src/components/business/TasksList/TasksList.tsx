@@ -159,11 +159,9 @@ export const TasksList: FC<ITaskListProps> = ({
       </HStack>
       <VStack w="100%">
         {tasksIsFetched && !tasks?.length && <Text>Tasks not found.</Text>}
-        <Skeleton w="100%" loading={tasksIsLoading}>
-          {_tasks?.map((task) => {
-            return <TaskItem key={task.id} task={task} />;
-          })}
-        </Skeleton>
+        {_tasks?.map((task) => {
+          return <TaskItem key={task.id} task={task} />;
+        })}
       </VStack>
     </VStack>
   );
