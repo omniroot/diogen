@@ -168,7 +168,6 @@ export const Taskbar = () => {
         key={task?.id}
         // hidden={!isOpen}
       >
-        desktop
         {content}
       </VStack>
     );
