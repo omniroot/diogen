@@ -1,5 +1,6 @@
 import { useCreateTask, useGetTasks } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
+import { toaster } from "@/components/ui/toaster.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
 import {
   Button,
@@ -13,7 +14,8 @@ import {
   Text,
 } from "@chakra-ui/react";
 import { useKeyPress } from "@siberiacancode/reactuse";
-import { useState } from "react";
+import { useNavigate } from "@tanstack/react-router";
+import { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { LuPlus } from "react-icons/lu";
 
@@ -23,12 +25,14 @@ interface IFormValues {
 }
 
 export const CreateTaskModal = () => {
+  const navigate = useNavigate({ from: "/" });
   const [open, setOpen] = useState(false);
   const [error, setError] = useState("");
   useKeyPress("n", () => {
     setOpen(true);
   });
   const {
+    getValues,
     register,
     handleSubmit,
     reset,
@@ -38,29 +42,57 @@ export const CreateTaskModal = () => {
   const { mutate: createTask } = useCreateTask({
     onSuccess: () => {
       client.refetchQueries({ queryKey: useGetTasks.getKey() });
+      const newTask = getValues();
+      toaster.create({
+        title: `Task ${newTask.title} created`,
+        type: "success",
+      });
       setOpen(false);
       reset();
     },
     onError: (error) => {
+      const newTask = getValues();
+
+      toaster.create({
+        title: `Task ${newTask.title} create failed!`,
+        type: "error",
+      });
       setError(error.message);
     },
   });
 
   console.log({ errors });
 
+  useEffect(() => {
+    if (open) {
+      navigate({
+        search: {
+          modal: true,
+        },
+      });
+    } else {
+      navigate({
+        search: {},
+      });
+    }
+  }, [open]);
+
   const onSubmit = (values: IFormValues) => {
-    createTask({
-      title: values.title,
-      description: values.description,
-      module_id,
-      project_id,
-    });
+    createTask(
+      {
+        title: values.title,
+        description: values.description,
+        module_id,
+        project_id,
+      },
+      {}
+    );
   };
 
   return (
     <Dialog.Root lazyMount open={open} onOpenChange={(e) => setOpen(e.open)}>
       <Dialog.Trigger asChild>
-        <Button variant={"outline"} size={{ base: "md" }}>
+        <Button variant={"outline"} size={{ base: "sm", sm: "md" }}>
           <LuPlus />
           Create task
           <Kbd>n</Kbd>

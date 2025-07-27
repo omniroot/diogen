@@ -20,13 +20,14 @@ interface IFilters {
   project_id?: number | null;
   module_id?: number | null;
   empty_module_id?: boolean;
+  user_id?: string | null;
 
   completed?: boolean | null;
 }
 
 interface ISortings {
-  sortByCreatedAt?: "asc" | "desc" | null;
-  sortByUpdatedAt?: "asc" | "desc" | null;
+  sortByCreatedAt?: "asc" | "desc" | string | null;
+  sortByUpdatedAt?: "asc" | "desc" | string | null;
 }
 
 interface IUseSupabaseQuery {

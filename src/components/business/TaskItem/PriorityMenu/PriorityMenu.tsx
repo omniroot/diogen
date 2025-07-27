@@ -52,6 +52,8 @@ export const PriorityMenu: FC<IProps> = ({ task, isShow = true }) => {
       });
   };
 
+  if (!isShow) return null;
+
   return (
     <Menu.Root>
       <Menu.Trigger asChild>

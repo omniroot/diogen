@@ -5,7 +5,16 @@ import {
   supabase,
 } from "@/api/supabase";
 import type { ITask, ITaskInsert, ITaskUpdate } from "@/api/supabase.interface";
-import { createMutation } from "react-query-kit";
+import { createMutation, createQuery } from "react-query-kit";
+
+export const useGetTasksCount = createQuery({
+  queryKey: ["get-tasks-count"],
+  fetcher: async () => {
+    const query = supabase.from("tasks").select("id");
+    const { data } = await query;
+    return data?.length;
+  },
+});
 
 export const useGetTasks = createSupabaseQuery<ITask[]>({
   name: "tasks",

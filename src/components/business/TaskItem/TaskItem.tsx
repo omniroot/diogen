@@ -5,15 +5,13 @@ import {
 } from "@/api/queries/tasks.api.ts";
 import { client } from "@/api/query.client.ts";
 import type { ITask } from "@/api/supabase.interface";
+import { DatePicker } from "@/components/business/TaskItem/DatePicker/DatePicker";
 import { LabelMenu } from "@/components/business/TaskItem/LabelMenu/LabelMenu.tsx";
 import { PriorityMenu } from "@/components/business/TaskItem/PriorityMenu/PriorityMenu.tsx";
-import { DatePicker } from "@/components/business/TaskItem/StartDatePicker/StartDatePicker.tsx";
 import { TaskContextMenu } from "@/components/business/TaskItem/TaskContextMenu/TaskContextMenu";
 import { useTaskbarStore } from "@/stores/taskbar.store";
 import {
   Checkbox,
-  Editable,
-  EditableValueChangeDetails,
   HStack,
   IconButton,
   Menu,
@@ -49,7 +47,11 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
       client.refetchQueries({ queryKey: useGetTasks.getKey() });
     },
   });
-  const { mutate: updateTask } = useUpdateTask();
+  const { mutate: updateTask } = useUpdateTask({
+    onSuccess: () => {
+      client.refetchQueries({ queryKey: useGetTasks.getKey() });
+    },
+  });
 
   const onDeleteTaskClick = (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -65,11 +67,11 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
     updateTask({ id: task.id, data: { completed: nextState } });
   };
 
-  const onTitleChange = (value: EditableValueChangeDetails) => {
-    if (value) {
-      updateTask({ id: task.id, data: { title: value.value } });
-    }
-  };
+  // const onTitleChange = (value: EditableValueChangeDetails) => {
+  //   if (value) {
+  //     updateTask({ id: task.id, data: { title: value.value } });
+  //   }
+  // };
 
   const onTaskClick = () => {
     setTaskId(task.id);
@@ -115,8 +117,9 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
           onClick={onTaskClick}
           // draggable
         >
-          <HStack onClick={(e) => e.stopPropagation()}>
+          <HStack>
             <Checkbox.Root
+              onClick={(e) => e.stopPropagation()}
               checked={checked}
               onChange={onTaskChecked}
               variant={"solid"}
@@ -125,14 +128,17 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
               <Checkbox.Control cursor={"pointer"} />
             </Checkbox.Root>
             <Text color={"text_variant"}>{task.custom_id || task.id}</Text>
-            <Editable.Root
+            <Text w="100%" textAlign={"start"}>
+              {task.title}
+            </Text>
+            {/* <Editable.Root
               textAlign="start"
               defaultValue={task.title}
               onValueCommit={onTitleChange}
             >
               <Editable.Preview />
               <Editable.Input color="text" />
-            </Editable.Root>
+            </Editable.Root> */}
           </HStack>
           <HStack
             className={styles.actions}
@@ -142,22 +148,10 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
             <DatePicker task={task} type="end" isShow={!!task.end_date} />
             <LabelMenu task={task} isShow={!!task.label} />
             <PriorityMenu task={task} isShow={!!task.priority} />
-            {/* <Button
-          variant={"outline"}
-          size={"xs"}
-          w="fit-content"
-          borderRadius={"12px"}
-          minW={"80px"}
-          borderColor={project?.color}
-          borderWidth={"2px"}
-        >
-          {project?.title}
-        </Button> */}
-
-            {/* <Badge size={"lg"} variant={"solid"}></Badge> */}
             <IconButton variant="ghost" size={"xs"} onClick={onDeleteTaskClick}>
               <LuTrash />
             </IconButton>
+            {/* {JSON.stringify(`${task.label} - ${task.priority}`)} */}
           </HStack>
         </HStack>
       </Menu.ContextTrigger>

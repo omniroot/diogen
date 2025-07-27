@@ -16,8 +16,8 @@ export const colors = defineTokens.colors({
   // light
   text_light: { value: "#0E090B" },
   text_variant_light: { value: "#171717" },
-  surface_light: { value: "#f5f5f5" },
-  surface_container_light: { value: "#fafafa" },
+  surface_light: { value: "#d4d4d4ff" },
+  surface_container_light: { value: "#e0ddddff" },
   surface_container_high_light: { value: "#e5e5e5" },
   surface_container_highest_light: { value: "#d4d4d4" },
   transparent: {

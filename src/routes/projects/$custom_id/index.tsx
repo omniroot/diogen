@@ -3,7 +3,7 @@ import { ModulesList } from "@/components/business/ModulesList/ModulesList.tsx";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { TasksList } from "@/components/business/TasksList/TasksList.tsx";
 import { useGlobalStore } from "@/stores/global.store.ts";
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { HStack, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
 
@@ -14,7 +14,7 @@ export const Route = createFileRoute("/projects/$custom_id/")({
 function RouteComponent() {
   const { setCustomId, setProjectId } = useGlobalStore();
   const { custom_id } = Route.useParams();
-  const { data: project, isFetching: projectIsFetching } = useGetProject({
+  const { data: project, isFetching: projectIsLoading } = useGetProject({
     variables: { custom_id },
   });
 
@@ -44,29 +44,33 @@ function RouteComponent() {
   //   });
   // };
 
-  if (projectIsFetching) return "Loading...";
-  if (!project) return "Not found";
+  // if (projectIsFetching) return "Loading...";
+  // if (!project) return "Not found";
   return (
     <>
       <VStack w="100%" bg={"surface_container"} p="24px" borderRadius={"24px"}>
-        <HStack w="100%">
-          <ProjectCircle color={project.color} />
-          <Text as={"h1"} fontWeight={"bold"} color={"text"}>
-            {project.title}
-          </Text>
-        </HStack>
+        <Skeleton w="100%" loading={projectIsLoading} borderRadius={"8px"}>
+          <HStack w="100%">
+            <ProjectCircle color={project?.color} />
+            <Text as={"h1"} fontWeight={"bold"} color={"text"}>
+              {project?.title}
+            </Text>
+          </HStack>
+        </Skeleton>
 
-        <HStack w="100%">
-          <Text as={"h3"} color={"text_variant"}>
-            {project.description}
-          </Text>
-        </HStack>
+        <Skeleton w="100%" loading={projectIsLoading} borderRadius={"8px"}>
+          <HStack w="100%">
+            <Text as={"h3"} color={"text_variant"}>
+              {project?.description}
+            </Text>
+          </HStack>
+        </Skeleton>
       </VStack>
 
       {/* <DndContext onDragEnd={onDragEnd}> */}
       <ModulesList project={project} />
 
-      <TasksList project_id={project.id} empty_module_id />
+      <TasksList project_id={project?.id} module_id={null} empty_module_id />
       {/* </DndContext> */}
     </>
   );
