@@ -5,10 +5,10 @@ import {
   useGetTasks,
   useUpdateTask,
 } from "@/api/queries/tasks.api.ts";
+import { useGetUser } from "@/api/queries/users.api.ts";
 import { client } from "@/api/query.client.ts";
 import { ITask } from "@/api/supabase.interface.ts";
 import { toaster } from "@/components/ui/toaster.tsx";
-import { useGlobalStore } from "@/stores/global.store.ts";
 import {
   Button,
   CloseButton,
@@ -48,9 +48,15 @@ interface IProps {
   task: ITask;
 }
 export const TaskContextMenu: FC<IProps> = ({ task }) => {
-  const { project_id } = useGlobalStore();
-  const { data: projects } = useGetProjects({ variables: {} });
-  const { data: modules } = useGetModules({ variables: { project_id } });
+  const { data: user } = useGetUser();
+  const { data: projects } = useGetProjects({
+    variables: {
+      user_id: user?.id,
+    },
+  });
+  const { data: modules } = useGetModules({
+    variables: { project_id: task.project_id },
+  });
   const { mutate: updateTask } = useUpdateTask({
     onSuccess: () => {
       client.refetchQueries({ queryKey: useGetTasks.getKey() });
