@@ -2,10 +2,10 @@
 import { ReactNode, FC, useState } from "react";
 import styles from "./TaskItem.module.css";
 import { ITask, ITaskUpdate } from "@/api/supabase.interface";
-import { Checkbox, ActionIcon, Text } from "@mantine/core";
-import { TrashIcon } from "lucide-react";
 import { useMutation } from "@tanstack/react-query";
 import { supabase } from "@/api/supabase";
+import { Checkbox, IconButton, Text } from "@chakra-ui/react";
+import { LuTrash } from "react-icons/lu";
 
 interface ITaskItemProps {
   task: ITask;
@@ -45,14 +45,22 @@ export const TaskItem: FC<ITaskItemProps> = ({ task }) => {
   return (
     <div className={styles.task_item} onClick={onTaskClick}>
       <div className={styles.content}>
-        <Checkbox checked={checked} onChange={onTaskChecked} />
-        <Text c={"dark.3"}>{task.id}</Text>
-        <Text>{task.title}</Text>
+        <Checkbox.Root
+          checked={checked}
+          onChekedChange={(event) => console.log(event)}
+          variant={"solid"}
+        >
+          <Checkbox.HiddenInput />
+          <Checkbox.Control />
+          <Checkbox.Label>123</Checkbox.Label>
+        </Checkbox.Root>
+        <Text color={"text_variant"}>{task.id}</Text>
+        <Text color="text">{task.title}</Text>
       </div>
       <div className={styles.actions}>
-        <ActionIcon variant="transparent">
-          <TrashIcon />
-        </ActionIcon>
+        <IconButton variant="outline">
+          <LuTrash />
+        </IconButton>
       </div>
     </div>
   );

@@ -1,10 +1,14 @@
-import { Button, Text } from "@mantine/core";
+import { Button, Text } from "@chakra-ui/react";
 
 export default function HomePage() {
   return (
     <>
-      <Text>Home page</Text>
-      <Button>Open</Button>
+      <span>home page</span>
+      <Button>
+        <Text></Text>
+      </Button>
+      {/* <Text>Home page</Text>
+      <Button>Open</Button> */}
     </>
   );
 }

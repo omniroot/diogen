@@ -2,14 +2,15 @@ body {
   display: flex;
   padding: 24px;
   gap: 12px;
-  --color-primary: #44634c;
+  background-color: var(--chakra-colors-surface);
+  /* transition:
+    background-color 300ms,
+    color 300ms !important; */
+  /* --color-primary: #44634c;
   --color-surface: #131315;
   --color-surface-container: #191a1c;
   --color-surface-container-high: #1d1e20;
-  --color-surface-container-highest: #232428;
-
-  --color-mantine-color-text: var(--color-surface);
-  --mantine-color-body: var(--color-surface);
+  --color-surface-container-highest: #232428; */
 }
 
 .main {

@@ -1,18 +1,15 @@
-import { ColorSchemeScript, mantineHtmlProps } from "@mantine/core";
-import "@mantine/core/styles.css";
 import "./global.css";
 import { Providers } from "@/app/providers";
 
 export const metadata = {
-  title: "Mantine Next.js template",
-  description: "I am using Mantine with Next.js!",
+  title: "Diogen",
+  description: "App for tracking tasks for projects",
 };
 
 export default function RootLayout({ children }: { children: any }) {
   return (
-    <html lang="en" {...mantineHtmlProps}>
+    <html lang="en">
       <head>
-        <ColorSchemeScript />
         <link rel="shortcut icon" href="/favicon.svg" />
         <meta
           name="viewport"
