@@ -1,14 +1,18 @@
 import { Button, HStack, IconButton, Text } from "@chakra-ui/react";
 import type { FC, ReactNode } from "react";
 import { LuGithub, LuLogOut } from "react-icons/lu";
-import { useGetUser } from "@/api/queries/users.api";
 import { supabase } from "@/api/supabase";
+import { useUser } from "@/api/queries/users.api.ts";
 
 interface ISidebarFooterProps {
   children?: ReactNode;
 }
 export const SidebarFooter: FC<ISidebarFooterProps> = () => {
-  const { data: user, refetch } = useGetUser();
+  console.log("Before sidebar user hook", useUser);
+
+  const { data: user, refetch } = useUser();
+
+  console.log("After sidebar user hook");
 
   const onGithubLoginClick = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({
