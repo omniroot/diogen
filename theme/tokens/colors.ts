@@ -1,17 +1,18 @@
 import { defineTokens } from "@chakra-ui/react";
 
 export const colors = defineTokens.colors({
-  primary: { value: "#FFB77A" },
+  primary: { value: "#7A55FF" },
+  on_primary: { value: "#F3F3F3" },
 
   // dark
-  text_dark: { value: "#EFE0D6" },
-  text_variant_dark: { value: "#D6C3B6" },
-  surface_dark: { value: "#19120C" },
-  surface_container_dark: { value: "#261E18" },
-  surface_container_high_dark: { value: "#312822" },
-  surface_container_highest_dark: { value: "#3C332C" },
-  outline_dark: { value: "#9E8E82" },
-  outline_variant_dark: { value: "#51443B" },
+  text_dark: { value: "#F3F3F3" },
+  text_variant_dark: { value: "#AFAFAF" },
+  surface_dark: { value: "#08090B" },
+  surface_container_dark: { value: "#131315" },
+  surface_container_high_dark: { value: "#191919" },
+  surface_container_highest_dark: { value: "#1B1B1B" },
+  outline_dark: { value: "#252424" },
+  outline_variant_dark: { value: "#2b2a2a" },
 
   // light
   text_light: { value: "#0E090B" },

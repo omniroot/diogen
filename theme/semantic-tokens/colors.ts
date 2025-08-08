@@ -13,6 +13,12 @@ export const colors = defineSemanticTokens.colors({
       _dark: "{colors.text_variant_dark}",
     },
   },
+  on_primary: {
+    value: {
+      _light: "{colors.on_primary}",
+      _dark: "{colors.on_primary}",
+    },
+  },
   surface: {
     value: {
       _light: "{colors.surface_light}",
