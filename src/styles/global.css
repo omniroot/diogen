@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&display=swap");
+
 html,
 body {
   /* display: flex; */
@@ -13,6 +15,8 @@ body {
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
 
+  font-family: "Inter";
+
   /* --color-primary: #44634c;
   --color-surface: #131315;
   --color-surface-container: #191a1c;
@@ -22,7 +26,7 @@ body {
 #root {
   width: 100%;
   height: 100%;
-  padding: 24px;
+  padding: 12px;
 
   gap: 12px;
   display: flex;
