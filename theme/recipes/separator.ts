@@ -4,7 +4,7 @@ export const separatorRecipe = defineRecipe({
   className: "chakra-separator",
   base: {
     display: "block",
-    borderColor: "outline_variant",
+    borderColor: "outline",
   },
   variants: {
     variant: {
