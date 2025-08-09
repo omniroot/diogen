@@ -21,7 +21,7 @@ const getBreadcrumbs = (pathname: string) => {
       [{ path: "/", title: "/" }]
     );
 
-  console.log({ breadcrumbs });
+  // console.log({ breadcrumbs });
 
   return breadcrumbs;
 };

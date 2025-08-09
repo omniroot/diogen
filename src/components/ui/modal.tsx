@@ -18,7 +18,7 @@ export const Modal: FC<IModalProps> = ({
 
   const onSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    console.log("@Modal submit: ", event);
+    // console.log("@Modal submit: ", event);
   };
 
   return (

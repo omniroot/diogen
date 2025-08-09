@@ -16,9 +16,9 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
   const { isMobile, isTablet } = useMedia();
   const { toggleIsCollapsed } = useHeader();
 
-  console.log({ isMobile });
+  // console.log({ isMobile });
 
-  console.log({ path });
+  // console.log({ path });
 
   useEffect(() => {
     if (isMobile || isTablet) {

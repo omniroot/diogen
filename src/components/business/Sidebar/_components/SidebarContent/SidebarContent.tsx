@@ -12,7 +12,7 @@ interface ISidebarContentProps {
 export const SidebarContent: FC<ISidebarContentProps> = () => {
   const { colorMode } = useColorMode();
 
-  console.log({ colorMode });
+  // console.log({ colorMode });
 
   return (
     <VStack

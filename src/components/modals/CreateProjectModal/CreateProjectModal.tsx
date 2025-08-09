@@ -46,7 +46,7 @@ export const CreateProjectModal = () => {
     },
   });
 
-  console.log({ errors });
+  // console.log({ errors });
 
   const onSubmit = (values: IFormValues) => {
     createProject({
@@ -59,7 +59,7 @@ export const CreateProjectModal = () => {
   };
 
   useEffect(() => {
-    console.log({ errors });
+    // console.log({ errors });
   }, [errors]);
 
   return (

@@ -71,7 +71,7 @@ export const TasksList: FC<ITaskListProps> = ({
   //   refetch();
   // }, [sort]);
 
-  console.log({ _tasks });
+  // console.log({ _tasks });
 
   return (
     <VStack w="100%">

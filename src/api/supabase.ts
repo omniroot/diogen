@@ -105,7 +105,7 @@ export const createSupabaseQuery = <TResult>({
 
       const { data } = await query;
 
-      console.log(table, data);
+      // console.log(table, data);
 
       if (count == "first") {
         return data?.[0] as TResult;
@@ -128,7 +128,7 @@ export const createSupabaseInsert = <TVariables>({
       return result.data;
     },
     onError: (error) => {
-      console.log("insert error ", { error });
+      // console.log("insert error ", { error });
     },
   });
 };

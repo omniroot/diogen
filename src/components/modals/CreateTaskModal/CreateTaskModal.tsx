@@ -61,7 +61,7 @@ export const CreateTaskModal = () => {
     },
   });
 
-  console.log({ errors });
+  // console.log({ errors });
 
   useEffect(() => {
     if (open) {
