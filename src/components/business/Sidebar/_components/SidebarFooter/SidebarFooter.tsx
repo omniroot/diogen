@@ -8,11 +8,7 @@ interface ISidebarFooterProps {
   children?: ReactNode;
 }
 export const SidebarFooter: FC<ISidebarFooterProps> = () => {
-  console.log("Before sidebar user hook", useUser);
-
   const { data: user, refetch } = useUser();
-
-  console.log("After sidebar user hook");
 
   const onGithubLoginClick = async () => {
     const { data, error } = await supabase.auth.signInWithOAuth({

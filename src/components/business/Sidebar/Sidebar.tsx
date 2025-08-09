@@ -3,38 +3,35 @@ import { SidebarContent } from "@/components/business/Sidebar/_components/Sideba
 import { SidebarFooter } from "@/components/business/Sidebar/_components/SidebarFooter/SidebarFooter.tsx";
 import { SidebarHeader } from "@/components/business/Sidebar/_components/SidebarHeader/SidebarHeader.tsx";
 import { SidebarSearch } from "@/components/business/Sidebar/_components/SidebarSearch/SidebarSearch.tsx";
+import { useMedia } from "@/hooks/useMedia.tsx";
 import { useHeader } from "@/stores/header.store";
 import { Separator, VStack } from "@chakra-ui/react";
 
 export function Sidebar() {
   const { isCollapsed } = useHeader();
+  const { isMobile } = useMedia();
+
   return (
     <VStack
-      w={{ sm: "100%", md: "350px" }}
-      h={{
-        base: isCollapsed ? "76px" : "90dvh",
-        // sm: isCollapsed ? "76px" : "90dvh",
-        md: isCollapsed ? "76px" : "95dvh",
-      }}
-      // h={isCollapsed ? "76px" : "95dvh"}
-      transition={"height 200ms"}
-      p={"12px"}
-      borderColor={"surface_container_highest"}
-      borderRadius={"24px"}
+      minW={"380px"}
+      h={"97.5dvh"}
+      transition={"width 200ms"}
+      borderColor={"outline"}
+      borderRadius={"8px"}
       borderWidth={"2px"}
-      gap={"12px"}
-      bg={"surface_container"}
-      // bg={"bg.subtle"}
+      padding={"12px 0px"}
+      gap={"8px"}
+      display={{ base: "none", md: "flex", lg: "flex" }}
     >
       {/* HEADER */}
-      <SidebarHeader />
-      {!isCollapsed && (
+      {!isMobile && (
         <>
-          <Separator w={"100%"} h={"3px"} />
+          <SidebarHeader />
+          <Separator w={"100%"} size={"md"} />
           <SidebarBadge />
           <SidebarSearch />
           <SidebarContent />
-          <Separator w={"100%"} h={"3px"} />
+          <Separator w={"100%"} size={"md"} />
           <SidebarFooter />
         </>
       )}
