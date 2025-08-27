@@ -13,7 +13,7 @@ export function Sidebar() {
 
   return (
     <VStack
-      minW={"380px"}
+      minW={"350px"}
       h={"97.5dvh"}
       transition={"width 200ms"}
       borderColor={"outline"}

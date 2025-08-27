@@ -1,5 +1,5 @@
 import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
-import { ButtonGroup, HStack, IconButton, Text } from "@chakra-ui/react";
+import { Button, ButtonGroup, HStack, Text } from "@chakra-ui/react";
 import { IconArrowNarrowLeft, IconArrowNarrowRight } from "@tabler/icons-react";
 import { Link, useCanGoBack, useRouter } from "@tanstack/react-router";
 import type { FC, ReactNode } from "react";
@@ -17,7 +17,7 @@ export const SidebarHeader: FC<ISidebarHeaderProps> = () => {
   return (
     <HStack
       w={"100%"}
-      p="4px 12px"
+      p="8px 12px"
       justifyContent={"space-between"}
       alignItems={"center"}
       // borderBottomWidth={"2px"}
@@ -31,20 +31,20 @@ export const SidebarHeader: FC<ISidebarHeaderProps> = () => {
       </HStack>
       <HStack>
         <ButtonGroup gap="8px">
-          <IconButton
+          <Button
             variant={"ghost"}
             onClick={() => history.back()}
             disabled={!canGoBack}
           >
             <IconArrowNarrowLeft />
-          </IconButton>
-          <IconButton
+          </Button>
+          <Button
             variant={"ghost"}
             onClick={() => history.forward()}
             disabled={!canGoForward}
           >
             <IconArrowNarrowRight />
-          </IconButton>
+          </Button>
 
           {/* <IconButton variant={"ghost"} asChild>
             <ColorModeButton variant={"outline"} p="2" />

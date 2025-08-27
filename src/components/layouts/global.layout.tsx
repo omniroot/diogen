@@ -48,6 +48,7 @@ export const GlobalLayout = ({ children }: { children: ReactNode }) => {
         borderRadius={"12px"}
       >
         <Text>Project: {project_id}</Text>
+
         <Spacer w={"8px"} />
         <Text>Module: {module_id}</Text>
       </Float>
