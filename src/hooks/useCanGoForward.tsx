@@ -1,5 +1,5 @@
 import { useLocation } from "@tanstack/react-router";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 
 //
 // Как эта хуйня работает (второй раз я такое не напишу):
@@ -10,17 +10,14 @@ import { useState, useEffect } from "react";
 // иначе если это новый путь, мы обрезаем стек до текущей позиции
 // новый ключ добавляется в стек [k1, k2]
 // и мы меняем текущую позицию на позицию нового ключа
-// в конце мы проверяем, если текущуя позиция меньше чем последняя размер стека
+// в конце мы проверяем, если текущуя позиция меньше чем последняя размер стека то мы может перемащаться вперед
 //
 
 export const useCanGoForward = () => {
   const location = useLocation();
-  const [historyStack, setHistoryStack] = useState([
-    location.state?.key || location.pathname,
-  ]);
+  const initialKey = location.state?.key || location.pathname;
+  const [historyStack, setHistoryStack] = useState([initialKey]);
   const [currentPosition, setCurrentPosition] = useState(0);
-
-  console.log(historyStack);
 
   useEffect(() => {
     const newKey = location.state?.key || location.pathname;
@@ -31,11 +28,15 @@ export const useCanGoForward = () => {
       setCurrentPosition(existingIndex);
     } else {
       const nextStack = historyStack.slice(0, currentPosition + 1);
-      nextStack.push(newKey);
-      setHistoryStack(nextStack);
-      setCurrentPosition(nextStack.indexOf(newKey));
+      if (nextStack[nextStack.length - 1] !== newKey) {
+        nextStack.push(newKey);
+        setHistoryStack(nextStack);
+        setCurrentPosition(nextStack.length - 1);
+      }
     }
   }, [location]);
+
+  console.log(historyStack, currentPosition < historyStack.length - 1);
 
   return currentPosition < historyStack.length - 1;
 };

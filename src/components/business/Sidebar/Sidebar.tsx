@@ -1,79 +1,72 @@
-import { SidebarBadge } from "@/components/business/Sidebar/_components/SidebarBadge/SidebarBadge.tsx";
-import { SidebarContent } from "@/components/business/Sidebar/_components/SidebarContent/SidebarContent.tsx";
-import { SidebarFooter } from "@/components/business/Sidebar/_components/SidebarFooter/SidebarFooter.tsx";
-import { SidebarHeader } from "@/components/business/Sidebar/_components/SidebarHeader/SidebarHeader.tsx";
-import { SidebarSearch } from "@/components/business/Sidebar/_components/SidebarSearch/SidebarSearch.tsx";
-import { useMedia } from "@/hooks/useMedia.tsx";
-import { useHeader } from "@/stores/header.store";
-import { Separator, VStack } from "@chakra-ui/react";
+import { supabase } from "@/api/supabase.ts";
+import { SidebarHeader } from "@/components/business/Sidebar/SidebarHeader/SidebarHeader";
+import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
+import { Button, VStack } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
 
-export function Sidebar() {
-  const { isCollapsed } = useHeader();
-  const { isMobile } = useMedia();
+export const Sidebar = () => {
+  // const sidebarRef = useRef<HTMLDivElement>(null);
+  // const resizerRef = useRef<HTMLDivElement>(null);
+  // const isResizing = useRef(false);
+
+  // const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
+  //   if (isResizing) {
+  //     console.log(event);
+  //   }
+  // };
+
+  const onLoginWithGithubClick = async () => {
+    const { data, error } = await supabase.auth.signInWithOAuth({
+      provider: "github",
+    });
+    console.log("Authorized: ", data, error);
+  };
 
   return (
-    <VStack
-      minW={"350px"}
-      h={"97.5dvh"}
-      transition={"width 200ms"}
-      borderColor={"outline"}
-      borderRadius={"8px"}
-      borderWidth={"2px"}
-      padding={"12px 0px"}
-      gap={"8px"}
-      display={{ base: "none", md: "flex", lg: "flex" }}
-    >
-      {/* HEADER */}
-      {!isMobile && (
-        <>
-          <SidebarHeader />
-          <Separator w={"100%"} size={"md"} />
-          <SidebarBadge />
-          <SidebarSearch />
-          <SidebarContent />
-          <Separator w={"100%"} size={"md"} />
-          <SidebarFooter />
-        </>
-      )}
+    <>
+      <VStack w={`380px`} h={"99.9dvh"} justify="flex-start" p={"2"}>
+        <SidebarHeader />
+        <SidebarProjects />
+        <Button w="100%" asChild>
+          <Link to="/test">Test page</Link>
+        </Button>
+        <Button w="100%" onClick={onLoginWithGithubClick}>
+          Login with Github
+        </Button>
+        {/* <SidebarActions /> */}
 
-      {/* <TextInput
-        placeholder="Search"
-        size="xs"
-        // leftSection={<IconSearch size={12} stroke={1.5} />}
-        rightSectionWidth={70}
-        rightSection={<Code className={styles.searchCode}>Ctrl + K</Code>}
-        styles={{ section: { pointerEvents: "none" } }}
-        mb="sm"
-      /> */}
-
-      {/* MENU LIST */}
-      {/* <div className={styles.item}>
-        <div className={styles.content}>
-          <Text fw={"bold"} c={"dark.2"}>
-            Menu
-          </Text>
-        </div>
-        <div className={styles.actions}>
-          <ActionIcon size={"md"} c={"dark.2"} variant="transparent">
-            <Settings2Icon />
-          </ActionIcon>
-        </div>
-      </div>
-      <NavLink
-        href="/today"
-        component={Link}
-        label="Today"
-        leftSection={<CalendarIcon />}
-        p={"xs"}
-      />
-      <NavLink
-        href="/tasks"
-        component={Link}
-        label="Tasks"
-        leftSection={<ListTodoIcon />}
-        p={"xs"}
-      /> */}
-      {/* <Space /> */}
-    </VStack>
+        {/* <Button
+        onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}
+      >
+        Auth
+      </Button> */}
+      </VStack>
+      {/* <VStack
+        ref={resizerRef}
+        w={"10px"}
+        h={"99.9dvh"}
+        justifyContent={"center"}
+        opacity={"0"}
+        _hover={{ opacity: 1 }}
+        transition={"opacity 200ms"}
+        color={"subtext"}
+        userSelect={"none"}
+        cursor={"e-resize"}
+        onMouseDown={() => (isResizing.current = true)}
+        onMouseUp={() => (isResizing.current = false)}
+        // onMouseMove={onMouseMove}
+        draggable
+        onDragStart={() => (isResizing.current = true)}
+        onDragEnd={() => (isResizing.current = false)}
+        onDrag={onMouseMove}
+      >
+        <HStack
+          w={"5px"}
+          h={"35px"}
+          bg={"subtext"}
+          borderRadius={"12px"}
+        ></HStack>
+      </VStack> */}
+    </>
   );
-}
+};

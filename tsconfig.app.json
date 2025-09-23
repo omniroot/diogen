@@ -36,5 +36,7 @@
   },
   "include": [
     "src",
-  ]
+    ".old/routes",
+    ".old/stores",
+  ],
 }
