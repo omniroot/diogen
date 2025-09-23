@@ -1,33 +1,55 @@
-import {
-  createSupabaseDelete,
-  createSupabaseInsert,
-  createSupabaseQuery,
-  createSupabaseUpdate,
-} from "@/api/supabase";
-import type { IProject, IProjectUpdate } from "@/api/supabase.interface";
+import { client } from "@/api/query.client.ts";
+import { IProject } from "@/api/supabase.interface.ts";
+import { supabase } from "@/api/supabase.ts";
+import { queryOptions } from "@tanstack/react-query";
 
-export const useGetProjects = createSupabaseQuery<IProject[]>({
-  name: "projects",
-  table: "projects",
-});
+interface IGetProjectsOptions {
+  id?: IProject["id"];
+  custom_id?: IProject["custom_id"];
+  title?: IProject["title"];
 
-export const useGetProject = createSupabaseQuery<IProject>({
-  name: "project",
-  table: "projects",
-  count: "first",
-});
+  limit?: number;
+  orderByPosition?: boolean;
+}
 
-export const useCreateProject = createSupabaseInsert<IProject>({
-  name: "project",
-  table: "projects",
-});
+export const getProjectsOptions = ({
+  limit,
+  orderByPosition = true,
+  ...opts
+}: IGetProjectsOptions = {}) => {
+  const key = ["get", "projects", opts];
+  return queryOptions({
+    queryKey: key,
+    queryFn: async () => {
+      let query = supabase.from("projects").select();
+      Object.entries(opts).forEach(([key, value]) => {
+        if (value) query = query.eq(key, value);
+      });
 
-export const useDeleteProject = createSupabaseDelete({
-  name: "project",
-  table: "projects",
-});
+      if (limit) query = query.limit(limit);
 
-export const useUpdateProject = createSupabaseUpdate<IProjectUpdate>({
-  name: "project",
-  table: "projects",
-});
+      if (orderByPosition) query = query.order("position");
+
+      const { data, error } = await query;
+
+      if (error) throw error;
+      return data;
+    },
+    initialData: () => {
+      return client.getQueryData(key);
+    },
+    placeholderData: () => {
+      return client.getQueryData(key);
+    },
+  });
+};
+
+export const getProjectOptions = ({
+  limit = 1,
+  ...opts
+}: IGetProjectsOptions = {}) =>
+  queryOptions({
+    ...getProjectsOptions({ limit, ...opts }),
+    queryKey: ["get", "project", opts],
+    select: (data) => data[0],
+  });

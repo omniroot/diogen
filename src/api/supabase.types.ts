@@ -7,13 +7,82 @@ export type Json =
   | Json[]
 
 export type Database = {
-  // Allows to automatically instanciate createClient with right options
+  // Allows to automatically instantiate createClient with right options
   // instead of createClient<Database, { PostgrestVersion: 'XX' }>(URL, KEY)
   __InternalSupabase: {
     PostgrestVersion: "12.2.3 (519615d)"
   }
   public: {
     Tables: {
+      issues: {
+        Row: {
+          completed: boolean
+          created_at: string
+          custom_id: string | null
+          description: string | null
+          end_date: string | null
+          id: number
+          label: string | null
+          module_id: number | null
+          priority: string | null
+          project_id: number | null
+          start_date: string | null
+          task_number: number | null
+          title: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          completed?: boolean
+          created_at?: string
+          custom_id?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: number
+          label?: string | null
+          module_id?: number | null
+          priority?: string | null
+          project_id?: number | null
+          start_date?: string | null
+          task_number?: number | null
+          title: string
+          updated_at?: string
+          user_id?: string
+        }
+        Update: {
+          completed?: boolean
+          created_at?: string
+          custom_id?: string | null
+          description?: string | null
+          end_date?: string | null
+          id?: number
+          label?: string | null
+          module_id?: number | null
+          priority?: string | null
+          project_id?: number | null
+          start_date?: string | null
+          task_number?: number | null
+          title?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "tasks_module_id_fkey"
+            columns: ["module_id"]
+            isOneToOne: false
+            referencedRelation: "modules"
+            referencedColumns: ["id"]
+          },
+          {
+            foreignKeyName: "tasks_project_id_fkey"
+            columns: ["project_id"]
+            isOneToOne: false
+            referencedRelation: "projects"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       modules: {
         Row: {
           created_at: string
@@ -91,6 +160,7 @@ export type Database = {
           custom_id: string
           description: string
           id: number
+          position: number
           prefix: string
           title: string
           updated_at: string
@@ -102,6 +172,7 @@ export type Database = {
           custom_id: string
           description: string
           id?: number
+          position?: number
           prefix?: string
           title: string
           updated_at?: string
@@ -113,81 +184,13 @@ export type Database = {
           custom_id?: string
           description?: string
           id?: number
+          position?: number
           prefix?: string
           title?: string
           updated_at?: string
           user_id?: string
         }
         Relationships: []
-      }
-      tasks: {
-        Row: {
-          completed: boolean
-          created_at: string
-          custom_id: string | null
-          description: string | null
-          end_date: string | null
-          id: number
-          label: string | null
-          module_id: number | null
-          priority: string | null
-          project_id: number | null
-          start_date: string | null
-          task_number: number | null
-          title: string
-          updated_at: string
-          user_id: string
-        }
-        Insert: {
-          completed?: boolean
-          created_at?: string
-          custom_id?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: number
-          label?: string | null
-          module_id?: number | null
-          priority?: string | null
-          project_id?: number | null
-          start_date?: string | null
-          task_number?: number | null
-          title: string
-          updated_at?: string
-          user_id?: string
-        }
-        Update: {
-          completed?: boolean
-          created_at?: string
-          custom_id?: string | null
-          description?: string | null
-          end_date?: string | null
-          id?: number
-          label?: string | null
-          module_id?: number | null
-          priority?: string | null
-          project_id?: number | null
-          start_date?: string | null
-          task_number?: number | null
-          title?: string
-          updated_at?: string
-          user_id?: string
-        }
-        Relationships: [
-          {
-            foreignKeyName: "tasks_module_id_fkey"
-            columns: ["module_id"]
-            isOneToOne: false
-            referencedRelation: "modules"
-            referencedColumns: ["id"]
-          },
-          {
-            foreignKeyName: "tasks_project_id_fkey"
-            columns: ["project_id"]
-            isOneToOne: false
-            referencedRelation: "projects"
-            referencedColumns: ["id"]
-          },
-        ]
       }
     }
     Views: {

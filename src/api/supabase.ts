@@ -1,7 +1,12 @@
-import type { ITables } from "@/api/supabase.interface.ts";
 import type { Database } from "@/api/supabase.types";
 import { createClient } from "@supabase/supabase-js";
-import { createMutation, createQuery } from "react-query-kit";
+// import {
+//   PostgrestFilterBuilder,
+//   PostgrestBuilder,
+//   PostgrestQueryBuilder,
+// } from "@supabase/postgrest-js";
+// import { GenericSchema } from "@supabase/supabase-js/dist/module/lib/types";
+// import { IIssue } from "@/api/supabase.interface.ts";
 
 // const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
 // const supabaseAnonKey = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
@@ -14,148 +19,161 @@ if (!supabaseUrl || !supabaseAnonKey) {
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 
-interface IFilters {
-  id?: number | null;
-  custom_id?: string | null;
-  project_id?: number | null;
-  module_id?: number | null;
-  empty_module_id?: boolean;
-  user_id?: string | null;
+// export const applyFilters = (
+//   query: PostgrestFilterBuilder<
+//     GenericSchema,
+//     any,
+//     any
+//     // RelationName = unknown,
+//     // Relationships = unknown
+//   >
+// ) => {
+//   query = query.eq("test", "sdv");
+//   return query;
+// };
 
-  completed?: boolean | null;
-}
+// interface IFilters {
+//   id?: number | null;
+//   custom_id?: string | null;
+//   project_id?: number | null;
+//   module_id?: number | null;
+//   empty_module_id?: boolean;
+//   user_id?: string | null;
 
-interface ISortings {
-  sortByCreatedAt?: "asc" | "desc" | string | null;
-  sortByUpdatedAt?: "asc" | "desc" | string | null;
-}
+//   completed?: boolean | null;
+// }
 
-interface IUseSupabaseQuery {
-  name: string;
-  table: keyof ITables;
-  count?: "all" | "first";
-}
+// interface ISortings {
+//   sortByCreatedAt?: "asc" | "desc" | string | null;
+//   sortByUpdatedAt?: "asc" | "desc" | string | null;
+// }
 
-interface IUseSupabaseInsert {
-  name: string;
-  table: keyof ITables;
-}
+// interface IUseSupabaseQuery {
+//   name: string;
+//   table: keyof ITables;
+//   count?: "all" | "first";
+// }
 
-interface IUseSupabaseUpdate {
-  name: string;
-  table: keyof ITables;
-}
+// interface IUseSupabaseInsert {
+//   name: string;
+//   table: keyof ITables;
+// }
 
-// Хук useSupabaseQuery
-export const createSupabaseQuery = <TResult>({
-  name,
-  table,
-  count = "all",
-}: IUseSupabaseQuery) => {
-  return createQuery<TResult, Partial<IFilters & ISortings>>({
-    queryKey: ["get", name, "from", table],
+// interface IUseSupabaseUpdate {
+//   name: string;
+//   table: keyof ITables;
+// }
 
-    fetcher: async ({
-      id,
-      completed,
-      custom_id,
-      module_id,
-      project_id,
-      empty_module_id = false,
-      sortByCreatedAt,
-      sortByUpdatedAt,
-    }) => {
-      let query = supabase.from(table).select("*");
+// // Хук useSupabaseQuery
+// export const createSupabaseQuery = <TResult>({
+//   name,
+//   table,
+//   count = "all",
+// }: IUseSupabaseQuery) => {
+//   return createQuery<TResult, Partial<IFilters & ISortings>>({
+//     queryKey: ["get", name, "from", table],
 
-      // FILTERS
-      // This is look like a suck because i suck in typescript
-      // TODO: REFACTORING |  не удивляйся что тебя не берут на работу
-      if (id) {
-        query = query.eq("id", id);
-      }
-      if (completed) {
-        query = query.eq("completed", completed);
-      }
-      if (custom_id) {
-        query = query.eq("custom_id", custom_id);
-      }
-      if (module_id) {
-        query = query.eq("module_id", module_id);
-      }
-      if (project_id) {
-        query = query.eq("project_id", project_id);
-      }
+//     fetcher: async ({
+//       id,
+//       completed,
+//       custom_id,
+//       module_id,
+//       project_id,
+//       empty_module_id = false,
+//       sortByCreatedAt,
+//       sortByUpdatedAt,
+//     }) => {
+//       let query = supabase.from(table).select("*");
 
-      if (empty_module_id) {
-        query = query.is("module_id", null);
-      }
+//       // FILTERS
+//       // This is look like a suck because i suck in typescript
+//       // TODO: REFACTORING |  не удивляйся что тебя не берут на работу
+//       if (id) {
+//         query = query.eq("id", id);
+//       }
+//       if (completed) {
+//         query = query.eq("completed", completed);
+//       }
+//       if (custom_id) {
+//         query = query.eq("custom_id", custom_id);
+//       }
+//       if (module_id) {
+//         query = query.eq("module_id", module_id);
+//       }
+//       if (project_id) {
+//         query = query.eq("project_id", project_id);
+//       }
 
-      // SORTINGS
-      if (sortByCreatedAt) {
-        query = query.order("created_at", {
-          ascending: sortByCreatedAt === "asc",
-        });
-      }
+//       if (empty_module_id) {
+//         query = query.is("module_id", null);
+//       }
 
-      if (sortByUpdatedAt) {
-        query = query.order("updated_at", {
-          ascending: sortByUpdatedAt === "asc",
-        });
-      }
+//       // SORTINGS
+//       if (sortByCreatedAt) {
+//         query = query.order("created_at", {
+//           ascending: sortByCreatedAt === "asc",
+//         });
+//       }
 
-      const { data } = await query;
+//       if (sortByUpdatedAt) {
+//         query = query.order("updated_at", {
+//           ascending: sortByUpdatedAt === "asc",
+//         });
+//       }
 
-      console.log(table, data);
+//       const { data } = await query;
 
-      if (count == "first") {
-        return data?.[0] as TResult;
-      }
-      return data as TResult;
-    },
-  });
-};
+//       // console.log(table, data);
 
-export const createSupabaseInsert = <TVariables>({
-  name,
-  table,
-}: IUseSupabaseInsert) => {
-  return createMutation<null, Partial<TVariables>>({
-    mutationKey: ["create", name, "to", table],
-    mutationFn: async (newData) => {
-      // @ts-ignore
-      const result = await supabase.from(table).insert(newData);
-      // if (result.error) throw result.error;
-      return result.data;
-    },
-    onError: (error) => {
-      console.log("insert error ", { error });
-    },
-  });
-};
+//       if (count == "first") {
+//         return data?.[0] as TResult;
+//       }
+//       return data as TResult;
+//     },
+//   });
+// };
 
-export const createSupabaseUpdate = <TVariables>({
-  name,
-  table,
-}: IUseSupabaseUpdate) => {
-  return createMutation<null, { id: number; data: TVariables }>({
-    mutationKey: ["create", name, "to", table],
-    mutationFn: async ({ id, data }) => {
-      // @ts-ignore
-      await supabase.from(table).update(data).eq("id", id);
-      return null;
-    },
-  });
-};
+// export const createSupabaseInsert = <TVariables>({
+//   name,
+//   table,
+// }: IUseSupabaseInsert) => {
+//   return createMutation<null, Partial<TVariables>>({
+//     mutationKey: ["create", name, "to", table],
+//     mutationFn: async (newData) => {
+//       // @ts-ignore
+//       const result = await supabase.from(table).insert(newData);
+//       // if (result.error) throw result.error;
+//       return result.data;
+//     },
+//     onError: () => {
+//       // console.log("insert error ", { error });
+//     },
+//   });
+// };
 
-export const createSupabaseDelete = ({ name, table }: IUseSupabaseInsert) => {
-  return createMutation<null, { id: number }>({
-    mutationKey: ["delete", name, "from", table],
-    mutationFn: async ({ id }) => {
-      await supabase.from(table).delete().eq("id", id);
-      return null;
-    },
-  });
-};
+// export const createSupabaseUpdate = <TVariables>({
+//   name,
+//   table,
+// }: IUseSupabaseUpdate) => {
+//   return createMutation<null, { id: number; data: TVariables }>({
+//     mutationKey: ["create", name, "to", table],
+//     mutationFn: async ({ id, data }) => {
+//       // @ts-ignore
+//       await supabase.from(table).update(data).eq("id", id);
+//       return null;
+//     },
+//   });
+// };
+
+// export const createSupabaseDelete = ({ name, table }: IUseSupabaseInsert) => {
+//   return createMutation<null, { id: number }>({
+//     mutationKey: ["delete", name, "from", table],
+//     mutationFn: async ({ id }) => {
+//       await supabase.from(table).delete().eq("id", id);
+//       return null;
+//     },
+//   });
+// };
 
 // Изаначально, задумка было в том: что бы при различном table была соответствующая типизация в select и filters на основе полей Database["public"]["Tables"]["название таблицы"]["Row"];
 

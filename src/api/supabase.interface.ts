@@ -1,15 +1,13 @@
-import type { Database } from "./supabase.types";
+import type { Tables, TablesInsert, TablesUpdate } from "./supabase.types";
 
-export type ITables = Database["public"]["Tables"];
+export type IIssue = Tables<"issues">;
+export type IIssueInsert = TablesInsert<"issues">;
+export type IIssueUpdate = TablesUpdate<"issues">;
 
-export type ITask = Database["public"]["Tables"]["tasks"]["Row"];
-export type ITaskInsert = Database["public"]["Tables"]["tasks"]["Insert"];
-export type ITaskUpdate = Database["public"]["Tables"]["tasks"]["Update"];
+export type IProject = Tables<"projects">;
+export type IProjectInsert = TablesInsert<"projects">;
+export type IProjectUpdate = TablesUpdate<"projects">;
 
-export type IProject = Database["public"]["Tables"]["projects"]["Row"];
-export type IProjectInsert = Database["public"]["Tables"]["projects"]["Insert"];
-export type IProjectUpdate = Database["public"]["Tables"]["projects"]["Update"];
-
-export type IModule = Database["public"]["Tables"]["modules"]["Row"];
-export type IModuleInsert = Database["public"]["Tables"]["modules"]["Insert"];
-export type IModuleUpdate = Database["public"]["Tables"]["modules"]["Update"];
+export type IModule = Tables<"modules">;
+export type IModuleInsert = TablesInsert<"modules">;
+export type IModuleUpdate = TablesUpdate<"modules">;
