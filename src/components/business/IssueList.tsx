@@ -1,4 +1,5 @@
 import { Button, Skeleton } from "@chakra-ui/react";
+import { IconCopyCheck } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
 import { getIssuesOptions } from "@/api/queries/issues.api.ts";
@@ -12,14 +13,14 @@ interface IIssueList {
 
 export const IssueList: FC<IIssueList> = ({ project_id }) => {
 	const { data: issues, isFetching } = useQuery({
-		...getIssuesOptions({ project_id, count: "many" }),
+		...getIssuesOptions({ project_id }),
 		enabled: !!project_id,
 	});
 
 	console.log({ issues, project_id });
 
 	return (
-		<Section title="Issues" actionsSlot={<Button>Filters</Button>}>
+		<Section icon={<IconCopyCheck />} title="Issues" actionsSlot={<Button>Filters</Button>}>
 			{issues?.map((issue) => {
 				console.log("Render ", issue);
 

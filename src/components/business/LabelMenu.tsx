@@ -1,6 +1,8 @@
-import type { IIssue } from "@/api/supabase.interface.ts";
 import { Button, Menu, Portal, Skeleton, useDisclosure } from "@chakra-ui/react";
 import type { FC } from "react";
+import type { IIssue } from "@/api/supabase.interface.ts";
+import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
+
 type ILabel = null | "bug" | "refactoring" | "feature";
 
 const getTaskColor = (priority: ILabel) => {
@@ -68,6 +70,7 @@ export const LabelMenu: FC<IProps> = ({ issue, isShow = true }) => {
 							onToggle();
 						}}
 					>
+						<ProjectCircle color={getTaskColor(issue?.label as ILabel)} variant="filled" />
 						{issue?.label || "Label"}
 					</Button>
 				</Skeleton>
@@ -83,6 +86,7 @@ export const LabelMenu: FC<IProps> = ({ issue, isShow = true }) => {
 									// onSelect={() => onItemSelect(item)}
 									key={item.value}
 								>
+									<ProjectCircle color={item.color} variant="filled" />
 									{item.title}
 								</Menu.Item>
 							);

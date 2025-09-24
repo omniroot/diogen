@@ -1,4 +1,5 @@
-import { getIssuesOptions } from "@/api/queries/issues.api.ts";
+import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
+import { getIssueOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
 import { getProjectOptions } from "@/api/queries/projects.api.ts";
 import { client } from "@/api/query.client.ts";
 import { GlobalLayout } from "@/components/layouts/global.layout.tsx";
@@ -9,7 +10,6 @@ import { ProjectIssuesPage } from "@/pages/projects/project/project.issues.page"
 import { ProjectModulesPage } from "@/pages/projects/project/project.modules.page";
 import { ProjectPage } from "@/pages/projects/project/project.page";
 import { ProjectsPage } from "@/pages/projects/projects.page.tsx";
-import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 
 export const rootRoute = createRootRoute({
 	component: () => <GlobalLayout />,
@@ -41,7 +41,7 @@ export const ProjectIssuesRoute = createRoute({
 	path: "/projects/$custom_id/issues",
 	component: () => <ProjectIssuesPage />,
 	loader: ({ params }) => {
-		client.prefetchQuery(getIssuesOptions({ project_id: Number(params.custom_id), count: "many" }));
+		client.prefetchQuery(getIssuesOptions({ project_id: Number(params.custom_id) }));
 	},
 });
 
@@ -50,7 +50,7 @@ export const IssuesRoute = createRoute({
 	path: "/issues",
 	component: () => <IssuesPage />,
 	loader: () => {
-		client.prefetchQuery(getIssuesOptions({ count: "many" }));
+		client.prefetchQuery(getIssuesOptions({}));
 	},
 });
 
@@ -59,7 +59,7 @@ export const IssueRoute = createRoute({
 	path: "/issues/$issue_id",
 	component: () => <IssuePage />,
 	loader: async ({ params }) => {
-		client.prefetchQuery(getIssuesOptions({ id: Number(params.issue_id), count: "one" }));
+		client.prefetchQuery(getIssueOptions({ id: Number(params.issue_id) }));
 	},
 });
 
