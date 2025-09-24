@@ -3,7 +3,7 @@
 write vite plugin who replace normal import to lazy import
 `const GraphFeedItem = React.lazy(() => import('./GraphFeedItem'))`
 
-## TODO
+## TODO for 1.0.0 version
 
 - [ ] General
   - [x] Add biome js
