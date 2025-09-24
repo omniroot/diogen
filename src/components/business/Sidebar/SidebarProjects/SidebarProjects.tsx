@@ -9,33 +9,27 @@ import { SidebarProjectItem } from "@/components/business/Sidebar/SidebarProject
 import { SidebarSection } from "@/components/business/Sidebar/SidebarSection.tsx";
 
 export const SidebarProjects = () => {
-  const { data: projects } = useQuery(getProjectsOptions());
+	const { data: projects } = useQuery(getProjectsOptions());
 
-  if (!projects) return null;
+	if (!projects) return null;
 
-  return (
-    <SidebarSection
-      title="Projects"
-      defaultOpen
-      action={
-        <IconButton size="sm" variant="ghost" color={"subtext"}>
-          <IconPlus />
-        </IconButton>
-      }
-    >
-      <DragDropProvider onDragEnd={(event) => move(projects, event)}>
-        {projects?.map((project, index) => {
-          return (
-            <SidebarProjectItem
-              key={project.id}
-              project={project}
-              index={index}
-            />
-          );
-        })}
-      </DragDropProvider>
-    </SidebarSection>
-  );
+	return (
+		<SidebarSection
+			title="Projects"
+			defaultOpen
+			action={
+				<IconButton size="sm" variant="ghost" color={"subtext"}>
+					<IconPlus />
+				</IconButton>
+			}
+		>
+			<DragDropProvider onDragEnd={(event) => move(projects, event)}>
+				{projects?.map((project, index) => {
+					return <SidebarProjectItem key={project.id} project={project} index={index} />;
+				})}
+			</DragDropProvider>
+		</SidebarSection>
+	);
 };
 
 // type ITypes = "overview" | "issues" | "modules";

@@ -9,81 +9,73 @@ import { ProjectIssuesPage } from "@/pages/projects/project/project.issues.page"
 import { ProjectModulesPage } from "@/pages/projects/project/project.modules.page";
 import { ProjectPage } from "@/pages/projects/project/project.page";
 import { ProjectsPage } from "@/pages/projects/projects.page.tsx";
-import {
-  createRootRoute,
-  createRoute,
-  createRouter,
-} from "@tanstack/react-router";
+import { createRootRoute, createRoute, createRouter } from "@tanstack/react-router";
 
 export const rootRoute = createRootRoute({
-  component: () => <GlobalLayout />,
+	component: () => <GlobalLayout />,
 });
 
 export const HomeRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/",
-  component: () => <HomePage />,
+	getParentRoute: () => rootRoute,
+	path: "/",
+	component: () => <HomePage />,
 });
 
 export const ProjectsRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/projects",
-  component: () => <ProjectsPage />,
+	getParentRoute: () => rootRoute,
+	path: "/projects",
+	component: () => <ProjectsPage />,
 });
 
 export const ProjectRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/projects/$custom_id",
-  component: () => <ProjectPage />,
-  loader: ({ params }) => {
-    client.prefetchQuery(getProjectOptions({ custom_id: params.custom_id }));
-  },
+	getParentRoute: () => rootRoute,
+	path: "/projects/$custom_id",
+	component: () => <ProjectPage />,
+	loader: ({ params }) => {
+		client.prefetchQuery(getProjectOptions({ custom_id: params.custom_id }));
+	},
 });
 
 export const ProjectIssuesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/projects/$custom_id/issues",
-  component: () => <ProjectIssuesPage />,
-  loader: ({ params }) => {
-    client.prefetchQuery(
-      getIssuesOptions({ project_id: Number(params.custom_id), count: "many" })
-    );
-  },
+	getParentRoute: () => rootRoute,
+	path: "/projects/$custom_id/issues",
+	component: () => <ProjectIssuesPage />,
+	loader: ({ params }) => {
+		client.prefetchQuery(getIssuesOptions({ project_id: Number(params.custom_id), count: "many" }));
+	},
 });
 
 export const IssuesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/issues",
-  component: () => <IssuesPage />,
-  loader: () => {
-    client.prefetchQuery(getIssuesOptions({ count: "many" }));
-  },
+	getParentRoute: () => rootRoute,
+	path: "/issues",
+	component: () => <IssuesPage />,
+	loader: () => {
+		client.prefetchQuery(getIssuesOptions({ count: "many" }));
+	},
 });
 
 export const IssueRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/issues/$issue_id",
-  component: () => <IssuePage />,
-  loader: async ({ params }) => {
-    client.prefetchQuery(
-      getIssuesOptions({ id: Number(params.issue_id), count: "one" })
-    );
-  },
+	getParentRoute: () => rootRoute,
+	path: "/issues/$issue_id",
+	component: () => <IssuePage />,
+	loader: async ({ params }) => {
+		client.prefetchQuery(getIssuesOptions({ id: Number(params.issue_id), count: "one" }));
+	},
 });
 
 export const ProjectModulesRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/projects/$custom_id/modules",
-  component: () => <ProjectModulesPage />,
-  // loader: ({ params }) => {
-  //   client.prefetchQuery(getProjectOptions({ custom_id: params.custom_id }));
-  // },
-  // wrapInSuspense: true,
+	getParentRoute: () => rootRoute,
+	path: "/projects/$custom_id/modules",
+	component: () => <ProjectModulesPage />,
+	// loader: ({ params }) => {
+	//   client.prefetchQuery(getProjectOptions({ custom_id: params.custom_id }));
+	// },
+	// wrapInSuspense: true,
 });
 
 export const TestRoute = createRoute({
-  getParentRoute: () => rootRoute,
-  path: "/test",
+	getParentRoute: () => rootRoute,
+	path: "/test",
 }).lazy(() => import("@/pages/test/test.page.tsx").then((c) => c.Route));
 
 // export const LoginRoute = createRoute({
@@ -93,26 +85,26 @@ export const TestRoute = createRoute({
 // });
 
 const routeTree = rootRoute.addChildren([
-  HomeRoute,
-  TestRoute,
-  ProjectsRoute,
-  ProjectRoute,
-  ProjectIssuesRoute,
-  ProjectModulesRoute,
-  IssuesRoute,
-  IssueRoute,
+	HomeRoute,
+	TestRoute,
+	ProjectsRoute,
+	ProjectRoute,
+	ProjectIssuesRoute,
+	ProjectModulesRoute,
+	IssuesRoute,
+	IssueRoute,
 ]);
 
 export const router = createRouter({
-  routeTree,
-  defaultPreload: "intent",
-  // defaultNotFoundComponent: () => <NotFoundPage />,
+	routeTree,
+	defaultPreload: "intent",
+	// defaultNotFoundComponent: () => <NotFoundPage />,
 });
 
 export const routeTypes = router.routesByPath;
 
 declare module "@tanstack/react-router" {
-  interface Register {
-    router: typeof router;
-  }
+	interface Register {
+		router: typeof router;
+	}
 }

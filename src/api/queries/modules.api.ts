@@ -40,11 +40,11 @@ import { queryOptions } from "@tanstack/react-query";
 // });
 
 export const getModulesOptions = () =>
-  queryOptions({
-    queryKey: ["get", "modules"],
-    queryFn: async () => {
-      const { data, error } = await supabase.from("modules").select();
-      if (error) throw error;
-      return data;
-    },
-  });
+	queryOptions({
+		queryKey: ["get", "modules"],
+		queryFn: async () => {
+			const { data, error } = await supabase.from("modules").select();
+			if (error) throw error;
+			return data;
+		},
+	});

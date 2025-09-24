@@ -14,7 +14,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase URL or Anon Key is missing");
+	throw new Error("Supabase URL or Anon Key is missing");
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
@@ -140,7 +140,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 //   return createMutation<null, Partial<TVariables>>({
 //     mutationKey: ["create", name, "to", table],
 //     mutationFn: async (newData) => {
-//       // @ts-ignore
+//       // @ts-expect-error
 //       const result = await supabase.from(table).insert(newData);
 //       // if (result.error) throw result.error;
 //       return result.data;
@@ -158,7 +158,7 @@ export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);
 //   return createMutation<null, { id: number; data: TVariables }>({
 //     mutationKey: ["create", name, "to", table],
 //     mutationFn: async ({ id, data }) => {
-//       // @ts-ignore
+//       // @ts-expect-error
 //       await supabase.from(table).update(data).eq("id", id);
 //       return null;
 //     },

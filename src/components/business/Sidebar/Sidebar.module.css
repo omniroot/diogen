@@ -1,8 +1,8 @@
 .sidebar {
-  width: 400px;
-  height: 99.6dvh;
-  display: flex;
-  flex-direction: column;
+	width: 400px;
+	height: 99.6dvh;
+	display: flex;
+	flex-direction: column;
 
-  border: 2px solid rgb(255, 50, 50);
+	border: 2px solid rgb(255, 50, 50);
 }

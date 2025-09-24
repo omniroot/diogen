@@ -5,5 +5,8 @@ write vite plugin who replace normal import to lazy import
 
 ## TODO
 
+- [ ] General
+  - [x] Add biome js
+  - [ ] Add husky
 - [ ] Rewrite all using useQuery to router loader
 - [ ] Use mini api for sidebar project

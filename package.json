@@ -9,8 +9,9 @@
     "dev": "vite dev --port 5173 --host",
     "build:pre": "npm run prepare-submodules && npm run typegen-chakra",
     "build": "npm run build:pre && tsc -b && vite build",
-    "biome:format": "yarn exec biome format --write ",
-    "biome:lint": "yarn exec biome lint --write ",
+    "biome:format": "bunx biome format --write ./src/",
+    "biome:lint": "bunx biome lint --write ./src/",
+    "lf": "bun run biome:format && bun run biome:lint",
     "preview": "vite preview --port 5173",
     "typegen-supabase": "npx supabase gen types typescript --project-id ddmwmjqgwvhbjvyifjzs --schema public > ./src/api/supabase.types.ts",
     "typegen-chakra": "chakra typegen ./src/theme/index.ts"
@@ -53,6 +54,7 @@
     "zustand": "^5.0.8"
   },
   "devDependencies": {
+    "@biomejs/biome": "^2.2.4",
     "@types/node": "^24.0.7",
     "@types/react": "^19.1.8",
     "@types/react-dom": "^19.1.6",

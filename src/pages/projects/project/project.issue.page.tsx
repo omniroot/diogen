@@ -1,3 +1,3 @@
 export const IssuePage = () => {
-  return <>Page for project issue</>;
+	return "Page for project issue";
 };
