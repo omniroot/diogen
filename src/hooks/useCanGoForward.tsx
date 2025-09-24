@@ -14,29 +14,29 @@ import { useEffect, useState } from "react";
 //
 
 export const useCanGoForward = () => {
-  const location = useLocation();
-  const initialKey = location.state?.key || location.pathname;
-  const [historyStack, setHistoryStack] = useState([initialKey]);
-  const [currentPosition, setCurrentPosition] = useState(0);
+	const location = useLocation();
+	const initialKey = location.state?.key || location.pathname;
+	const [historyStack, setHistoryStack] = useState([initialKey]);
+	const [currentPosition, setCurrentPosition] = useState(0);
 
-  useEffect(() => {
-    const newKey = location.state?.key || location.pathname;
+	useEffect(() => {
+		const newKey = location.state?.key || location.pathname;
 
-    const existingIndex = historyStack.indexOf(newKey);
+		const existingIndex = historyStack.indexOf(newKey);
 
-    if (existingIndex !== -1 && existingIndex !== currentPosition) {
-      setCurrentPosition(existingIndex);
-    } else {
-      const nextStack = historyStack.slice(0, currentPosition + 1);
-      if (nextStack[nextStack.length - 1] !== newKey) {
-        nextStack.push(newKey);
-        setHistoryStack(nextStack);
-        setCurrentPosition(nextStack.length - 1);
-      }
-    }
-  }, [location]);
+		if (existingIndex !== -1 && existingIndex !== currentPosition) {
+			setCurrentPosition(existingIndex);
+		} else {
+			const nextStack = historyStack.slice(0, currentPosition + 1);
+			if (nextStack[nextStack.length - 1] !== newKey) {
+				nextStack.push(newKey);
+				setHistoryStack(nextStack);
+				setCurrentPosition(nextStack.length - 1);
+			}
+		}
+	}, [location, historyStack, currentPosition]);
 
-  console.log(historyStack, currentPosition < historyStack.length - 1);
+	console.log(historyStack, currentPosition < historyStack.length - 1);
 
-  return currentPosition < historyStack.length - 1;
+	return currentPosition < historyStack.length - 1;
 };

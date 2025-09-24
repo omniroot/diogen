@@ -1,12 +1,12 @@
 // const route = getRouteApi("/issues/$issue_id");
 
 export const IssuePage = () => {
-  // const { issue } = route.useLoaderData();
+	// const { issue } = route.useLoaderData();
 
-  return (
-    <>
-      Issue page
-      {/* <Text>{issue.title}</Text> */}
-    </>
-  );
+	return (
+		<>
+			Issue page
+			{/* <Text>{issue.title}</Text> */}
+		</>
+	);
 };

@@ -10,20 +10,17 @@ import { RouterProvider } from "@tanstack/react-router";
 import { StrictMode } from "react";
 
 export function App() {
-  return (
-    <StrictMode>
-      <DndContext
-        onDragEnd={(e) => console.log(e)}
-        modifiers={[restrictToVerticalAxis]}
-      >
-        <OmnikitProvider>
-          <ColorModeProvider>
-            <QueryClientProvider client={client}>
-              <RouterProvider router={router} />
-            </QueryClientProvider>
-          </ColorModeProvider>
-        </OmnikitProvider>
-      </DndContext>
-    </StrictMode>
-  );
+	return (
+		<StrictMode>
+			<DndContext onDragEnd={(e) => console.log(e)} modifiers={[restrictToVerticalAxis]}>
+				<OmnikitProvider>
+					<ColorModeProvider>
+						<QueryClientProvider client={client}>
+							<RouterProvider router={router} />
+						</QueryClientProvider>
+					</ColorModeProvider>
+				</OmnikitProvider>
+			</DndContext>
+		</StrictMode>
+	);
 }

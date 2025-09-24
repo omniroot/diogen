@@ -5,43 +5,43 @@ import { Button, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 
 export const Sidebar = () => {
-  // const sidebarRef = useRef<HTMLDivElement>(null);
-  // const resizerRef = useRef<HTMLDivElement>(null);
-  // const isResizing = useRef(false);
+	// const sidebarRef = useRef<HTMLDivElement>(null);
+	// const resizerRef = useRef<HTMLDivElement>(null);
+	// const isResizing = useRef(false);
 
-  // const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
-  //   if (isResizing) {
-  //     console.log(event);
-  //   }
-  // };
+	// const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
+	//   if (isResizing) {
+	//     console.log(event);
+	//   }
+	// };
 
-  const onLoginWithGithubClick = async () => {
-    const { data, error } = await supabase.auth.signInWithOAuth({
-      provider: "github",
-    });
-    console.log("Authorized: ", data, error);
-  };
+	const onLoginWithGithubClick = async () => {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: "github",
+		});
+		console.log("Authorized: ", data, error);
+	};
 
-  return (
-    <>
-      <VStack w={`380px`} h={"99.9dvh"} justify="flex-start" p={"2"}>
-        <SidebarHeader />
-        <SidebarProjects />
-        <Button w="100%" asChild>
-          <Link to="/test">Test page</Link>
-        </Button>
-        <Button w="100%" onClick={onLoginWithGithubClick}>
-          Login with Github
-        </Button>
-        {/* <SidebarActions /> */}
+	return (
+		<>
+			<VStack w={`380px`} h={"99.9dvh"} justify="flex-start" p={"2"}>
+				<SidebarHeader />
+				<SidebarProjects />
+				<Button w="100%" asChild>
+					<Link to="/test">Test page</Link>
+				</Button>
+				<Button w="100%" onClick={onLoginWithGithubClick}>
+					Login with Github
+				</Button>
+				{/* <SidebarActions /> */}
 
-        {/* <Button
+				{/* <Button
         onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}
       >
         Auth
       </Button> */}
-      </VStack>
-      {/* <VStack
+			</VStack>
+			{/* <VStack
         ref={resizerRef}
         w={"10px"}
         h={"99.9dvh"}
@@ -67,6 +67,6 @@ export const Sidebar = () => {
           borderRadius={"12px"}
         ></HStack>
       </VStack> */}
-    </>
-  );
+		</>
+	);
 };
