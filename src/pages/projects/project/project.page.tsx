@@ -3,6 +3,7 @@ import { useQuery } from "@tanstack/react-query";
 import { getRouteApi } from "@tanstack/react-router";
 import { getProjectOptions } from "@/api/queries/projects.api.ts";
 import { IssueList } from "@/components/business/IssueList.tsx";
+import { ModuleList } from "@/components/business/ModuleList.tsx";
 
 const route = getRouteApi("/projects/$custom_id");
 
@@ -34,6 +35,7 @@ export const ProjectPage = () => {
 			{/* <DndContext onDragEnd={onDragEnd}> */}
 			{/* <ModulesList project={project} /> */}
 
+			<ModuleList project_id={project?.id} />
 			<IssueList project_id={project?.id} />
 		</>
 	);

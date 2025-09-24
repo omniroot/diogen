@@ -6,6 +6,8 @@ import { GlobalLayout } from "@/components/layouts/global.layout.tsx";
 import { HomePage } from "@/pages/home/home.page.tsx";
 import { IssuePage } from "@/pages/issues/issue.page.tsx";
 import { IssuesPage } from "@/pages/issues/issues.page.tsx";
+import { ModulePage } from "@/pages/modules/module.page.tsx";
+import { ModulesPage } from "@/pages/modules/modules.page.tsx";
 import { ProjectIssuesPage } from "@/pages/projects/project/project.issues.page";
 import { ProjectModulesPage } from "@/pages/projects/project/project.modules.page";
 import { ProjectPage } from "@/pages/projects/project/project.page";
@@ -67,10 +69,17 @@ export const ProjectModulesRoute = createRoute({
 	getParentRoute: () => rootRoute,
 	path: "/projects/$custom_id/modules",
 	component: () => <ProjectModulesPage />,
-	// loader: ({ params }) => {
-	//   client.prefetchQuery(getProjectOptions({ custom_id: params.custom_id }));
-	// },
-	// wrapInSuspense: true,
+});
+
+export const ModulesRoute = createRoute({
+	getParentRoute: () => rootRoute,
+	path: "/modules",
+	component: () => <ModulesPage />,
+});
+export const ModuleRoute = createRoute({
+	getParentRoute: () => rootRoute,
+	path: "/modules/$module_id",
+	component: () => <ModulePage />,
 });
 
 export const TestRoute = createRoute({
@@ -91,6 +100,8 @@ const routeTree = rootRoute.addChildren([
 	ProjectRoute,
 	ProjectIssuesRoute,
 	ProjectModulesRoute,
+	ModulesRoute,
+	ModuleRoute,
 	IssuesRoute,
 	IssueRoute,
 ]);

@@ -1,50 +1,42 @@
-// import {
-//   createSupabaseDelete,
-//   createSupabaseInsert,
-//   createSupabaseQuery,
-//   createSupabaseUpdate,
-// } from "@/api/supabase";
-// import type {
-//   IModule,
-//   IModuleInsert,
-//   IModuleUpdate,
-// } from "@/api/supabase.interface";
-
-import { supabase } from "@/api/supabase.ts";
 import { queryOptions } from "@tanstack/react-query";
+import { client } from "@/api/query.client.ts";
+import type { IModule } from "@/api/supabase.interface.ts";
+import { supabase } from "@/api/supabase.ts";
 
-// export const useGetModules = createSupabaseQuery<IModule[]>({
-//   name: "modules",
-//   table: "modules",
-// });
+interface IGetModulesOptions {
+  id?: IModule["id"];
+  project_id?: IModule["project_id"];
+}
 
-// export const useGetModule = createSupabaseQuery<IModule>({
-//   name: "module",
-//   table: "modules",
-//   count: "first",
-// });
+export const getModulesOptions = (opts: IGetModulesOptions) => {
+  const key = ["get", "modules", opts];
+  return queryOptions({
+    queryKey: key,
+    queryFn: async () => {
+      let query = supabase.from("modules").select();
 
-// export const useCreateModule = createSupabaseInsert<IModuleInsert>({
-//   name: "module",
-//   table: "modules",
-// });
+      Object.entries(opts).forEach(([key, value]) => {
+        if (value) query = query.eq(key, value);
+      });
 
-// export const useDeleteModule = createSupabaseDelete({
-//   name: "module",
-//   table: "modules",
-// });
+      const { data, error } = await query;
+      if (error) throw error;
+      return data;
+    },
+    initialData: () => {
+      return client.getQueryData(key);
+    },
+    placeholderData: () => {
+      return client.getQueryData(key);
+    },
+  });
+};
 
-// export const useUpdateModule = createSupabaseUpdate<IModuleUpdate>({
-//   name: "module",
-//   table: "modules",
-// });
-
-export const getModulesOptions = () =>
-	queryOptions({
-		queryKey: ["get", "modules"],
-		queryFn: async () => {
-			const { data, error } = await supabase.from("modules").select();
-			if (error) throw error;
-			return data;
-		},
-	});
+export const getModuleOptions = (opts: IGetModulesOptions) => {
+  const key = ["get", "module", opts];
+  return queryOptions({
+    ...getModulesOptions(opts),
+    queryKey: key,
+    select: (data) => data[0],
+  });
+};
