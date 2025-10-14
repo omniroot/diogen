@@ -1,0 +1,38 @@
+import type * as React from "react";
+
+export const TodoIcon = (props: React.SVGProps<SVGSVGElement>) => {
+	return (
+		<svg
+			width={14}
+			height={14}
+			viewBox="0 0 14 14"
+			fill="none"
+			className="sc-jdjTYm ekNTiZ workflow-state-icon"
+			{...props}
+		>
+			<title>TodoIcon</title>
+			<circle
+				cx={7}
+				cy={7}
+				r={6}
+				fill="none"
+				stroke="#e2e2e2"
+				strokeWidth={1.5}
+				strokeDasharray="3.14 0"
+				strokeDashoffset={-0.7}
+			></circle>
+			<circle
+				className="progress"
+				cx={7}
+				cy={7}
+				r={2}
+				fill="none"
+				stroke="#e2e2e2"
+				strokeWidth={4}
+				strokeDasharray="12.189379495928398 24.378758991856795"
+				strokeDashoffset={12.189379495928398}
+				transform="rotate(-90 7 7)"
+			></circle>
+		</svg>
+	);
+};

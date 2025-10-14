@@ -1,0 +1,74 @@
+import { Button, VStack } from "@chakra-ui/react";
+import { Link } from "@tanstack/react-router";
+import { supabase } from "@/api/supabase.ts";
+import { SidebarHeader } from "@/components/business/Sidebar/SidebarHeader/SidebarHeader";
+import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
+
+export const Sidebar = () => {
+	// const sidebarRef = useRef<HTMLDivElement>(null);
+	// const resizerRef = useRef<HTMLDivElement>(null);
+	// const isResizing = useRef(false);
+
+	// const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
+	//   if (isResizing) {
+	//     console.log(event);
+	//   }
+	// };
+
+	const onLoginWithGithubClick = async () => {
+		const { data, error } = await supabase.auth.signInWithOAuth({
+			provider: "github",
+		});
+		console.log("Authorized: ", data, error);
+	};
+
+	return (
+		<>
+			<VStack w={`380px`} h={"99.9dvh"} justify="flex-start" p={"2"}>
+				<SidebarHeader />
+				<SidebarProjects />
+				<VStack w={"100%"} mt={"auto"}>
+					<Button w="100%" asChild>
+						<Link to="/">Test page</Link>
+					</Button>
+					<Button w="100%" onClick={onLoginWithGithubClick}>
+						Login with Github
+					</Button>
+				</VStack>
+				{/* <SidebarActions /> */}
+
+				{/* <Button
+        onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}
+      >
+        Auth
+      </Button> */}
+			</VStack>
+			{/* <VStack
+        ref={resizerRef}
+        w={"10px"}
+        h={"99.9dvh"}
+        justifyContent={"center"}
+        opacity={"0"}
+        _hover={{ opacity: 1 }}
+        transition={"opacity 200ms"}
+        color={"subtext"}
+        userSelect={"none"}
+        cursor={"e-resize"}
+        onMouseDown={() => (isResizing.current = true)}
+        onMouseUp={() => (isResizing.current = false)}
+        // onMouseMove={onMouseMove}
+        draggable
+        onDragStart={() => (isResizing.current = true)}
+        onDragEnd={() => (isResizing.current = false)}
+        onDrag={onMouseMove}
+      >
+        <HStack
+          w={"5px"}
+          h={"35px"}
+          bg={"subtext"}
+          borderRadius={"12px"}
+        ></HStack>
+      </VStack> */}
+		</>
+	);
+};
