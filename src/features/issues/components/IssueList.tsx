@@ -5,7 +5,7 @@ import type { FC } from "react";
 import { getIssuesOptions, type IGetIssuesOptions } from "@/api/queries/issues.api.ts";
 import { Section } from "@/components/business/Section.tsx";
 import { IssueItem } from "@/features/issues/components/IssueItem";
-import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
+import { useModals } from "@/stores/modals.store.tsx";
 
 type IIssueList = IGetIssuesOptions;
 

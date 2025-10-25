@@ -1,8 +1,6 @@
 import { Button, Menu, Portal, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { IconQuestionMark } from "@tabler/icons-react";
-import { useMutation } from "@tanstack/react-query";
 import { type FC, type SetStateAction, useId } from "react";
-import { updateIssueOptions } from "@/api/queries/issues.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
 import { BacklogIcon } from "@/assets/icons/backlog-icon.tsx";
 import { CanceledIcon } from "@/assets/icons/canceled-icon.tsx";
@@ -33,9 +31,9 @@ const items: IItem[] = [
 	{ title: "Canceled", value: "canceled", color: "#95A2B3", icon: <CanceledIcon /> },
 ];
 
-const getSelectedItem = (status: IIssue["status"] | undefined) => {
-	return items.filter((i) => i.value === status)?.[0]?.icon || items.filter((i) => i.value === "backlog")?.[0]?.icon;
-};
+// const getSelectedItem = (status: IIssue["status"] | undefined) => {
+// 	return items.filter((i) => i.value === status)?.[0]?.icon || items.filter((i) => i.value === "backlog")?.[0]?.icon;
+// };
 
 export const StatusSelect: FC<IProps> = ({ value = "backlog", onChange, showTitle = false }) => {
 	const id = useId();

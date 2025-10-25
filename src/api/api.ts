@@ -15,7 +15,7 @@ export const queryKeys = {
 	issues: {
 		all: ["issues"],
 		one: (id: IIssue["id"] | null | undefined) => [...queryKeys.issues.all, "one", id],
-		many: (project_id: IProject["id"]) => [...queryKeys.issues.all, "many"],
+		many: (project_id: IProject["id"]) => [...queryKeys.issues.all, "many", project_id],
 	},
 	modules: {
 		all: ["modules"],

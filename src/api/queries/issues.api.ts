@@ -1,12 +1,6 @@
-import {
-	mutationOptions,
-	type QueryOptions,
-	queryOptions,
-	type UseQueryOptions,
-	useQuery,
-} from "@tanstack/react-query";
+import { mutationOptions, queryOptions, type UseQueryOptions, useQuery } from "@tanstack/react-query";
 import { client } from "@/api/api.ts";
-import { type IIssue, type IIssueInsert, type IIssueUpdate, type IModule, supabase } from "@/api/supabase";
+import { type IIssue, type IIssueInsert, type IIssueUpdate, supabase } from "@/api/supabase";
 
 export interface IGetIssuesOptions {
 	id?: IIssue["id"];
@@ -136,8 +130,8 @@ export const useGetIssues = (
 	});
 };
 
-const a = () => {
-	const {} = useGetIssues({ id: 1 }, { queryKey: ["123"] });
+// const a = () => {
+// 	const {} = useGetIssues({ id: 1 }, { queryKey: ["123"] });
 
-	return 1;
-};
+// 	return 1;
+// };

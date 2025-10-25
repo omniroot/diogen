@@ -1,21 +1,9 @@
-import {
-	Button,
-	Dialog,
-	HStack,
-	Input,
-	InputGroup,
-	Portal,
-	Separator,
-	Textarea,
-	useDisclosure,
-	VStack,
-} from "@chakra-ui/react";
+import { Dialog, Input, InputGroup, Portal, VStack } from "@chakra-ui/react";
 import { useDebounceValue, useKeyPress } from "@siberiacancode/reactuse";
-import { IconLoader, IconLoader2, IconLoader3, IconSearch } from "@tabler/icons-react";
+import { IconLoader2, IconSearch } from "@tabler/icons-react";
 import { useEffect, useState } from "react";
 import { useGetIssues } from "@/api/queries/issues.api.ts";
 import { IssueItem } from "@/features/issues/components/IssueItem.tsx";
-import { IssueList } from "@/features/issues/components/IssueList.tsx";
 import { useModals } from "@/stores/modals.store.tsx";
 
 export const SearchModal = () => {
@@ -91,7 +79,7 @@ export const SearchModal = () => {
 							<VStack overflowY={"scroll"}>
 								{results?.map((result) => {
 									return (
-										<IssueItem key={result.id} issue={result} onClick={() => onToggle()} />
+										<IssueItem key={result.id} issue={result} onClick={() => close()} />
 										// <HStack  w={"100%"} p={2} border={"2px solid {colors.outline}"}>
 										// 	{result.title}
 										// </HStack>

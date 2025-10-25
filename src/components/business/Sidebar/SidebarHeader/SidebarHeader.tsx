@@ -2,7 +2,7 @@ import { HStack, IconButton, Separator } from "@chakra-ui/react";
 import { IconArrowNarrowLeft, IconArrowNarrowRight, IconEdit, IconSearch } from "@tabler/icons-react";
 import { useCanGoBack, useRouter } from "@tanstack/react-router";
 import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
-import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
+import { useModals } from "@/stores/modals.store.tsx";
 
 export const SidebarHeader = () => {
 	const { open } = useModals("issue");

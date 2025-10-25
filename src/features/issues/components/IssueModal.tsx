@@ -37,31 +37,31 @@ export const IssueModal = () => {
 			/>
 		);
 
-	if (mode === "update")
-		return (
-			<ModuleUpdateModal
-				open={isOpen}
-				onChange={(newState) => {
-					if (newState) {
-						open("create");
-					} else {
-						close();
-					}
-				}}
-			/>
-		);
+	// if (mode === "update")
+	// 	return (
+	// 		<ModuleUpdateModal
+	// 			open={isOpen}
+	// 			onChange={(newState) => {
+	// 				if (newState) {
+	// 					open("create");
+	// 				} else {
+	// 					close();
+	// 				}
+	// 			}}
+	// 		/>
+	// 	);
 
-	if (mode === "delete")
-		return (
-			<ModuleDeleteModal
-				open={isOpen}
-				onChange={(newState) => {
-					if (newState) {
-						open(mode);
-					} else {
-						close();
-					}
-				}}
-			/>
-		);
+	// if (mode === "delete")
+	// 	return (
+	// 		<ModuleDeleteModal
+	// 			open={isOpen}
+	// 			onChange={(newState) => {
+	// 				if (newState) {
+	// 					open(mode);
+	// 				} else {
+	// 					close();
+	// 				}
+	// 			}}
+	// 		/>
+	// 	);
 };

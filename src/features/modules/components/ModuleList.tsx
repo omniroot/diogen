@@ -6,7 +6,7 @@ import { getModulesOptions } from "@/api/queries/modules.api.ts";
 import type { IProject } from "@/api/supabase.ts";
 import { Section } from "@/components/business/Section.tsx";
 import { ModuleItem } from "@/features/modules/components/ModuleItem";
-import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
+import { useModals } from "@/stores/modals.store.tsx";
 
 interface IModuleListProps {
 	project_id?: IProject["id"];

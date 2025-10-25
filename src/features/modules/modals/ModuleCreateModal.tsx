@@ -1,12 +1,9 @@
 import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
-
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
+import { useMutation } from "@tanstack/react-query";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
-import { deleteIssuesOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
-import { createModulesOptions, deleteModuleOptions, getModuleOptions } from "@/api/queries/modules.api.ts";
+import { createModulesOptions } from "@/api/queries/modules.api.ts";
 import type { IModuleInsert } from "@/api/supabase.ts";
 import type { IModuleModal } from "@/features/modules/components/ModuleModal.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
@@ -14,10 +11,10 @@ import { useModals } from "@/stores/modals.store.tsx";
 import { EmojiPicker, type IEmoji } from "@/theme/components/EmojiPicker.tsx";
 
 export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
-	const { project_id, custom_id, module_id } = useLocationStore();
-	const { isOpen, close, mode, isAnyOpen } = useModals("module");
+	const { project_id } = useLocationStore();
+	const { close, mode } = useModals("module");
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -25,13 +22,13 @@ export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 		reset,
 	} = useForm<IModuleInsert>({});
 
-	const [emoji, setEmoji] = useState<IEmoji | null>(null);
+	const [_, setEmoji] = useState<IEmoji | null>(null);
 
-	const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
-	const { data: issues } = useQuery(getIssuesOptions({ project_id: Number(project_id), module_id: Number(module_id) }));
+	// const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
+	// const { data: issues } = useQuery(getIssuesOptions({ project_id: Number(project_id), module_id: Number(module_id) }));
 	const { mutate: createModule } = useMutation(createModulesOptions());
-	const { mutate: deleteIssues } = useMutation(deleteIssuesOptions());
-	const { mutate: deleteModule } = useMutation(deleteModuleOptions());
+	// const { mutate: deleteIssues } = useMutation(deleteIssuesOptions());
+	// const { mutate: deleteModule } = useMutation(deleteModuleOptions());
 
 	const onSubmit: SubmitHandler<IModuleInsert> = (data) => {
 		createModule([{ ...data, project_id }], {
@@ -43,23 +40,6 @@ export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 		});
 	};
 
-	const onDeleteClick = () => {
-		if (!module) return;
-		deleteIssues(issues?.map((i) => i.id) || [-9999], {
-			onSuccess: () => {
-				deleteModule(
-					{ ids: [module.id] },
-					{
-						onSuccess: () => {
-							onChange(false);
-							refetchQuery(queryKeys.modules.many(project_id));
-							navigate({ to: "/projects/$custom_id", params: { custom_id: String(custom_id) } });
-						},
-					},
-				);
-			},
-		});
-	};
 	return (
 		<Dialog.Root open={open} onOpenChange={(e) => onChange(e.open)}>
 			<Dialog.Trigger asChild></Dialog.Trigger>

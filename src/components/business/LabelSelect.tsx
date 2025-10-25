@@ -1,16 +1,15 @@
 import { Button, Menu, Portal, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { type FC, type SetStateAction, useId } from "react";
-import type { IIssue } from "@/api/supabase.ts";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 
-type ILabel = null | "bug" | "refactoring" | "feature";
+// type ILabel = null | "bug" | "refactoring" | "feature";
 
-const getTaskColor = (priority: ILabel) => {
-	if (priority === "bug") return "red.600";
-	if (priority === "refactoring") return "orange.600";
-	if (priority === "feature") return "purple.600";
-	return "outline_variant";
-};
+// const getTaskColor = (priority: ILabel) => {
+// 	if (priority === "bug") return "red.600";
+// 	if (priority === "refactoring") return "orange.600";
+// 	if (priority === "feature") return "purple.600";
+// 	return "outline_variant";
+// };
 
 interface IProps {
 	value?: string | null | undefined;

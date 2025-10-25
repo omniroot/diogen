@@ -1,6 +1,5 @@
 import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
@@ -12,13 +11,13 @@ import { useModals } from "@/stores/modals.store.tsx";
 import { EmojiPicker, type IEmoji } from "@/theme/components/EmojiPicker.tsx";
 
 export const ModuleUpdateModal: FC<IModuleModal> = ({ open, onChange }) => {
-	const { project_id, custom_id, module_id } = useLocationStore();
-	const { close, mode } = useModals("module");
+	const { project_id, module_id } = useLocationStore();
+	const { close } = useModals("module");
 	const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
 	// const [title, setTitle] = useState(module?.title);
-	const [emoji, setEmoji] = useState<IEmoji | null>(null);
+	const [_, setEmoji] = useState<IEmoji | null>(null);
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 
 	const { mutate: updateModule } = useMutation(updateModuleOptions());
 	// const { mutate: deleteIssues } = useMutation(deleteIssuesOptions());
@@ -45,23 +44,6 @@ export const ModuleUpdateModal: FC<IModuleModal> = ({ open, onChange }) => {
 		);
 	};
 
-	const onDeleteClick = () => {
-		// if (!module) return;
-		// deleteIssues(issues?.map((i) => i.id) || [-9999], {
-		// 	onSuccess: () => {
-		// 		deleteModule(
-		// 			{ ids: [module.id] },
-		// 			{
-		// 				onSuccess: () => {
-		// 					onChange(false);
-		// 					refetchQuery(queryKeys.modules.many(project_id));
-		// 					navigate({ to: "/projects/$custom_id", params: { custom_id: String(custom_id) } });
-		// 				},
-		// 			},
-		// 		);
-		// 	},
-		// });
-	};
 	return (
 		<Dialog.Root open={open} onOpenChange={(e) => onChange(e.open)}>
 			<Portal>

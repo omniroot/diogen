@@ -1,12 +1,11 @@
 import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
-import { useNavigate } from "@tanstack/react-router";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
-import { createIssueOptions, deleteIssuesOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
-import { createModulesOptions, deleteModuleOptions, getModuleOptions } from "@/api/queries/modules.api.ts";
-import type { IIssueInsert, IModuleInsert } from "@/api/supabase.ts";
+import { createIssueOptions } from "@/api/queries/issues.api.ts";
+import { getModuleOptions } from "@/api/queries/modules.api.ts";
+import type { IIssueInsert } from "@/api/supabase.ts";
 import { StatusSelect } from "@/components/business/StatusSelect.tsx";
 import type { IModuleModal } from "@/features/modules/components/ModuleModal.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
@@ -15,10 +14,10 @@ import { EmojiPicker, type IEmoji } from "@/theme/components/EmojiPicker.tsx";
 
 export const IssueCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 	const { project_id, custom_id, module_id } = useLocationStore();
-	const { close, mode } = useModals("module");
+	const { close } = useModals("module");
 	const [statusValue, setStatusValue] = useState("backlog");
 
-	const navigate = useNavigate();
+	// const navigate = useNavigate();
 	const {
 		register,
 		handleSubmit,
@@ -26,7 +25,7 @@ export const IssueCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 		reset,
 	} = useForm<IIssueInsert>({});
 
-	const [emoji, setEmoji] = useState<IEmoji | null>(null);
+	const [_, setEmoji] = useState<IEmoji | null>(null);
 
 	const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
 	const { mutate: createIssue } = useMutation(createIssueOptions());

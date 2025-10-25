@@ -1,22 +1,9 @@
-import {
-	Badge,
-	Button,
-	CloseButton,
-	Dialog,
-	HStack,
-	Portal,
-	Skeleton,
-	Text,
-	useDisclosure,
-	VStack,
-} from "@chakra-ui/react";
+import { Badge, Button, HStack, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-import { useMutation, useQuery } from "@tanstack/react-query";
-import { createFileRoute, useNavigate } from "@tanstack/react-router";
+import { useQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
 import { useEffect } from "react";
-import { queryKeys, refetchQuery } from "@/api/api.ts";
-import { deleteIssuesOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
-import { deleteModuleOptions, getModuleOptions } from "@/api/queries/modules.api.ts";
+import { getModuleOptions } from "@/api/queries/modules.api.ts";
 import { IssueList } from "@/features/issues/components/IssueList";
 import { useLocationStore } from "@/stores/location.store.tsx";
 import { useModals } from "@/stores/modals.store.tsx";
@@ -27,7 +14,6 @@ export const Route = createFileRoute("/projects/$custom_id/modules/$module_id")(
 
 function RouteComponent() {
 	const { project_id, module_id } = useLocationStore();
-	const { open, onToggle } = useDisclosure();
 	const { open: openModal } = useModals("module");
 	const { data: module, isFetching } = useQuery(getModuleOptions({ id: Number(module_id) }));
 

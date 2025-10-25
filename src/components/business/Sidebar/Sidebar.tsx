@@ -8,8 +8,8 @@ import { useResizable } from "@/hooks/useResizable.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
 export const Sidebar = () => {
 	const locations = useLocationStore();
-	const [size, setSize] = useState("290px");
-	const resizeRef = useResizable();
+	const [size] = useState("290px");
+	const resizeRef = useResizable() as React.RefObject<HTMLDivElement | null>;
 	// const sidebarRef = useRef<HTMLDivElement>(null);
 	// const resizerRef = useRef<HTMLDivElement>(null);
 	// const isResizing = useRef(false);
