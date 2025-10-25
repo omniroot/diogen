@@ -1,9 +1,12 @@
 {
   "compilerOptions": {
-    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.node.tsbuildinfo",
-    "target": "ES2023",
+    "tsBuildInfoFile": "./node_modules/.tmp/tsconfig.app.tsbuildinfo",
+    "target": "esnext",
+    "useDefineForClassFields": true,
     "lib": [
-      "ES2023"
+      "esnext",
+      "DOM",
+      "DOM.Iterable"
     ],
     "module": "ESNext",
     "skipLibCheck": true,
@@ -13,6 +16,7 @@
     "verbatimModuleSyntax": false,
     "moduleDetection": "force",
     "noEmit": true,
+    "jsx": "react-jsx",
     /* Linting */
     "strict": true,
     "noUnusedLocals": true,
@@ -31,6 +35,8 @@
     }
   },
   "include": [
-    "vite.config.ts"
+    "src",
+    ".old/routes",
+    ".old/stores"
   ]
 }
