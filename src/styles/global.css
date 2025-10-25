@@ -1,12 +1,12 @@
 * {
-  box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 html,
 body {
-  /* display: flex; */
-  /* gap: 12px; */
-  /* background-color: var(--chakra-colors-text);
+	/* display: flex; */
+	/* gap: 12px; */
+	/* background-color: var(--chakra-colors-text);
   background-color: var(--chakra-colors-surface);
   transition:
     background-color 200ms,
@@ -16,72 +16,72 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  overflow: hidden;
+	overflow: hidden;
 
-  /* font-family: "Inter"; */
-  margin: 0;
-  padding: 0;
+	/* font-family: "Inter"; */
+	margin: 0;
+	padding: 0;
 
-  scrollbar-color: var(--chakra-colors-primary) transparent;
+	scrollbar-color: var(--chakra-colors-primary) transparent;
 }
 #root {
-  display: flex;
-  width: 100%;
-  height: 100%;
+	display: flex;
+	width: 100%;
+	height: 100%;
 
-  /* gap: 12px; */
-  padding: 6px;
+	/* gap: 12px; */
+	padding: 6px;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 98.5dvh;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 98.5dvh;
 
-  overflow-y: scroll;
-  /* margin-bottom: 3dvh; */
+	overflow-y: scroll;
+	/* margin-bottom: 3dvh; */
 
-  gap: 6px;
-  padding: 6px;
-  background-color: var(--chakra-colors-surface_container);
-  border: 2px solid var(--chakra-colors-outline);
-  border-radius: var(--chakra-radii-lg);
+	gap: 6px;
+	padding: 6px;
+	background-color: var(--chakra-colors-surface_container);
+	border: 2px solid var(--chakra-colors-outline);
+	border-radius: var(--chakra-radii-lg);
 }
 
 ::selection {
-  color: var(--chakra-colors-text_primary);
-  background-color: var(--chakra-colors-primary);
+	color: var(--chakra-colors-text_primary);
+	background-color: var(--chakra-colors-primary);
 }
 
 @media screen and (max-width: 768px) {
-  #root {
-    flex-direction: column;
-    /* padding: 16px; */
-  }
+	#root {
+		flex-direction: column;
+		/* padding: 16px; */
+	}
 }
 
 /* полоса прокрутки */
 ::-webkit-scrollbar {
-  width: 2px; /* для вертикальной */
-  height: 6px; /* для горизонтальной */
+	width: 2px; /* для вертикальной */
+	height: 6px; /* для горизонтальной */
 }
 
 /* трек (фон полосы) */
 ::-webkit-scrollbar-track {
-  /* background: var(--chakra-colors-surface); */
-  background: transparent;
-  border-radius: 8px;
+	/* background: var(--chakra-colors-surface); */
+	background: transparent;
+	border-radius: 8px;
 }
 
 /* сам ползунок */
 ::-webkit-scrollbar-thumb {
-  /* background-color: #c98383cc; полупрозрачный цвет */
-  border-radius: 8px;
-  border: 2px solid var(--chakra-colors-primary); /* отступ внутри трека */
+	/* background-color: #c98383cc; полупрозрачный цвет */
+	border-radius: 8px;
+	border: 2px solid var(--chakra-colors-primary); /* отступ внутри трека */
 }
 
 /* при наведении */
 ::-webkit-scrollbar-thumb:hover {
-  background-color: #e90000;
+	background-color: #e90000;
 }

@@ -1,10 +1,5 @@
 import { createClient } from "@supabase/supabase-js";
-import type {
-  Database,
-  Tables,
-  TablesInsert,
-  TablesUpdate,
-} from "@/api/supabase.types";
+import type { Database, Tables, TablesInsert, TablesUpdate } from "@/api/supabase.types";
 
 export type IIssue = Tables<"issues">;
 export type IIssueInsert = TablesInsert<"issues">;
@@ -22,7 +17,7 @@ const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
 const supabaseAnonKey = import.meta.env.VITE_SUPABASE_ANON_KEY;
 
 if (!supabaseUrl || !supabaseAnonKey) {
-  throw new Error("Supabase URL or Anon Key is missing");
+	throw new Error("Supabase URL or Anon Key is missing");
 }
 
 export const supabase = createClient<Database>(supabaseUrl, supabaseAnonKey);

@@ -7,15 +7,14 @@ import "unfonts.css";
 import { OmnikitProvider } from "@/theme/components/provider.tsx";
 import "./styles/global.css";
 import { client } from "@/api/api.ts";
-import { routeTree } from '~/.tanstack/routeTree.gen.ts'
+import { routeTree } from "~/.tanstack/routeTree.gen.ts";
 
+const router = createRouter({ routeTree });
 
-const router = createRouter({ routeTree })
-
-declare module '@tanstack/react-router' {
-  interface Register {
-    router: typeof router
-  }
+declare module "@tanstack/react-router" {
+	interface Register {
+		router: typeof router;
+	}
 }
 // import { scan } from "react-scan";
 
@@ -24,12 +23,12 @@ declare module '@tanstack/react-router' {
 // });
 
 createRoot(document.getElementById("root") as HTMLElement).render(
-  <StrictMode>
-    <OmnikitProvider>
-      <QueryClientProvider client={client}>
-        <RouterProvider router={router} />
-        <ReactQueryDevtools initialIsOpen={false} />
-      </QueryClientProvider>
-    </OmnikitProvider>
-  </StrictMode>
+	<StrictMode>
+		<OmnikitProvider>
+			<QueryClientProvider client={client}>
+				<RouterProvider router={router} />
+				<ReactQueryDevtools initialIsOpen={false} />
+			</QueryClientProvider>
+		</OmnikitProvider>
+	</StrictMode>,
 );
