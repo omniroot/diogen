@@ -1,7 +1,11 @@
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
-import { client } from "@/api/api.ts";
-import { queryKeys } from "@/api/query_keys.ts";
-import { type IModule, type IModuleInsert, supabase } from "@/api/supabase.ts";
+import { client, queryKeys } from "@/api/api.ts";
+import {
+  type IModule,
+  type IModuleInsert,
+  type IModuleUpdate,
+  supabase,
+} from "@/api/supabase.ts";
 
 interface IGetModulesOptions {
   id?: IModule["id"];
@@ -50,6 +54,20 @@ export const getModuleOptions = (opts: IGetModulesOptions) => {
     select: (data) => data[0],
   });
 };
+
+export const updateModuleOptions = () =>
+  mutationOptions<IModule, unknown, IModuleUpdate>({
+    mutationFn: async (module) => {
+      const query = supabase
+        .from("modules")
+        .update(module)
+        .eq("id", Number(module.id))
+        .select();
+      const { data, error } = await query.single();
+      if (error) throw error;
+      return data;
+    },
+  });
 
 export const deleteModuleOptions = () =>
   mutationOptions<unknown, unknown, { ids: IModule["id"][] }>({

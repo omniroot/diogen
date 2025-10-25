@@ -2,10 +2,11 @@ import { HStack, IconButton, Separator } from "@chakra-ui/react";
 import { IconArrowNarrowLeft, IconArrowNarrowRight, IconEdit, IconSearch } from "@tabler/icons-react";
 import { useCanGoBack, useRouter } from "@tanstack/react-router";
 import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
-import { useModalsStore } from "@/stores/modals.store.tsx";
+import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
 
 export const SidebarHeader = () => {
-	const setCreateIssueModal = useModalsStore((state) => state.setCreateIssueModal);
+	const { open } = useModals("issue");
+
 	const canGoBack = useCanGoBack();
 	const canGoForward = useCanGoForward();
 	const { history } = useRouter();
@@ -40,7 +41,7 @@ export const SidebarHeader = () => {
 				<IconButton variant="ghost" color={"subtext"}>
 					<IconSearch />
 				</IconButton>
-				<IconButton onClick={() => setCreateIssueModal()}>
+				<IconButton onClick={() => open("create")}>
 					<IconEdit />
 				</IconButton>
 			</HStack>

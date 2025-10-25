@@ -1,10 +1,15 @@
-import { Button, VStack } from "@chakra-ui/react";
+import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { useState } from "react";
 import { supabase } from "@/api/supabase.ts";
 import { SidebarHeader } from "@/components/business/Sidebar/SidebarHeader/SidebarHeader";
 import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
-
+import { useResizable } from "@/hooks/useResizable.tsx";
+import { useLocationStore } from "@/stores/location.store.tsx";
 export const Sidebar = () => {
+	const locations = useLocationStore();
+	const [size, setSize] = useState("290px");
+	const resizeRef = useResizable();
 	// const sidebarRef = useRef<HTMLDivElement>(null);
 	// const resizerRef = useRef<HTMLDivElement>(null);
 	// const isResizing = useRef(false);
@@ -24,12 +29,22 @@ export const Sidebar = () => {
 
 	return (
 		<>
-			<VStack w={`380px`} h={"99.9dvh"} justify="flex-start" p={"2"}>
+			<VStack w={size} h={"99.9dvh"} justify="flex-start" p={"2"} ref={resizeRef}>
 				<SidebarHeader />
 				<SidebarProjects />
 				<VStack w={"100%"} mt={"auto"}>
+					<VStack w={"100%"} bg={"surface_container"} border={"2px solid {colors.outline}"} borderRadius={"md"}>
+						{Object.entries(locations).map(([name, value]) => {
+							return (
+								<HStack w="100%" justifyContent={"space-between"} px={2} py={1} key={name}>
+									<Text fontWeight={"bold"}>{name}:</Text>
+									<Text>{value}</Text>
+								</HStack>
+							);
+						})}
+					</VStack>
 					<Button w="100%" asChild>
-						<Link to="/">Test page</Link>
+						<Link to="/test">Test page</Link>
 					</Button>
 					<Button w="100%" onClick={onLoginWithGithubClick}>
 						Login with Github

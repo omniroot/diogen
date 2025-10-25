@@ -5,15 +5,15 @@ import type { FC } from "react";
 import { getModulesOptions } from "@/api/queries/modules.api.ts";
 import type { IProject } from "@/api/supabase.ts";
 import { Section } from "@/components/business/Section.tsx";
-import { ModuleItem } from "@/features/modules/_components/ModuleItem";
-import { useModalsStore } from "@/stores/modals.store.tsx";
+import { ModuleItem } from "@/features/modules/components/ModuleItem";
+import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
 
 interface IModuleListProps {
 	project_id?: IProject["id"];
 }
 export const ModuleList: FC<IModuleListProps> = ({ project_id }) => {
 	const { data: modules, isFetching } = useQuery(getModulesOptions({ project_id }));
-	const { setCreateModuleModal } = useModalsStore();
+	const { open } = useModals("module");
 
 	return (
 		<Section
@@ -26,7 +26,7 @@ export const ModuleList: FC<IModuleListProps> = ({ project_id }) => {
 				</Badge>
 			}
 			actionsSlot={
-				<IconButton variant={"ghost"} onClick={() => setCreateModuleModal()}>
+				<IconButton variant={"ghost"} onClick={() => open("create")}>
 					<IconPlus />
 				</IconButton>
 			}

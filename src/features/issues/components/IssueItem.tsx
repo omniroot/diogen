@@ -1,11 +1,13 @@
 import { Checkbox, chakra, HStack, type HTMLChakraProps, Text } from "@chakra-ui/react";
+import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { type FC, forwardRef, useEffect, useState } from "react";
-import { useSelectionStore } from "@/stores/selection.store.tsx";
+import { getProjectsOptions } from "@/api/queries/projects.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
-import { LabelMenu } from "@/components/business/LabelMenu.tsx";
-import { StatusMenu } from "@/components/business/StatusMenu.tsx";
 import { IssueContextMenu } from "@/components/business/IssueContextMenu.tsx";
+import { LabelSelect } from "@/components/business/LabelSelect";
+import { StatusSelect } from "@/components/business/StatusSelect";
+import { useSelectionStore } from "@/stores/selection.store.tsx";
 
 interface IIssueItem extends HTMLChakraProps<"div"> {
 	issue?: IIssue;
@@ -16,6 +18,7 @@ export const IssueItem: FC<IIssueItem> = forwardRef<HTMLDivElement, IIssueItem>(
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { issues, toggleIssue, getIsSelected } = useSelectionStore();
 	const [isSelected, setIsSelected] = useState(getIsSelected(issue));
+	const { data: projects } = useQuery(getProjectsOptions());
 
 	useEffect(() => {
 		setIsSelected(getIsSelected(issue));
@@ -30,6 +33,12 @@ export const IssueItem: FC<IIssueItem> = forwardRef<HTMLDivElement, IIssueItem>(
 
 		setIsMenuOpen((prev) => !prev);
 	};
+
+	const project_custom_id = projects?.filter((i) => i.id === issue?.project_id)[0].custom_id;
+
+	const link = issue?.module_id
+		? `/projects/${project_custom_id}/modules/${issue.module_id}`
+		: `/projects/${project_custom_id}`;
 
 	return (
 		<chakra.div
@@ -49,7 +58,7 @@ export const IssueItem: FC<IIssueItem> = forwardRef<HTMLDivElement, IIssueItem>(
 			asChild
 		>
 			<Link
-				to="/issues/$issue_id"
+				to={link}
 				params={{
 					issue_id: String(issue?.id),
 				}}
@@ -67,11 +76,22 @@ export const IssueItem: FC<IIssueItem> = forwardRef<HTMLDivElement, IIssueItem>(
 							{issue?.custom_id}
 						</Text>
 					)}
-					<StatusMenu issue={issue} />
+					<StatusSelect value={issue?.status} />
 					<Text color={"text"}>{issue?.title}</Text>
 				</HStack>
 				<HStack justifyContent={"end"} alignItems={"center"}>
-					<LabelMenu issue={issue} isShow={!!issue?.label} />
+					<LabelSelect value={issue?.label} showTitle={true} />
+					{project_custom_id && (
+						<HStack border={"2px solid {colors.outline}"} py={1} px={2} borderRadius={"full"}>
+							{project_custom_id}
+						</HStack>
+					)}
+
+					{issue?.module_id && (
+						<HStack border={"2px solid {colors.outline}"} py={1} px={2} borderRadius={"full"}>
+							{issue?.module_id}
+						</HStack>
+					)}
 				</HStack>
 
 				{/* <Presence

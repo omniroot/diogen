@@ -1,16 +1,16 @@
-import { getIssuesOptions, type IGetIssuesOptions } from "@/api/queries/issues.api.ts";
-import { IssueItem } from "@/components/business/IssueItem.tsx";
-import { Section } from "@/components/business/Section.tsx";
-import { useModalsStore } from "@/stores/modals.store.tsx";
 import { IconButton, Skeleton } from "@chakra-ui/react";
 import { IconCopyCheck, IconPlus } from "@tabler/icons-react";
 import { useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
+import { getIssuesOptions, type IGetIssuesOptions } from "@/api/queries/issues.api.ts";
+import { Section } from "@/components/business/Section.tsx";
+import { IssueItem } from "@/features/issues/components/IssueItem";
+import { useModals, useModalsStore } from "@/stores/modals.store.tsx";
 
 type IIssueList = IGetIssuesOptions;
 
 export const IssueList: FC<IIssueList> = (opts) => {
-	const setCreateIssueList = useModalsStore((state) => state.setCreateIssueModal);
+	const { open } = useModals("issue");
 	const { data: issues, isFetching } = useQuery({
 		...getIssuesOptions(opts),
 		enabled: !!opts.project_id,
@@ -23,7 +23,7 @@ export const IssueList: FC<IIssueList> = (opts) => {
 			icon={<IconCopyCheck />}
 			title="Issues"
 			actionsSlot={
-				<IconButton onClick={() => setCreateIssueList()} variant="ghost">
+				<IconButton onClick={() => open("create")} variant="ghost">
 					<IconPlus />
 				</IconButton>
 			}

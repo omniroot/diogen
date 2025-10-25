@@ -7,7 +7,7 @@ import { getProjectOptions } from "@/api/queries/projects.api.ts";
 interface ILocations {
 	project_id: number | null;
 	custom_id: string | null;
-	module_id: string | null;
+	module_id: number | null;
 	issue_id: string | null;
 }
 
@@ -28,7 +28,7 @@ export const useLocationHandler = () => {
 	const { data: project } = useQuery(getProjectOptions({ custom_id: params.custom_id }));
 
 	useLayoutEffect(() => {
-		setLocations({ ...params, project_id: project?.id || -99999 });
+		setLocations({ ...params, module_id: Number(params.module_id), project_id: project?.id || -99999 });
 	}, [params, setLocations, project]);
 
 	useEffect(() => {

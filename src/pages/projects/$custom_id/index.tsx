@@ -3,8 +3,8 @@ import { useQuery } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import { getProjectOptions } from "@/api/queries/projects.api.ts";
 import { supabase } from "@/api/supabase.ts";
-import { IssueList } from "@/components/business/IssueList.tsx";
-import { ModuleList } from "@/features/modules/_components/ModuleList";
+import { IssueList } from "@/features/issues/components/IssueList";
+import { ModuleList } from "@/features/modules/components/ModuleList";
 import { useLocationStore } from "@/stores/location.store.tsx";
 import { toaster } from "@/theme/components/toaster.tsx";
 
@@ -18,7 +18,7 @@ function RouteComponent() {
 	const { data: logo } = useQuery({
 		queryKey: ["logo", project?.id],
 		queryFn: () => supabase.storage.from("logos").getPublicUrl(project?.logo || ""),
-	})
+	});
 
 	if (!project) return null;
 
@@ -44,7 +44,7 @@ function RouteComponent() {
 				</Skeleton>
 			</VStack>
 
-			<Button onClick={() => toaster.create({ title: "Hello", description: "World" })}>Refetch</Button>
+			<Button onClick={() => toaster.create({ title: "Hello", description: "World", closable: true })}>Refetch</Button>
 
 			{/* <DndContext onDragEnd={onDragEnd}> */}
 			{/* <ModulesList project={project} /> */}
@@ -52,5 +52,5 @@ function RouteComponent() {
 			<ModuleList project_id={project?.id} />
 			<IssueList project_id={project?.id} filterByEmptyModule />
 		</>
-	)
+	);
 }

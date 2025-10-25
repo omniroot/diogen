@@ -1,5 +1,5 @@
 import { Button, Menu, Portal, Skeleton, useDisclosure } from "@chakra-ui/react";
-import type { FC } from "react";
+import { type FC, type SetStateAction, useId } from "react";
 import type { IIssue } from "@/api/supabase.ts";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 
@@ -13,8 +13,10 @@ const getTaskColor = (priority: ILabel) => {
 };
 
 interface IProps {
-	issue: IIssue | undefined;
-	isShow?: boolean;
+	value?: string | null | undefined;
+	onChange?: (newValue: SetStateAction<string>) => void;
+
+	showTitle?: boolean;
 }
 
 interface IItem {
@@ -30,8 +32,10 @@ const items: IItem[] = [
 	{ title: "Feature", value: "feature", color: "purple.600" },
 ];
 
-export const LabelMenu: FC<IProps> = ({ issue, isShow = true }) => {
+export const LabelSelect: FC<IProps> = ({ value = "unset", onChange, showTitle = false }) => {
+	const id = useId();
 	const { open, onToggle } = useDisclosure();
+	const selectedItem = items.filter((i) => i.value === value)[0] || items[0];
 	// const { mutate: updateTask } = useUpdateTask({
 	//   onSuccess: () => {
 	//     client.refetchQueries({ queryKey: useGetTasks.getKey() });
@@ -39,53 +43,54 @@ export const LabelMenu: FC<IProps> = ({ issue, isShow = true }) => {
 	//   },
 	// });
 
-	// const onItemSelect = (item: IItem) => {
-	//   // if (issue)
-	//   //   updateTask({
-	//   //     id: task.id,
-	//   //     data: {
-	//   //       label: item.value === "unset" ? null : item.value,
-	//   //     },
-	//   //   });
-	// };
+	const onItemSelect = (item: IItem) => {
+		onChange?.(item.value || "");
+		// if (issue)
+		//   updateTask({
+		//     id: task.id,
+		//     data: {
+		//       label: item.value === "unset" ? null : item.value,
+		//     },
+		//   });
+	};
 
-	if (!isShow) return null;
-
+	if (!value) return null;
 	return (
-		<Menu.Root open={open} onOpenChange={onToggle}>
+		<Menu.Root open={open} onOpenChange={onToggle} id={id}>
 			<Menu.Trigger asChild>
-				<Skeleton loading={!issue}>
+				<Skeleton loading={!value} asChild>
 					<Button
 						// variant="outline"
 						size="sm"
 						border={"2px solid {colors.outline_variant}"}
 						// borderWidth={"2px"}
 						borderColor={{
-							_default: getTaskColor(issue?.label as ILabel),
+							base: selectedItem.color,
 						}}
 						borderRadius={"full"}
-						hidden={!isShow}
 						onClick={(e) => {
 							e.preventDefault();
+							e.stopPropagation();
 							onToggle();
 						}}
 					>
-						<ProjectCircle color={getTaskColor(issue?.label as ILabel)} variant="filled" />
-						{issue?.label || "Label"}
+						<ProjectCircle color={selectedItem.color} variant="filled" />
+						{showTitle && selectedItem.title}
 					</Button>
 				</Skeleton>
 			</Menu.Trigger>
 			<Portal>
 				<Menu.Positioner>
-					<Menu.Content>
+					<Menu.Content
+						zIndex={"max"}
+						onClick={(e) => {
+							e.preventDefault();
+							e.stopPropagation();
+						}}
+					>
 						{items.map((item) => {
 							return (
-								<Menu.Item
-									value={item.value}
-									color={item.color}
-									// onSelect={() => onItemSelect(item)}
-									key={item.value}
-								>
+								<Menu.Item value={item.value} color={item.color} onSelect={() => onItemSelect(item)} key={item.value}>
 									<ProjectCircle color={item.color} variant="filled" />
 									{item.title}
 								</Menu.Item>

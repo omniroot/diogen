@@ -1,7 +1,7 @@
 import { Button, Menu, Portal, Skeleton, useDisclosure } from "@chakra-ui/react";
 import { IconQuestionMark } from "@tabler/icons-react";
 import { useMutation } from "@tanstack/react-query";
-import type { FC } from "react";
+import { type FC, type SetStateAction, useId } from "react";
 import { updateIssueOptions } from "@/api/queries/issues.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
 import { BacklogIcon } from "@/assets/icons/backlog-icon.tsx";
@@ -11,8 +11,10 @@ import { ProgressIcon } from "@/assets/icons/progress-icon.tsx";
 import { TodoIcon } from "@/assets/icons/todo-icon.tsx";
 
 interface IProps {
-	issue: IIssue | undefined;
-	isShow?: boolean;
+	value?: string | null | undefined;
+	showTitle?: boolean;
+	onChange?: (newValue: SetStateAction<string>) => void;
+	// issue: IIssue | undefined;
 }
 
 interface IItem {
@@ -35,9 +37,15 @@ const getSelectedItem = (status: IIssue["status"] | undefined) => {
 	return items.filter((i) => i.value === status)?.[0]?.icon || items.filter((i) => i.value === "backlog")?.[0]?.icon;
 };
 
-export const StatusMenu: FC<IProps> = ({ issue, isShow = true }) => {
+export const StatusSelect: FC<IProps> = ({ value = "backlog", onChange, showTitle = false }) => {
+	const id = useId();
+
 	const { open, onToggle } = useDisclosure();
-	const { mutate: updateIssue } = useMutation(updateIssueOptions());
+	const selectedItem = items.filter((i) => i.value === value)[0] || items[0];
+
+	console.log({ open });
+
+	// const { mutate: updateIssue } = useMutation(updateIssueOptions());
 	// const { mutate: updateTask } = update({
 	//   onSuccess: () => {
 	//     client.refetchQueries({ queryKey: useGetTasks.getKey() });
@@ -46,18 +54,17 @@ export const StatusMenu: FC<IProps> = ({ issue, isShow = true }) => {
 	// });
 
 	const onItemSelect = (item: IItem) => {
-		updateIssue({
-			id: issue?.id,
-			status: item.value,
-		});
+		onChange?.(item.value || "");
+		// updateIssue({
+		// 	id: issue?.id,
+		// 	status: item.value,
+		// });
 	};
 
-	if (!isShow) return null;
-
 	return (
-		<Menu.Root open={open} onOpenChange={onToggle}>
+		<Menu.Root open={open} onOpenChange={onToggle} id={id}>
 			<Menu.Trigger asChild>
-				<Skeleton loading={!issue}>
+				<Skeleton loading={!value} asChild>
 					<Button
 						variant="ghost"
 						// w={"45px"}
@@ -78,14 +85,14 @@ export const StatusMenu: FC<IProps> = ({ issue, isShow = true }) => {
 							onToggle();
 						}}
 					>
-						{getSelectedItem(issue?.status)}
-						{/* {issue?.status || "Status"} */}
+						{selectedItem.icon}
+						{showTitle && selectedItem.title}
 					</Button>
 				</Skeleton>
 			</Menu.Trigger>
 			<Portal>
 				<Menu.Positioner>
-					<Menu.Content>
+					<Menu.Content zIndex={"max"}>
 						{items.map((item) => {
 							return (
 								<Menu.Item

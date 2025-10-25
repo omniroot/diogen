@@ -11,6 +11,7 @@
 import { Route as rootRouteImport } from './../src/pages/__root'
 import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
+import { Route as TestIndexRouteImport } from './../src/pages/test/index'
 import { Route as ProjectsIndexRouteImport } from './../src/pages/projects/index'
 import { Route as IssuesIndexRouteImport } from './../src/pages/issues/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
@@ -28,6 +29,11 @@ const IndexRoute = IndexRouteImport.update({
 const UsersIndexRoute = UsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TestIndexRoute = TestIndexRouteImport.update({
+  id: '/test/',
+  path: '/test/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
@@ -79,6 +85,7 @@ export interface FileRoutesByFullPath {
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
   '/projects': typeof ProjectsIndexRoute
+  '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
   '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
   '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
@@ -91,6 +98,7 @@ export interface FileRoutesByTo {
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
   '/projects': typeof ProjectsIndexRoute
+  '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
   '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
   '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
@@ -104,6 +112,7 @@ export interface FileRoutesById {
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues/': typeof IssuesIndexRoute
   '/projects/': typeof ProjectsIndexRoute
+  '/test/': typeof TestIndexRoute
   '/users/': typeof UsersIndexRoute
   '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
   '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
@@ -118,6 +127,7 @@ export interface FileRouteTypes {
     | '/users/$user_id'
     | '/issues'
     | '/projects'
+    | '/test'
     | '/users'
     | '/projects/$custom_id/issues'
     | '/projects/$custom_id'
@@ -130,6 +140,7 @@ export interface FileRouteTypes {
     | '/users/$user_id'
     | '/issues'
     | '/projects'
+    | '/test'
     | '/users'
     | '/projects/$custom_id/issues'
     | '/projects/$custom_id'
@@ -142,6 +153,7 @@ export interface FileRouteTypes {
     | '/users/$user_id'
     | '/issues/'
     | '/projects/'
+    | '/test/'
     | '/users/'
     | '/projects/$custom_id/issues'
     | '/projects/$custom_id/'
@@ -155,6 +167,7 @@ export interface RootRouteChildren {
   UsersUser_idRoute: typeof UsersUser_idRoute
   IssuesIndexRoute: typeof IssuesIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
+  TestIndexRoute: typeof TestIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
   ProjectsCustom_idIssuesRoute: typeof ProjectsCustom_idIssuesRoute
   ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
@@ -176,6 +189,13 @@ declare module '@tanstack/react-router' {
       path: '/users'
       fullPath: '/users'
       preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/test/': {
+      id: '/test/'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/projects/': {
@@ -243,6 +263,7 @@ const rootRouteChildren: RootRouteChildren = {
   UsersUser_idRoute: UsersUser_idRoute,
   IssuesIndexRoute: IssuesIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
+  TestIndexRoute: TestIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
   ProjectsCustom_idIssuesRoute: ProjectsCustom_idIssuesRoute,
   ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
