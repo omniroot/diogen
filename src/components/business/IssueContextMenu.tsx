@@ -1,7 +1,9 @@
 import { Menu, Portal, VStack } from "@chakra-ui/react";
 import { IconChevronRight } from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
+import { useMutation, useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
+import { queryKeys, refetchQuery } from "@/api/api.ts";
+import { deleteIssuesOptions } from "@/api/queries/issues.api.ts";
 import { getModulesOptions } from "@/api/queries/modules.api.ts";
 import { getProjectsOptions } from "@/api/queries/projects.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
@@ -51,6 +53,7 @@ export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => 
 	// const { data: user } = useGetUser();
 	const { data: projects } = useQuery({ ...getProjectsOptions({}) });
 	const { data: modules } = useQuery({ ...getModulesOptions({ project_id: issue?.project_id }) });
+	const { mutate: deleteIssue } = useMutation(deleteIssuesOptions());
 	// const { mutate: updateIssue } = useMutation(updateIssueOptions());
 
 	// Group
@@ -114,6 +117,24 @@ export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => 
 				});
 			},
 		},
+		{
+			title: "Delete",
+			type: "item",
+			onSelect: () => {
+				if (!issue) return null;
+				console.log({ issue });
+
+				deleteIssue([issue.id], {
+					onSuccess: () => {
+						refetchQuery([queryKeys.issues.all]);
+						toaster.create({
+							title: `Issue ${issue?.title} completed`,
+							type: "success",
+						});
+					},
+				});
+			},
+		},
 	];
 
 	// const { mutate: updateTask } = useUpdateTask({
@@ -121,11 +142,7 @@ export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => 
 	// 		client.refetchQueries({ queryKey: useGetTasks.getKey() });
 	// 	},
 	// });
-	// const { mutate: deleteTask } = useDeleteTask({
-	// 	onSuccess: () => {
-	// 		client.refetchQueries({ queryKey: useGetTasks.getKey() });
-	// 	},
-	// });
+
 	if (!open) return null;
 	return (
 		<Portal>

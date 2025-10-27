@@ -1,5 +1,7 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
+import { useMediaQuery } from "@uidotdev/usehooks";
+import { Header } from "@/components/business/Header.tsx";
 import { SearchModal } from "@/components/business/SearchModal.tsx";
 import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 // import { IssueModal } from "@/features/issues/components/IssueModal.tsx";
@@ -8,11 +10,16 @@ import { ModuleModal } from "@/features/modules/components/ModuleModal.tsx";
 import { useLocationHandler } from "@/stores/location.store.tsx";
 
 const RootLayout = () => {
+	const isMobile = useMediaQuery("(max-width: 767px)");
+	// const isTablet = useMediaQuery("(min-width: 768px)");
+	// const isDesktop = useMediaQuery("(min-width: 1280px)");
+
 	useLocationHandler();
 	// useModalsStore();
 
 	return (
 		<>
+			{isMobile && <Header />}
 			<Sidebar />
 			<main className="main">
 				<Outlet />

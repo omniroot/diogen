@@ -1,24 +1,34 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
 import { supabase } from "@/api/supabase.ts";
-import { SidebarHeader } from "@/components/business/Sidebar/SidebarHeader/SidebarHeader";
+import { Header } from "@/components/business/Header.tsx";
 import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
 import { useResizable } from "@/hooks/useResizable.tsx";
+import { useHeaderStore } from "@/stores/header.store.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
+
 export const Sidebar = () => {
+	const { isOpen } = useHeaderStore();
 	const locations = useLocationStore();
-	const [size] = useState("290px");
+	const isMobile = useMediaQuery("(max-width: 767px)");
+	const isTablet = useMediaQuery("(min-width: 768px)");
+	const isDesktop = useMediaQuery("(min-width: 1280px)");
+
+	const [size] = useState("330px");
 	const resizeRef = useResizable() as React.RefObject<HTMLDivElement | null>;
 	// const sidebarRef = useRef<HTMLDivElement>(null);
 	// const resizerRef = useRef<HTMLDivElement>(null);
 	// const isResizing = useRef(false);
+	console.log({ isMobile, isTablet, isDesktop });
 
 	// const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
 	//   if (isResizing) {
 	//     console.log(event);
 	//   }
 	// };
+	const isOpen2 = isOpen ? true : isTablet || isDesktop ? true : false;
 
 	const onLoginWithGithubClick = async () => {
 		const { data, error } = await supabase.auth.signInWithOAuth({
@@ -28,37 +38,51 @@ export const Sidebar = () => {
 	};
 
 	return (
-		<>
-			<VStack w={size} h={"99.9dvh"} justify="flex-start" p={"2"} ref={resizeRef}>
-				<SidebarHeader />
-				<SidebarProjects />
-				<VStack w={"100%"} mt={"auto"}>
-					<VStack w={"100%"} bg={"surface_container"} border={"2px solid {colors.outline}"} borderRadius={"md"}>
-						{Object.entries(locations).map(([name, value]) => {
-							return (
-								<HStack w="100%" justifyContent={"space-between"} px={2} py={1} key={name}>
-									<Text fontWeight={"bold"}>{name}:</Text>
-									<Text>{value}</Text>
-								</HStack>
-							);
-						})}
-					</VStack>
-					<Button w="100%" asChild>
-						<Link to="/test">Test page</Link>
-					</Button>
-					<Button w="100%" onClick={onLoginWithGithubClick}>
-						Login with Github
-					</Button>
+		<VStack
+			w={size}
+			display={isOpen2 ? "flex" : "none"}
+			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: 0 }}
+			h={"99.9dvh"}
+			justify="flex-start"
+			p={"2"}
+			bg={"surface"}
+			ref={resizeRef}
+			mt={"60px"}
+			zIndex={10}
+		>
+			{!isMobile && <Header />}
+			<SidebarProjects />
+			<VStack w={"100%"} mt={"auto"}>
+				<VStack w={"100%"} bg={"surface_container"} border={"2px solid {colors.outline}"} borderRadius={"md"}>
+					{Object.entries(locations).map(([name, value]) => {
+						return (
+							<HStack w="100%" justifyContent={"space-between"} px={2} py={1} key={name}>
+								<Text fontWeight={"bold"}>{name}:</Text>
+								<Text>{value}</Text>
+							</HStack>
+						);
+					})}
 				</VStack>
-				{/* <SidebarActions /> */}
+				<Button w="100%" asChild>
+					<Link to="/test">Test page</Link>
+				</Button>
+				<Button w="100%" onClick={onLoginWithGithubClick}>
+					Login with Github
+				</Button>
+			</VStack>
+			{/* <SidebarActions /> */}
 
-				{/* <Button
+			{/* <Button
         onClick={() => supabase.auth.signInWithOAuth({ provider: "github" })}
       >
         Auth
       </Button> */}
-			</VStack>
-			{/* <VStack
+		</VStack>
+	);
+};
+
+{
+	/* <VStack
         ref={resizerRef}
         w={"10px"}
         h={"99.9dvh"}
@@ -83,7 +107,5 @@ export const Sidebar = () => {
           bg={"subtext"}
           borderRadius={"12px"}
         ></HStack>
-      </VStack> */}
-		</>
-	);
-};
+      </VStack> */
+}
