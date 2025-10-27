@@ -1,5 +1,6 @@
 import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
@@ -11,6 +12,7 @@ import { useModals } from "@/stores/modals.store.tsx";
 import { EmojiPicker, type IEmoji } from "@/theme/components/EmojiPicker.tsx";
 
 export const ModuleUpdateModal: FC<IModuleModal> = ({ open, onChange }) => {
+	const isDesktop = useMediaQuery("(min-width: 1280px)");
 	const { project_id, module_id } = useLocationStore();
 	const { close } = useModals("module");
 	const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
@@ -49,7 +51,7 @@ export const ModuleUpdateModal: FC<IModuleModal> = ({ open, onChange }) => {
 			<Portal>
 				<Dialog.Backdrop />
 				<Dialog.Positioner>
-					<Dialog.Content minW={"1000px"}>
+					<Dialog.Content minW={isDesktop ? "1000px" : "90dvw"}>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Dialog.Header>
 								<Dialog.Title>Update Module</Dialog.Title>

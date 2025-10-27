@@ -39,7 +39,7 @@ export const Sidebar = () => {
 
 	return (
 		<VStack
-			w={size}
+			w={isMobile ? "100dvw" : size}
 			display={isOpen2 ? "flex" : "none"}
 			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: 0 }}
 			h={isMobile ? "90dvh" : "99dvh"}

@@ -1,6 +1,7 @@
 import { Badge, Button, Dialog, Portal, Text } from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import type { FC } from "react";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
 import { deleteIssuesOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
@@ -9,6 +10,7 @@ import type { IModuleModal } from "@/features/modules/components/ModuleModal.tsx
 import { useLocationStore } from "@/stores/location.store.tsx";
 
 export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
+	const isDesktop = useMediaQuery("(min-width: 1280px)");
 	const { project_id, custom_id, module_id } = useLocationStore();
 	const navigate = useNavigate();
 
@@ -40,7 +42,7 @@ export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
 			<Portal>
 				<Dialog.Backdrop />
 				<Dialog.Positioner>
-					<Dialog.Content>
+					<Dialog.Content minW={isDesktop ? "1000px" : "90dvw"}>
 						<Dialog.Header>
 							<Dialog.Title>Delete Module</Dialog.Title>
 						</Dialog.Header>

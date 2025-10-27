@@ -1,5 +1,6 @@
 import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
 import { queryKeys, refetchQuery } from "@/api/api.ts";
@@ -11,6 +12,7 @@ import { useModals } from "@/stores/modals.store.tsx";
 import { EmojiPicker, type IEmoji } from "@/theme/components/EmojiPicker.tsx";
 
 export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
+	const isDesktop = useMediaQuery("(min-width: 1280px)");
 	const { project_id } = useLocationStore();
 	const { close, mode } = useModals("module");
 
@@ -46,7 +48,7 @@ export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 			<Portal>
 				<Dialog.Backdrop />
 				<Dialog.Positioner>
-					<Dialog.Content minW={"1000px"}>
+					<Dialog.Content minW={isDesktop ? "1000px" : "90dvw"}>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Dialog.Header>
 								<Dialog.Title>{`${mode?.slice(0, 1).toUpperCase()}${mode?.slice(1)}`} Module</Dialog.Title>
