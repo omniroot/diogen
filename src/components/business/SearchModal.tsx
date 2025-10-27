@@ -1,12 +1,14 @@
 import { Dialog, Input, InputGroup, Portal, VStack } from "@chakra-ui/react";
 import { useDebounceValue, useKeyPress } from "@siberiacancode/reactuse";
 import { IconLoader2, IconSearch } from "@tabler/icons-react";
+import { useMediaQuery } from "@uidotdev/usehooks";
 import { useEffect, useState } from "react";
 import { useGetIssues } from "@/api/queries/issues.api.ts";
 import { IssueItem } from "@/features/issues/components/IssueItem.tsx";
 import { useModals } from "@/stores/modals.store.tsx";
 
 export const SearchModal = () => {
+	const isDesktop = useMediaQuery("(min-width: 1280px)");
 	const { isOpen, open, close } = useModals("search");
 	const [search, setSearch] = useState("");
 	const debouncedSearch = useDebounceValue(search, 400);
@@ -41,7 +43,7 @@ export const SearchModal = () => {
 			<Portal>
 				<Dialog.Backdrop backdropFilter={"blur({blurs.sm})"} />
 				<Dialog.Positioner>
-					<Dialog.Content minW={"1000px"}>
+					<Dialog.Content minW={isDesktop ? "1000px" : "90dvw"}>
 						{/* <form onSubmit={handleSubmit(onSubmit)}> */}
 						{/* <Dialog.Header>
 							<Dialog.Title>Create Issue</Dialog.Title>

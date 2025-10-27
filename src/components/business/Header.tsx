@@ -7,7 +7,8 @@ import { useHeaderStore } from "@/stores/header.store.tsx";
 import { useModals } from "@/stores/modals.store.tsx";
 
 export const Header = () => {
-	const { open } = useModals("issue");
+	const { open: openIssue } = useModals("issue");
+	const { open: openSearch } = useModals("search");
 	const { isOpen, toggleOpen } = useHeaderStore();
 	const isMobile = useMediaQuery("(max-width: 767px)");
 
@@ -44,10 +45,10 @@ export const Header = () => {
 					<IconArrowNarrowRight />
 				</IconButton>
 				<Separator orientation="vertical" w={"2px"} h={"20px"} />
-				<IconButton variant="ghost" color={"subtext"}>
+				<IconButton variant="ghost" color={"subtext"} onClick={() => openSearch("create")}>
 					<IconSearch />
 				</IconButton>
-				<IconButton onClick={() => open("create")}>
+				<IconButton onClick={() => openIssue("create")}>
 					<IconEdit />
 				</IconButton>
 			</HStack>
