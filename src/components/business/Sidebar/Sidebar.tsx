@@ -42,7 +42,7 @@ export const Sidebar = () => {
 			w={size}
 			display={isOpen2 ? "flex" : "none"}
 			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: 0 }}
-			h={"99.9dvh"}
+			h={isMobile ? "90dvh" : "99dvh"}
 			justify="flex-start"
 			p={"2"}
 			bg={"surface"}
