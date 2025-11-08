@@ -16,6 +16,7 @@ import { Route as ProjectsIndexRouteImport } from './../src/pages/projects/index
 import { Route as IssuesIndexRouteImport } from './../src/pages/issues/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
 import { Route as IssuesIssue_idRouteImport } from './../src/pages/issues/$issue_id'
+import { Route as ProjectsCustom_idRouteRouteImport } from './../src/pages/projects/$custom_id/route'
 import { Route as ProjectsCustom_idIndexRouteImport } from './../src/pages/projects/$custom_id/index'
 import { Route as ProjectsCustom_idIssuesRouteImport } from './../src/pages/projects/$custom_id/issues'
 import { Route as ProjectsCustom_idModulesIndexRouteImport } from './../src/pages/projects/$custom_id/modules/index'
@@ -56,31 +57,37 @@ const IssuesIssue_idRoute = IssuesIssue_idRouteImport.update({
   path: '/issues/$issue_id',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsCustom_idIndexRoute = ProjectsCustom_idIndexRouteImport.update({
-  id: '/projects/$custom_id/',
-  path: '/projects/$custom_id/',
+const ProjectsCustom_idRouteRoute = ProjectsCustom_idRouteRouteImport.update({
+  id: '/projects/$custom_id',
+  path: '/projects/$custom_id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const ProjectsCustom_idIndexRoute = ProjectsCustom_idIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => ProjectsCustom_idRouteRoute,
+} as any)
 const ProjectsCustom_idIssuesRoute = ProjectsCustom_idIssuesRouteImport.update({
-  id: '/projects/$custom_id/issues',
-  path: '/projects/$custom_id/issues',
-  getParentRoute: () => rootRouteImport,
+  id: '/issues',
+  path: '/issues',
+  getParentRoute: () => ProjectsCustom_idRouteRoute,
 } as any)
 const ProjectsCustom_idModulesIndexRoute =
   ProjectsCustom_idModulesIndexRouteImport.update({
-    id: '/projects/$custom_id/modules/',
-    path: '/projects/$custom_id/modules/',
-    getParentRoute: () => rootRouteImport,
+    id: '/modules/',
+    path: '/modules/',
+    getParentRoute: () => ProjectsCustom_idRouteRoute,
   } as any)
 const ProjectsCustom_idModulesModule_idRoute =
   ProjectsCustom_idModulesModule_idRouteImport.update({
-    id: '/projects/$custom_id/modules/$module_id',
-    path: '/projects/$custom_id/modules/$module_id',
-    getParentRoute: () => rootRouteImport,
+    id: '/modules/$module_id',
+    path: '/modules/$module_id',
+    getParentRoute: () => ProjectsCustom_idRouteRoute,
   } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/projects/$custom_id': typeof ProjectsCustom_idRouteRouteWithChildren
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
@@ -88,7 +95,7 @@ export interface FileRoutesByFullPath {
   '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
   '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
-  '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
+  '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
 }
@@ -108,6 +115,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/projects/$custom_id': typeof ProjectsCustom_idRouteRouteWithChildren
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues/': typeof IssuesIndexRoute
@@ -123,6 +131,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/projects/$custom_id'
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues'
@@ -130,7 +139,7 @@ export interface FileRouteTypes {
     | '/test'
     | '/users'
     | '/projects/$custom_id/issues'
-    | '/projects/$custom_id'
+    | '/projects/$custom_id/'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules'
   fileRoutesByTo: FileRoutesByTo
@@ -149,6 +158,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/projects/$custom_id'
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues/'
@@ -163,16 +173,13 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  ProjectsCustom_idRouteRoute: typeof ProjectsCustom_idRouteRouteWithChildren
   IssuesIssue_idRoute: typeof IssuesIssue_idRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   IssuesIndexRoute: typeof IssuesIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   TestIndexRoute: typeof TestIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
-  ProjectsCustom_idIssuesRoute: typeof ProjectsCustom_idIssuesRoute
-  ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
-  ProjectsCustom_idModulesModule_idRoute: typeof ProjectsCustom_idModulesModule_idRoute
-  ProjectsCustom_idModulesIndexRoute: typeof ProjectsCustom_idModulesIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -226,50 +233,74 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IssuesIssue_idRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects/$custom_id/': {
-      id: '/projects/$custom_id/'
+    '/projects/$custom_id': {
+      id: '/projects/$custom_id'
       path: '/projects/$custom_id'
       fullPath: '/projects/$custom_id'
-      preLoaderRoute: typeof ProjectsCustom_idIndexRouteImport
+      preLoaderRoute: typeof ProjectsCustom_idRouteRouteImport
       parentRoute: typeof rootRouteImport
+    }
+    '/projects/$custom_id/': {
+      id: '/projects/$custom_id/'
+      path: '/'
+      fullPath: '/projects/$custom_id/'
+      preLoaderRoute: typeof ProjectsCustom_idIndexRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
     }
     '/projects/$custom_id/issues': {
       id: '/projects/$custom_id/issues'
-      path: '/projects/$custom_id/issues'
+      path: '/issues'
       fullPath: '/projects/$custom_id/issues'
       preLoaderRoute: typeof ProjectsCustom_idIssuesRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
     }
     '/projects/$custom_id/modules/': {
       id: '/projects/$custom_id/modules/'
-      path: '/projects/$custom_id/modules'
+      path: '/modules'
       fullPath: '/projects/$custom_id/modules'
       preLoaderRoute: typeof ProjectsCustom_idModulesIndexRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
     }
     '/projects/$custom_id/modules/$module_id': {
       id: '/projects/$custom_id/modules/$module_id'
-      path: '/projects/$custom_id/modules/$module_id'
+      path: '/modules/$module_id'
       fullPath: '/projects/$custom_id/modules/$module_id'
       preLoaderRoute: typeof ProjectsCustom_idModulesModule_idRouteImport
-      parentRoute: typeof rootRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
     }
   }
 }
 
+interface ProjectsCustom_idRouteRouteChildren {
+  ProjectsCustom_idIssuesRoute: typeof ProjectsCustom_idIssuesRoute
+  ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
+  ProjectsCustom_idModulesModule_idRoute: typeof ProjectsCustom_idModulesModule_idRoute
+  ProjectsCustom_idModulesIndexRoute: typeof ProjectsCustom_idModulesIndexRoute
+}
+
+const ProjectsCustom_idRouteRouteChildren: ProjectsCustom_idRouteRouteChildren =
+  {
+    ProjectsCustom_idIssuesRoute: ProjectsCustom_idIssuesRoute,
+    ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
+    ProjectsCustom_idModulesModule_idRoute:
+      ProjectsCustom_idModulesModule_idRoute,
+    ProjectsCustom_idModulesIndexRoute: ProjectsCustom_idModulesIndexRoute,
+  }
+
+const ProjectsCustom_idRouteRouteWithChildren =
+  ProjectsCustom_idRouteRoute._addFileChildren(
+    ProjectsCustom_idRouteRouteChildren,
+  )
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  ProjectsCustom_idRouteRoute: ProjectsCustom_idRouteRouteWithChildren,
   IssuesIssue_idRoute: IssuesIssue_idRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   IssuesIndexRoute: IssuesIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   TestIndexRoute: TestIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
-  ProjectsCustom_idIssuesRoute: ProjectsCustom_idIssuesRoute,
-  ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
-  ProjectsCustom_idModulesModule_idRoute:
-    ProjectsCustom_idModulesModule_idRoute,
-  ProjectsCustom_idModulesIndexRoute: ProjectsCustom_idModulesIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
