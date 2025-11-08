@@ -7,7 +7,6 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-src/routeTree.gen.ts
 node_modules
 dist
 dist-ssr
@@ -16,6 +15,7 @@ dist-ssr
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
+*.gen.ts
 .idea
 .DS_Store
 *.suo
