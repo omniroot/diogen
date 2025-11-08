@@ -1,6 +1,6 @@
-import { HStack, SegmentGroup } from "@chakra-ui/react";
-import { IconAssembly, IconBlocks, IconInfoCircle, IconLayoutKanban } from "@tabler/icons-react";
-import { Link, useLocation, useNavigate } from "@tanstack/react-router";
+import { SegmentGroup } from "@chakra-ui/react";
+import { IconAssembly, IconBlocks, IconLayoutKanban } from "@tabler/icons-react";
+import { useLocation, useNavigate } from "@tanstack/react-router";
 import { useState } from "react";
 import { useLocationStore } from "@/stores/location.store.tsx";
 

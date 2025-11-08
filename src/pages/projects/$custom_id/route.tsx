@@ -1,7 +1,6 @@
-import { Link as ChakraLink, HStack, Image, SegmentGroup, Skeleton, Text, VStack } from "@chakra-ui/react";
+import { HStack, Image, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
-import { createFileRoute, Link, Outlet, useLocation } from "@tanstack/react-router";
-import { useState } from "react";
+import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { getProjectOptions } from "@/api/queries/projects.api.ts";
 import { supabase } from "@/api/supabase.ts";
 import { ProjectLinkTabs } from "@/components/business/ProjectLinkTabs.tsx";

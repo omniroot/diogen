@@ -11,7 +11,7 @@ export const Route = createFileRoute("/projects/$custom_id/")({
 
 function RouteComponent() {
 	const { custom_id } = useLocationStore();
-	const { data: project, isFetching: projectIsLoading, refetch } = useQuery(getProjectOptions({ custom_id }));
+	const { data: project } = useQuery(getProjectOptions({ custom_id }));
 
 	return (
 		<>
