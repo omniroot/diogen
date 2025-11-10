@@ -18,7 +18,9 @@ import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
 import { Route as IssuesIssue_idRouteImport } from './../src/pages/issues/$issue_id'
 import { Route as ProjectsCustom_idRouteRouteImport } from './../src/pages/projects/$custom_id/route'
 import { Route as ProjectsCustom_idIndexRouteImport } from './../src/pages/projects/$custom_id/index'
-import { Route as ProjectsCustom_idIssuesRouteImport } from './../src/pages/projects/$custom_id/issues'
+import { Route as ProjectsCustom_idTimelineRouteImport } from './../src/pages/projects/$custom_id/timeline'
+import { Route as ProjectsCustom_idTableRouteImport } from './../src/pages/projects/$custom_id/table'
+import { Route as ProjectsCustom_idKanbanRouteImport } from './../src/pages/projects/$custom_id/kanban'
 import { Route as ProjectsCustom_idModulesIndexRouteImport } from './../src/pages/projects/$custom_id/modules/index'
 import { Route as ProjectsCustom_idModulesModule_idRouteImport } from './../src/pages/projects/$custom_id/modules/$module_id'
 
@@ -67,9 +69,20 @@ const ProjectsCustom_idIndexRoute = ProjectsCustom_idIndexRouteImport.update({
   path: '/',
   getParentRoute: () => ProjectsCustom_idRouteRoute,
 } as any)
-const ProjectsCustom_idIssuesRoute = ProjectsCustom_idIssuesRouteImport.update({
-  id: '/issues',
-  path: '/issues',
+const ProjectsCustom_idTimelineRoute =
+  ProjectsCustom_idTimelineRouteImport.update({
+    id: '/timeline',
+    path: '/timeline',
+    getParentRoute: () => ProjectsCustom_idRouteRoute,
+  } as any)
+const ProjectsCustom_idTableRoute = ProjectsCustom_idTableRouteImport.update({
+  id: '/table',
+  path: '/table',
+  getParentRoute: () => ProjectsCustom_idRouteRoute,
+} as any)
+const ProjectsCustom_idKanbanRoute = ProjectsCustom_idKanbanRouteImport.update({
+  id: '/kanban',
+  path: '/kanban',
   getParentRoute: () => ProjectsCustom_idRouteRoute,
 } as any)
 const ProjectsCustom_idModulesIndexRoute =
@@ -94,7 +107,9 @@ export interface FileRoutesByFullPath {
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
-  '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
+  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
+  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
+  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
@@ -107,7 +122,9 @@ export interface FileRoutesByTo {
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
-  '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
+  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
+  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
+  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
@@ -122,7 +139,9 @@ export interface FileRoutesById {
   '/projects/': typeof ProjectsIndexRoute
   '/test/': typeof TestIndexRoute
   '/users/': typeof UsersIndexRoute
-  '/projects/$custom_id/issues': typeof ProjectsCustom_idIssuesRoute
+  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
+  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
+  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules/': typeof ProjectsCustom_idModulesIndexRoute
@@ -138,7 +157,9 @@ export interface FileRouteTypes {
     | '/projects'
     | '/test'
     | '/users'
-    | '/projects/$custom_id/issues'
+    | '/projects/$custom_id/kanban'
+    | '/projects/$custom_id/table'
+    | '/projects/$custom_id/timeline'
     | '/projects/$custom_id/'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules'
@@ -151,7 +172,9 @@ export interface FileRouteTypes {
     | '/projects'
     | '/test'
     | '/users'
-    | '/projects/$custom_id/issues'
+    | '/projects/$custom_id/kanban'
+    | '/projects/$custom_id/table'
+    | '/projects/$custom_id/timeline'
     | '/projects/$custom_id'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules'
@@ -165,7 +188,9 @@ export interface FileRouteTypes {
     | '/projects/'
     | '/test/'
     | '/users/'
-    | '/projects/$custom_id/issues'
+    | '/projects/$custom_id/kanban'
+    | '/projects/$custom_id/table'
+    | '/projects/$custom_id/timeline'
     | '/projects/$custom_id/'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules/'
@@ -247,11 +272,25 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof ProjectsCustom_idIndexRouteImport
       parentRoute: typeof ProjectsCustom_idRouteRoute
     }
-    '/projects/$custom_id/issues': {
-      id: '/projects/$custom_id/issues'
-      path: '/issues'
-      fullPath: '/projects/$custom_id/issues'
-      preLoaderRoute: typeof ProjectsCustom_idIssuesRouteImport
+    '/projects/$custom_id/timeline': {
+      id: '/projects/$custom_id/timeline'
+      path: '/timeline'
+      fullPath: '/projects/$custom_id/timeline'
+      preLoaderRoute: typeof ProjectsCustom_idTimelineRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
+    }
+    '/projects/$custom_id/table': {
+      id: '/projects/$custom_id/table'
+      path: '/table'
+      fullPath: '/projects/$custom_id/table'
+      preLoaderRoute: typeof ProjectsCustom_idTableRouteImport
+      parentRoute: typeof ProjectsCustom_idRouteRoute
+    }
+    '/projects/$custom_id/kanban': {
+      id: '/projects/$custom_id/kanban'
+      path: '/kanban'
+      fullPath: '/projects/$custom_id/kanban'
+      preLoaderRoute: typeof ProjectsCustom_idKanbanRouteImport
       parentRoute: typeof ProjectsCustom_idRouteRoute
     }
     '/projects/$custom_id/modules/': {
@@ -272,7 +311,9 @@ declare module '@tanstack/react-router' {
 }
 
 interface ProjectsCustom_idRouteRouteChildren {
-  ProjectsCustom_idIssuesRoute: typeof ProjectsCustom_idIssuesRoute
+  ProjectsCustom_idKanbanRoute: typeof ProjectsCustom_idKanbanRoute
+  ProjectsCustom_idTableRoute: typeof ProjectsCustom_idTableRoute
+  ProjectsCustom_idTimelineRoute: typeof ProjectsCustom_idTimelineRoute
   ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
   ProjectsCustom_idModulesModule_idRoute: typeof ProjectsCustom_idModulesModule_idRoute
   ProjectsCustom_idModulesIndexRoute: typeof ProjectsCustom_idModulesIndexRoute
@@ -280,7 +321,9 @@ interface ProjectsCustom_idRouteRouteChildren {
 
 const ProjectsCustom_idRouteRouteChildren: ProjectsCustom_idRouteRouteChildren =
   {
-    ProjectsCustom_idIssuesRoute: ProjectsCustom_idIssuesRoute,
+    ProjectsCustom_idKanbanRoute: ProjectsCustom_idKanbanRoute,
+    ProjectsCustom_idTableRoute: ProjectsCustom_idTableRoute,
+    ProjectsCustom_idTimelineRoute: ProjectsCustom_idTimelineRoute,
     ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
     ProjectsCustom_idModulesModule_idRoute:
       ProjectsCustom_idModulesModule_idRoute,
