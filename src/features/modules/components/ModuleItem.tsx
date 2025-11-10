@@ -37,7 +37,7 @@ export const ModuleItem: FC<IModuleItemProps> = ({ module }) => {
 				to="/projects/$custom_id/modules/$module_id"
 				params={{ custom_id: String(custom_id), module_id: String(module.id) }}
 			>
-				<Text color="text" fontSize={"lg"}>
+				<Text color="text" fontSize={"lg"} textWrap={"nowrap"}>
 					{module.title}
 				</Text>
 				<Progress.Root w={"100%"} defaultValue={getRandomInt(10, 100)} minW="70%">
