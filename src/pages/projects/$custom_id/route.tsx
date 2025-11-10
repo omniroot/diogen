@@ -43,7 +43,7 @@ function RouteComponent() {
 				</Skeleton>
 			</VStack>
 
-			<ProjectLinkTabs />
+			<ProjectLinkTabs key={`project-${custom_id}`} />
 			{/* <Button onClick={() => toaster.create({ title: "Hello", description: "World", closable: true })}>Refetch</Button> */}
 
 			{/* <HStack w={"100%"} border={"2px solid {colors.outline}"} p={2} borderRadius={"md"}>
