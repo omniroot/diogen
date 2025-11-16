@@ -33,6 +33,37 @@ const HList = ({ title, children }: { title?: string; children?: ReactNode }) =>
 	);
 };
 
+const apiList = [
+	{
+		table: "projects",
+		list: true,
+		one: true,
+		update: true,
+		delete: true,
+	},
+	{
+		table: "modules",
+		list: false,
+		one: false,
+		update: false,
+		delete: false,
+	},
+	{
+		table: "issues",
+		list: false,
+		one: false,
+		update: false,
+		delete: false,
+	},
+	// {
+	// 	table: "projects",
+	// 	list: true,
+	// 	one: true,
+	// 	update: false,
+	// 	delete: false,
+	// },
+];
+
 function RouteComponent() {
 	const issue: IIssue = {
 		id: 1,
@@ -48,7 +79,7 @@ function RouteComponent() {
 		module_id: 1,
 		start_date: "2025-09-19T02:09:10.000Z",
 		user_id: "1",
-		project_id: null,
+		project_id: 5,
 		task_number: null,
 	};
 	return (
@@ -56,6 +87,22 @@ function RouteComponent() {
 			<Text fontSize={"2xl"} fontWeight={"bold"} m={"8px"}>
 				All ui components
 			</Text>
+			<Text fontSize={"xl"} color={"red.400"} fontWeight={"bold"} m={"8px"}>
+				Api
+			</Text>
+			<VList title="Api">
+				{apiList.map((api) => {
+					return (
+						<HList key={`${api.table}}`} title={api.table}>
+							<Text color={api.list ? "green.500" : "red.500"}>List</Text>
+							<Text color={api.one ? "green.500" : "red.500"}>One</Text>
+							<Text color={api.update ? "green.500" : "red.500"}>Update</Text>
+							<Text color={api.delete ? "green.500" : "red.500"}>Delete</Text>
+						</HList>
+					);
+				})}
+			</VList>
+
 			<EmojiPicker />
 			<VList title="Issue">
 				<IssueItem issue={issue} />
