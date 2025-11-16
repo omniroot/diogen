@@ -1,8 +1,7 @@
 import { Checkbox, chakra, HStack, type HTMLChakraProps, Text } from "@chakra-ui/react";
-import { useQuery } from "@tanstack/react-query";
 import { Link } from "@tanstack/react-router";
 import { type FC, forwardRef, useEffect, useState } from "react";
-import { getProjectsOptions } from "@/api/queries/projects.api.ts";
+import { useGetProjects } from "@/api/queries/projects.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
 import { IssueContextMenu } from "@/components/business/IssueContextMenu.tsx";
 import { LabelSelect } from "@/components/business/LabelSelect";
@@ -18,7 +17,9 @@ export const IssueItem: FC<IIssueItem> = forwardRef<HTMLDivElement, IIssueItem>(
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
 	const { issues, toggleIssue, getIsSelected } = useSelectionStore();
 	const [isSelected, setIsSelected] = useState(getIsSelected(issue));
-	const { data: projects } = useQuery(getProjectsOptions());
+	const { data: projects } = useGetProjects();
+
+	console.log({ projects });
 
 	useEffect(() => {
 		setIsSelected(getIsSelected(issue));

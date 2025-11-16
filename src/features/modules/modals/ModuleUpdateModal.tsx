@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { type FC, useState } from "react";
 import { type SubmitHandler, useForm } from "react-hook-form";
-import { queryKeys, refetchQuery } from "@/api/api.ts";
+import { keyFactory, refetchQuery } from "@/api/api.ts";
 import { getModuleOptions, updateModuleOptions } from "@/api/queries/modules.api.ts";
 import type { IModuleInsert } from "@/api/supabase.ts";
 import type { IModuleModal } from "@/features/modules/components/ModuleModal.tsx";
@@ -37,8 +37,8 @@ export const ModuleUpdateModal: FC<IModuleModal> = ({ open, onChange }) => {
 			{ ...data, id: module?.id },
 			{
 				onSuccess: () => {
-					refetchQuery(queryKeys.modules.one(module_id));
-					refetchQuery(queryKeys.modules.many(project_id));
+					refetchQuery(keyFactory.modules.one(module_id));
+					refetchQuery(keyFactory.modules.list(project_id));
 					reset();
 					close();
 				},

@@ -3,7 +3,7 @@ import { useMutation, useQuery } from "@tanstack/react-query";
 import { useNavigate } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import type { FC } from "react";
-import { queryKeys, refetchQuery } from "@/api/api.ts";
+import { keyFactory, refetchQuery } from "@/api/api.ts";
 import { deleteIssuesOptions, getIssuesOptions } from "@/api/queries/issues.api.ts";
 import { deleteModuleOptions, getModuleOptions } from "@/api/queries/modules.api.ts";
 import type { IModuleModal } from "@/features/modules/components/ModuleModal.tsx";
@@ -28,7 +28,7 @@ export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
 					{
 						onSuccess: () => {
 							onChange(false);
-							refetchQuery(queryKeys.modules.many(project_id));
+							refetchQuery(keyFactory.modules.list(project_id));
 							navigate({ to: "/projects/$custom_id", params: { custom_id: String(custom_id) } });
 						},
 					},

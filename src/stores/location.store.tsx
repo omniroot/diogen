@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
 import { useParams } from "@tanstack/react-router";
 import { useEffect, useLayoutEffect } from "react";
 import { create } from "zustand";
-import { getProjectOptions } from "@/api/queries/projects.api.ts";
+import { useGetProject } from "@/api/queries/projects.api.ts";
 
 interface ILocations {
 	project_id: number | null;
@@ -25,7 +24,7 @@ export const useLocationStore = create<ILocationStore>((set) => ({
 export const useLocationHandler = () => {
 	const { setLocations } = useLocationStore();
 	const params = useParams({ strict: false });
-	const { data: project } = useQuery(getProjectOptions({ custom_id: params.custom_id }));
+	const { data: project } = useGetProject({ custom_id: params.custom_id });
 
 	useLayoutEffect(() => {
 		setLocations({ ...params, module_id: Number(params.module_id), project_id: project?.id || -99999 });
