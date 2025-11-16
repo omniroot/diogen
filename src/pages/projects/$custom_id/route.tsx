@@ -1,7 +1,7 @@
 import { HStack, Image, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
-import { getProjectOptions } from "@/api/queries/projects.api.ts";
+import { useGetProject } from "@/api/queries/projects.api.ts";
 import { supabase } from "@/api/supabase.ts";
 import { ProjectLinkTabs } from "@/components/business/ProjectLinkTabs.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
@@ -13,18 +13,36 @@ export const Route = createFileRoute("/projects/$custom_id")({
 function RouteComponent() {
 	const { custom_id } = useLocationStore();
 	// const [value] = useState<string | null>(getSelectedValue(useLocation().href));
-	const { data: project, isFetching: projectIsLoading, refetch } = useQuery(getProjectOptions({ custom_id }));
+	const {
+		data: project,
+		isFetching: projectIsLoading,
+		refetch,
+	} = useGetProject({ custom_id });
 	const { data: logo } = useQuery({
 		queryKey: ["logo", project?.id],
 		queryFn: () => supabase.storage.from("logos").getPublicUrl(project?.logo || ""),
+		enabled: !!project?.logo,
 	});
+
+	console.log(project?.logo);
 
 	if (!project) return null;
 
 	return (
 		<>
-			<VStack w="100%" p="6px" borderRadius={"6px"} alignItems={"start"} border={"2px solid {colors.outline}"}>
-				<Image src={logo?.data.publicUrl} w={"50px"} h={"50px"} borderRadius={"md"} />
+			<VStack
+				w="100%"
+				p="6px"
+				borderRadius={"6px"}
+				alignItems={"start"}
+				border={"2px solid {colors.outline}"}
+			>
+				<Image
+					src={logo?.data.publicUrl || "/vite.svg"}
+					w={"50px"}
+					h={"50px"}
+					borderRadius={"md"}
+				/>
 				<Skeleton w="100%" loading={projectIsLoading} borderRadius={"8px"}>
 					<HStack w="100%">
 						{/* <ProjectCircle color={project?.color} /> */}
