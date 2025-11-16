@@ -10,14 +10,25 @@ interface ISidebarSection {
 	defaultOpen?: boolean;
 }
 
-export const SidebarSection: FC<ISidebarSection> = ({ title, action, children, defaultOpen = false }) => {
+export const SidebarSection: FC<ISidebarSection> = ({
+	title,
+	action,
+	children,
+	defaultOpen = false,
+}) => {
 	const { open, onToggle } = useDisclosure({
 		defaultOpen,
 	});
 	const [hoverRef, isHovered] = useHover();
 
 	return (
-		<Collapsible.Root w={"100%"} open={open} onOpenChange={onToggle}>
+		<Collapsible.Root
+			w={"100%"}
+			// h={"200px"}
+			open={open}
+			overflowY={"scroll"}
+			onOpenChange={onToggle}
+		>
 			<Collapsible.Trigger asChild>
 				<HStack
 					w={"100%"}
@@ -30,11 +41,16 @@ export const SidebarSection: FC<ISidebarSection> = ({ title, action, children, d
 					userSelect={"none"}
 					cursor={"pointer"}
 					// bg={{ _hover: "hover" }}
+
 					transition={"color 200ms, background 200ms"}
 					ref={hoverRef}
 				>
 					<HStack alignItems={"center"}>
-						<Text color={isHovered ? "text" : "subtext"} fontSize={"sm"} transition={"color 200ms"}>
+						<Text
+							color={isHovered ? "text" : "subtext"}
+							fontSize={"sm"}
+							transition={"color 200ms"}
+						>
 							{title}
 						</Text>
 						<Icon
@@ -46,7 +62,12 @@ export const SidebarSection: FC<ISidebarSection> = ({ title, action, children, d
 							<IconChevronRight />
 						</Icon>
 					</HStack>
-					<HStack alignItems={"center"} opacity={isHovered ? 1 : 0} transition={"opacity 200ms"}>
+					<HStack
+						alignItems={"center"}
+						opacity={isHovered ? 1 : 0}
+						transition={"opacity 200ms"}
+						onClick={(e) => e.stopPropagation()}
+					>
 						{action}
 					</HStack>
 				</HStack>
