@@ -7,6 +7,7 @@ export interface IGetIssuesOptions {
 	title?: IIssue["title"];
 	project_id?: IIssue["project_id"];
 	module_id?: IIssue["module_id"];
+	status?: IIssue["status"];
 
 	limit?: number;
 	filterByEmptyModule?: boolean;
