@@ -41,19 +41,23 @@ export const Sidebar = () => {
 		<VStack
 			w={isMobile ? "100dvw" : size}
 			display={isOpen2 ? "flex" : "none"}
-			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: 0 }}
+			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: -17 }}
 			h={isMobile ? "90dvh" : "99dvh"}
 			justify="flex-start"
 			p={"2"}
 			bg={"surface"}
 			ref={resizeRef}
-			mt={"60px"}
 			zIndex={10}
 		>
 			{!isMobile && <Header />}
 			<SidebarProjects />
-			<VStack w={"100%"} mt={"auto"}>
-				<VStack w={"100%"} bg={"surface_container"} border={"2px solid {colors.outline}"} borderRadius={"md"}>
+			<VStack w={"100%"} h="auto" mt={"auto"}>
+				<VStack
+					w={"100%"}
+					bg={"surface_container"}
+					border={"2px solid {colors.outline}"}
+					borderRadius={"md"}
+				>
 					{Object.entries(locations).map(([name, value]) => {
 						return (
 							<HStack w="100%" justifyContent={"space-between"} px={2} py={1} key={name}>
