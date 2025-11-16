@@ -11,6 +11,7 @@ import {
 	useDisclosure,
 	VStack,
 } from "@chakra-ui/react";
+import { RestrictToVerticalAxis } from "@dnd-kit/abstract/modifiers";
 import { useSortable } from "@dnd-kit/react/sortable";
 // import {  } from "@dnd-kit/sortable";
 import {
@@ -43,7 +44,7 @@ export const SidebarProjectItem: FC<ISidebarProjectItem> = ({ project, index }) 
 	const { ref } = useSortable({
 		id: project.id,
 		index: index,
-
+		modifiers: [RestrictToVerticalAxis],
 		data: () => {
 			return {
 				type: "project",

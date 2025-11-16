@@ -1,15 +1,14 @@
-import { getProjectsOptions } from "@/api/queries/projects.api.ts";
 import { IconButton } from "@chakra-ui/react";
-import { DragDropProvider } from "@dnd-kit/react";
 import { move } from "@dnd-kit/helpers";
-
+import { DragDropProvider } from "@dnd-kit/react";
 import { IconPlus } from "@tabler/icons-react";
-import { useQuery } from "@tanstack/react-query";
+import { useGetProjects } from "@/api/queries/projects.api.ts";
+import { supabase } from "@/api/supabase.ts";
 import { SidebarProjectItem } from "@/components/business/Sidebar/SidebarProjectItem.tsx";
 import { SidebarSection } from "@/components/business/Sidebar/SidebarSection.tsx";
 
 export const SidebarProjects = () => {
-	const { data: projects } = useQuery(getProjectsOptions());
+	const { data: projects } = useGetProjects();
 
 	if (!projects) return null;
 
@@ -23,7 +22,16 @@ export const SidebarProjects = () => {
 				</IconButton>
 			}
 		>
-			<DragDropProvider onDragEnd={(event) => move(projects, event)}>
+			<DragDropProvider
+				onDragEnd={async (event) => {
+					const newProjects = move(projects, event);
+					const newData = newProjects.map((p, index) => ({ id: p.id, position: index }));
+					await supabase.rpc("update_positions", {
+						table_name: "projects",
+						updates: newData,
+					});
+				}}
+			>
 				{projects?.map((project, index) => {
 					return <SidebarProjectItem key={project.id} project={project} index={index} />;
 				})}
