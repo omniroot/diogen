@@ -6,7 +6,8 @@ import { GanttIcon } from "@/assets/icons/gantt-icon.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
 
 const getSelectedValue = (currentPath: string) => {
-	return currentPath.split("/").reverse()[0];
+	const pathSegments = currentPath.split("/").filter(Boolean);
+	return pathSegments.length < 3 ? "general" : pathSegments[pathSegments.length - 1];
 };
 
 export const ProjectLinkTabs = () => {
@@ -24,7 +25,7 @@ export const ProjectLinkTabs = () => {
 		},
 		{
 			value: "kanban",
-			name: "kanban",
+			name: "Kanban",
 			icon: <IconLayoutKanban />,
 			path: `/projects/${custom_id}/kanban`,
 		},
@@ -44,9 +45,17 @@ export const ProjectLinkTabs = () => {
 
 	const [active, setActive] = useState(getSelectedValue(location.pathname));
 
+	console.log({ active });
+
 	console.log({ active }, getSelectedValue(location.pathname));
 
+	// useEffect(() => {
+
+	// }, [active]);
+
 	useEffect(() => {
+		setActive(getSelectedValue(location.pathname));
+
 		if (indicatorRef.current) {
 			const [activeWidth, activeHeight, activeLeft] = [
 				document.getElementById(`tab-${active}`)?.clientWidth,
@@ -59,7 +68,7 @@ export const ProjectLinkTabs = () => {
 			indicatorRef.current.style.height = `${activeHeight}px`;
 			indicatorRef.current.style.left = `${activeLeft}px`;
 		}
-	}, [active]);
+	}, [active, location]);
 
 	return (
 		<HStack
