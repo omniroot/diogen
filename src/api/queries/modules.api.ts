@@ -1,5 +1,5 @@
 import { mutationOptions, queryOptions } from "@tanstack/react-query";
-import { client, queryKeys } from "@/api/api.ts";
+import { client, keyFactory } from "@/api/api.ts";
 import { type IModule, type IModuleInsert, type IModuleUpdate, supabase } from "@/api/supabase.ts";
 
 interface IGetModulesOptions {
@@ -18,7 +18,7 @@ export const createModulesOptions = () =>
 	});
 
 export const getModulesOptions = (opts: IGetModulesOptions) => {
-	const key = queryKeys.modules.many(opts.project_id);
+	const key = keyFactory.modules.list(opts.project_id);
 	return queryOptions({
 		queryKey: key,
 		queryFn: async () => {
@@ -42,7 +42,7 @@ export const getModulesOptions = (opts: IGetModulesOptions) => {
 };
 
 export const getModuleOptions = (opts: IGetModulesOptions) => {
-	const key = queryKeys.modules.one(opts.id);
+	const key = keyFactory.modules.one(opts.id);
 	return queryOptions({
 		...getModulesOptions(opts),
 		queryKey: key,
