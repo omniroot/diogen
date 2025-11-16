@@ -1,8 +1,13 @@
-import { client } from "@/api/api.ts";
-import { supabase, type IProject } from "@/api/supabase.ts";
-import { queryOptions } from "@tanstack/react-query";
+import {
+	type UseMutationOptions,
+	type UseQueryOptions,
+	useMutation,
+	useQuery,
+} from "@tanstack/react-query";
+import { client, keyFactory } from "@/api/api.ts";
+import { type IProject, supabase } from "@/api/supabase.ts";
 
-interface IGetProjectsOptions {
+interface UseGetProjects {
 	id?: IProject["id"] | null | undefined;
 	custom_id?: IProject["custom_id"] | null | undefined;
 	title?: IProject["title"] | null | undefined;
@@ -11,13 +16,16 @@ interface IGetProjectsOptions {
 	orderByPosition?: boolean | null | undefined;
 }
 
-export const getProjectsOptions = ({ limit, orderByPosition = true, ...opts }: IGetProjectsOptions = {}) => {
-	const key = ["get", "projects", opts];
-	return queryOptions({
+export const useGetProjects = (
+	{ limit, orderByPosition = true, ...vars }: UseGetProjects = {},
+	override: Partial<UseQueryOptions<IProject[]>> = {},
+) => {
+	const key = keyFactory.projects.list({ vars, orderByPosition });
+	return useQuery<IProject[]>({
 		queryKey: key,
 		queryFn: async () => {
 			let query = supabase.from("projects").select();
-			Object.entries(opts).forEach(([key, value]) => {
+			Object.entries(vars).forEach(([key, value]) => {
 				if (value) query = query.eq(key, value);
 			});
 
@@ -36,12 +44,92 @@ export const getProjectsOptions = ({ limit, orderByPosition = true, ...opts }: I
 		placeholderData: () => {
 			return client.getQueryData(key);
 		},
+		...override,
 	});
 };
 
-export const getProjectOptions = ({ limit = 1, ...opts }: IGetProjectsOptions = {}) =>
-	queryOptions({
-		...getProjectsOptions({ limit, ...opts }),
-		queryKey: ["get", "project", opts],
-		select: (data) => data[0],
+// const { data } = useGetProjects({ id: 1 });
+
+interface UseGetProject {
+	id?: IProject["id"] | null | undefined;
+	custom_id?: IProject["custom_id"] | null | undefined;
+	title?: IProject["title"] | null | undefined;
+}
+
+export const useGetProject = (
+	vars: UseGetProject = {},
+	override: Partial<UseQueryOptions<IProject>> = {},
+) => {
+	const key = keyFactory.projects.one(vars);
+	return useQuery<IProject>({
+		queryKey: key,
+		queryFn: async () => {
+			let query = supabase.from("projects").select();
+			Object.entries(vars).forEach(([key, value]) => {
+				if (value) query = query.eq(key, value);
+			});
+
+			const { data, error } = await query.single();
+
+			if (error) throw error;
+			return data;
+		},
+		initialData: () => {
+			return client.getQueryData(key);
+		},
+		placeholderData: () => {
+			return client.getQueryData(key);
+		},
+		...override,
 	});
+};
+
+export interface UseUpdateProjectsInput {
+	ids: IProject["id"] | IProject["id"][];
+	data: Partial<IProject>;
+}
+
+export const useUpdateProjects = (
+	override: Partial<UseMutationOptions<unknown, unknown, UseUpdateProjectsInput>> = {},
+) => {
+	const key = keyFactory.projects.update();
+
+	return useMutation<unknown, unknown, UseUpdateProjectsInput>({
+		mutationKey: key,
+
+		mutationFn: async ({ ids, data }) => {
+			const idsArray = Array.isArray(ids) ? ids : [ids];
+
+			const { error } = await supabase.from("projects").update(data).in("id", idsArray);
+
+			if (error) throw error;
+
+			return { updated: idsArray };
+		},
+
+		...override,
+	});
+};
+
+interface UseDeleteProjects {
+	ids: IProject["id"] | IProject["id"][];
+}
+
+export const useDeleteProjects = (
+	override: Partial<UseMutationOptions<null, unknown, UseDeleteProjects["ids"]>> = {},
+) => {
+	const key = keyFactory.projects.delete();
+	return useMutation<null, unknown, UseDeleteProjects["ids"]>({
+		mutationKey: key,
+		mutationFn: async (ids) => {
+			const idsArray = Array.isArray(ids) ? ids : [ids];
+
+			const { error } = await supabase.from("projects").delete().in("id", idsArray);
+
+			if (error) throw error;
+
+			return null;
+		},
+		...override,
+	});
+};

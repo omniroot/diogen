@@ -226,6 +226,11 @@ export type Database = {
           isSetofReturn: true
         }
       }
+      update_positions: {
+        Args: { table_name: string; updates: Json }
+        Returns: undefined
+      }
+      update_project_positions: { Args: { updates: Json }; Returns: undefined }
     }
     Enums: {
       issues_status: "" | "backlog" | "todo" | "progress" | "done" | "canceled"
