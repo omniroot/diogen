@@ -2,10 +2,10 @@ import { Menu, Portal, VStack } from "@chakra-ui/react";
 import { IconChevronRight } from "@tabler/icons-react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import type { FC } from "react";
-import { queryKeys, refetchQuery } from "@/api/api.ts";
+import { keyFactory, refetchQuery } from "@/api/api.ts";
 import { deleteIssuesOptions } from "@/api/queries/issues.api.ts";
 import { getModulesOptions } from "@/api/queries/modules.api.ts";
-import { getProjectsOptions } from "@/api/queries/projects.api.ts";
+import { useGetProjects } from "@/api/queries/projects.api.ts";
 import type { IIssue } from "@/api/supabase.ts";
 import { toaster } from "@/theme/components/toaster.tsx";
 
@@ -51,7 +51,7 @@ interface IProps {
 }
 export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => {
 	// const { data: user } = useGetUser();
-	const { data: projects } = useQuery({ ...getProjectsOptions({}) });
+	const { data: projects } = useGetProjects();
 	const { data: modules } = useQuery({ ...getModulesOptions({ project_id: issue?.project_id }) });
 	const { mutate: deleteIssue } = useMutation(deleteIssuesOptions());
 	// const { mutate: updateIssue } = useMutation(updateIssueOptions());
@@ -126,7 +126,7 @@ export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => 
 
 				deleteIssue([issue.id], {
 					onSuccess: () => {
-						refetchQuery([queryKeys.issues.all]);
+						refetchQuery([keyFactory.issues.all]);
 						toaster.create({
 							title: `Issue ${issue?.title} completed`,
 							type: "success",
