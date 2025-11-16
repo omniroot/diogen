@@ -1,4 +1,16 @@
-import { Collapsible, HStack, Icon, IconButton, useDisclosure, VStack } from "@chakra-ui/react";
+import {
+	Button,
+	CloseButton,
+	Collapsible,
+	Dialog,
+	HStack,
+	Icon,
+	IconButton,
+	Portal,
+	Text,
+	useDisclosure,
+	VStack,
+} from "@chakra-ui/react";
 import { useSortable } from "@dnd-kit/react/sortable";
 // import {  } from "@dnd-kit/sortable";
 import {
@@ -11,10 +23,13 @@ import {
 } from "@tabler/icons-react";
 import { useHover } from "@uidotdev/usehooks";
 import type { FC } from "react";
+import { keyFactory, refetchQuery } from "@/api/api.ts";
+import { useDeleteProjects } from "@/api/queries/projects.api.ts";
 import type { IProject } from "@/api/supabase.ts";
 import { ProjectCircle } from "@/components/business/ProjectCircle/ProjectCircle.tsx";
 import { SidebarItem } from "@/components/business/Sidebar/SidebarItem.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
+import { toaster } from "@/theme/components/toaster.tsx";
 
 interface ISidebarProjectItem {
 	project: IProject;
@@ -24,6 +39,7 @@ interface ISidebarProjectItem {
 export const SidebarProjectItem: FC<ISidebarProjectItem> = ({ project, index }) => {
 	const [hoverRef, isHovered] = useHover();
 	const { custom_id } = useLocationStore();
+	const { mutate: deleteProject } = useDeleteProjects();
 	const { ref } = useSortable({
 		id: project.id,
 		index: index,
@@ -50,6 +66,17 @@ export const SidebarProjectItem: FC<ISidebarProjectItem> = ({ project, index }) 
 			ref(node);
 			hoverRef(node);
 		}
+	};
+
+	const onDeleteClick = () => {
+		deleteProject(project.id, {
+			onSuccess: () => {
+				toaster.create({
+					title: `Project ${project.title} deleted!`,
+				});
+				refetchQuery(keyFactory.projects.all);
+			},
+		});
 	};
 
 	return (
@@ -84,20 +111,53 @@ export const SidebarProjectItem: FC<ISidebarProjectItem> = ({ project, index }) 
 
 						<ProjectCircle color={project.color} variant={open ? "filled" : "outline"} />
 						{project.title}
-						<Icon color={"subtext"} size={"md"} rotate={open ? "90deg" : "0deg"} transition={"rotate 200ms"}>
+						<Icon
+							color={"subtext"}
+							size={"md"}
+							rotate={open ? "90deg" : "0deg"}
+							transition={"rotate 200ms"}
+						>
 							<IconChevronRight />
 						</Icon>
 					</HStack>
-					<HStack>
-						<IconButton
-							color={"subtext"}
-							opacity={isHovered ? 1 : 0}
-							transition={"opacity 200ms"}
-							variant={"ghost"}
-							size={"sm"}
-						>
-							<IconTrash />
-						</IconButton>
+					<HStack onClick={(e) => e.stopPropagation()}>
+						<Dialog.Root>
+							<Dialog.Trigger asChild>
+								<IconButton
+									color={"subtext"}
+									opacity={isHovered ? 1 : 0}
+									transition={"opacity 200ms"}
+									variant={"ghost"}
+									size={"sm"}
+								>
+									<IconTrash />
+								</IconButton>
+							</Dialog.Trigger>
+							<Portal>
+								<Dialog.Backdrop />
+								<Dialog.Positioner>
+									<Dialog.Content>
+										<Dialog.Header>
+											<Dialog.Title>Delete {project.title}?</Dialog.Title>
+										</Dialog.Header>
+										<Dialog.Body>
+											<Text>You are sure sure you want to remove this project?</Text>
+										</Dialog.Body>
+										<Dialog.Footer>
+											<Dialog.ActionTrigger asChild>
+												<Button variant="outline">Cancel</Button>
+											</Dialog.ActionTrigger>
+											<Button bg={"red.500"} onClick={onDeleteClick}>
+												Delete
+											</Button>
+										</Dialog.Footer>
+										<Dialog.CloseTrigger asChild>
+											<CloseButton size="sm" />
+										</Dialog.CloseTrigger>
+									</Dialog.Content>
+								</Dialog.Positioner>
+							</Portal>
+						</Dialog.Root>
 					</HStack>
 				</HStack>
 			</Collapsible.Trigger>
@@ -112,7 +172,7 @@ export const SidebarProjectItem: FC<ISidebarProjectItem> = ({ project, index }) 
 					<SidebarItem
 						icon={<IconCopyCheck />}
 						title="Issues"
-						to={"/projects/$custom_id/issues"}
+						to={"/projects/$custom_id/kanban"}
 						custom_id={project.custom_id}
 					/>
 					<SidebarItem
