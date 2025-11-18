@@ -9,11 +9,15 @@ import { useModals } from "@/stores/modals.store.tsx";
 
 export const SearchModal = () => {
 	const isDesktop = useMediaQuery("(min-width: 1280px)");
-	const { isOpen, open, close } = useModals("search");
+	const { isOpen, open, close, isAnyOpen } = useModals("search");
 	const [search, setSearch] = useState("");
 	const debouncedSearch = useDebounceValue(search, 400);
 
-	const { data: results, refetch, isFetching } = useGetIssues({ title: debouncedSearch }, { enabled: false });
+	const {
+		data: results,
+		refetch,
+		isFetching,
+	} = useGetIssues({ title: debouncedSearch }, { enabled: false });
 
 	useEffect(() => {
 		console.log("search", debouncedSearch);
@@ -22,7 +26,7 @@ export const SearchModal = () => {
 
 	useKeyPress("p", (_, event) => {
 		// setCreateModuleModal(true);
-		if (!isOpen) {
+		if (!isAnyOpen()) {
 			console.log("P pressed");
 			open();
 			event.preventDefault();
@@ -48,7 +52,13 @@ export const SearchModal = () => {
 						{/* <Dialog.Header>
 							<Dialog.Title>Create Issue</Dialog.Title>
 						</Dialog.Header> */}
-						<Dialog.Body display={"flex"} flexDirection={"column"} gap={4} p={2} maxH={"70dvh"}>
+						<Dialog.Body
+							display={"flex"}
+							flexDirection={"column"}
+							gap={4}
+							p={2}
+							maxH={"70dvh"}
+						>
 							{/* {custom_id} {">"} {"modules > "} {module?.title} */}
 							{/* <HStack gap={0} position={"relative"} > */}
 							{/* <EmojiPicker onChange={setEmoji} /> */}
@@ -56,7 +66,12 @@ export const SearchModal = () => {
 							<InputGroup
 								startElement={<IconSearch />}
 								endElement={
-									<IconLoader2 style={{ animation: "var(--chakra-animations-spin)", opacity: isFetching ? 1 : 0 }} />
+									<IconLoader2
+										style={{
+											animation: "var(--chakra-animations-spin)",
+											opacity: isFetching ? 1 : 0,
+										}}
+									/>
 								}
 								gap={2}
 								// border={"1px solid {colors.outline}"}
