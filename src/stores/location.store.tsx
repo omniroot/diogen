@@ -24,10 +24,19 @@ export const useLocationStore = create<ILocationStore>((set) => ({
 export const useLocationHandler = () => {
 	const { setLocations } = useLocationStore();
 	const params = useParams({ strict: false });
-	const { data: project } = useGetProject({ custom_id: params.custom_id });
+	const { data: project, error } = useGetProject(
+		{ custom_id: params.custom_id },
+		{ enabled: !!params.custom_id },
+	);
+
+	console.log("@Location handler", error);
 
 	useLayoutEffect(() => {
-		setLocations({ ...params, module_id: Number(params.module_id), project_id: project?.id || -99999 });
+		setLocations({
+			...params,
+			module_id: Number(params.module_id),
+			project_id: project?.id || -99999,
+		});
 	}, [params, setLocations, project]);
 
 	useEffect(() => {
