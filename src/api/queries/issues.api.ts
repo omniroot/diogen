@@ -1,6 +1,16 @@
-import { mutationOptions, queryOptions, type UseQueryOptions, useQuery } from "@tanstack/react-query";
+import {
+	mutationOptions,
+	queryOptions,
+	type UseQueryOptions,
+	useQuery,
+} from "@tanstack/react-query";
 import { client } from "@/api/api.ts";
-import { type IIssue, type IIssueInsert, type IIssueUpdate, supabase } from "@/api/supabase";
+import {
+	diogen,
+	type IIssue,
+	type IIssueInsert,
+	type IIssueUpdate,
+} from "@/api/supabase";
 
 export interface IGetIssuesOptions {
 	id?: IIssue["id"];
@@ -24,7 +34,7 @@ export const getIssuesOptions = ({
 	return queryOptions({
 		queryKey: key,
 		queryFn: async () => {
-			let query = supabase.from("issues").select("*");
+			let query = diogen.from("issues").select("*");
 
 			Object.entries(opts).forEach(([key, value]) => {
 				if (value) query = query.eq(key, value);
@@ -59,7 +69,11 @@ export const getIssueOptions = ({ limit = 1, ...opts }: IGetIssuesOptions = {}) 
 export const updateIssueOptions = () =>
 	mutationOptions<IIssue, unknown, IIssueUpdate>({
 		mutationFn: async (issue) => {
-			const query = supabase.from("issues").update(issue).eq("id", Number(issue.id)).select();
+			const query = diogen
+				.from("issues")
+				.update(issue)
+				.eq("id", Number(issue.id))
+				.select();
 			const { data, error } = await query.single();
 			if (error) throw error;
 			return data;
@@ -69,7 +83,7 @@ export const updateIssueOptions = () =>
 export const createIssueOptions = () =>
 	mutationOptions<IIssue, unknown, IIssueInsert>({
 		mutationFn: async (issue) => {
-			const query = supabase.from("issues").insert(issue);
+			const query = diogen.from("issues").insert(issue);
 			const { data, error } = await query.single();
 			if (error) throw error;
 			return data;
@@ -79,7 +93,7 @@ export const createIssueOptions = () =>
 export const deleteIssuesOptions = () =>
 	mutationOptions<null, unknown, IIssue["id"][]>({
 		mutationFn: async (ids) => {
-			const query = supabase.from("issues").delete().in("id", ids);
+			const query = diogen.from("issues").delete().in("id", ids);
 			const { error } = await query;
 			if (error) throw error;
 			return null;
@@ -108,7 +122,7 @@ export const useGetIssues = (
 	return useQuery<IIssue[]>({
 		queryKey: [""],
 		queryFn: async () => {
-			let query = supabase.from("issues").select("*");
+			let query = diogen.from("issues").select("*");
 
 			Object.entries(vars).forEach(([key, value]) => {
 				if (value) query = query.eq(key, value);

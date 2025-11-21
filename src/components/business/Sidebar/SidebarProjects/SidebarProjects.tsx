@@ -3,7 +3,7 @@ import { move } from "@dnd-kit/helpers";
 import { DragDropProvider } from "@dnd-kit/react";
 import { IconPlus } from "@tabler/icons-react";
 import { useGetProjects } from "@/api/queries/projects.api.ts";
-import { supabase } from "@/api/supabase.ts";
+import { diogen } from "@/api/supabase.ts";
 import { SidebarProjectItem } from "@/components/business/Sidebar/SidebarProjectItem.tsx";
 import { SidebarSection } from "@/components/business/Sidebar/SidebarSection.tsx";
 
@@ -26,7 +26,7 @@ export const SidebarProjects = () => {
 				onDragEnd={async (event) => {
 					const newProjects = move(projects, event);
 					const newData = newProjects.map((p, index) => ({ id: p.id, position: index }));
-					await supabase.rpc("update_positions", {
+					await diogen.rpc("update_positions", {
 						table_name: "projects",
 						updates: newData,
 					});

@@ -5,7 +5,7 @@ import {
 	useQuery,
 } from "@tanstack/react-query";
 import { client, keyFactory } from "@/api/api.ts";
-import { type IProject, supabase } from "@/api/supabase.ts";
+import { diogen, type IProject } from "@/api/supabase.ts";
 
 interface UseGetProjects {
 	id?: IProject["id"] | null | undefined;
@@ -24,7 +24,7 @@ export const useGetProjects = (
 	return useQuery<IProject[]>({
 		queryKey: key,
 		queryFn: async () => {
-			let query = supabase.from("projects").select();
+			let query = diogen.from("projects").select();
 			Object.entries(vars).forEach(([key, value]) => {
 				if (value) query = query.eq(key, value);
 			});
@@ -64,7 +64,7 @@ export const useGetProject = (
 	return useQuery<IProject>({
 		queryKey: key,
 		queryFn: async () => {
-			let query = supabase.from("projects").select();
+			let query = diogen.from("projects").select();
 			Object.entries(vars).forEach(([key, value]) => {
 				if (value) query = query.eq(key, value);
 			});
@@ -100,7 +100,7 @@ export const useUpdateProjects = (
 		mutationFn: async ({ ids, data }) => {
 			const idsArray = Array.isArray(ids) ? ids : [ids];
 
-			const { error } = await supabase.from("projects").update(data).in("id", idsArray);
+			const { error } = await diogen.from("projects").update(data).in("id", idsArray);
 
 			if (error) throw error;
 
@@ -124,7 +124,7 @@ export const useDeleteProjects = (
 		mutationFn: async (ids) => {
 			const idsArray = Array.isArray(ids) ? ids : [ids];
 
-			const { error } = await supabase.from("projects").delete().in("id", idsArray);
+			const { error } = await diogen.from("projects").delete().in("id", idsArray);
 
 			if (error) throw error;
 

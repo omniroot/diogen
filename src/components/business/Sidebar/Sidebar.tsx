@@ -2,7 +2,7 @@ import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
-import { supabase } from "@/api/supabase.ts";
+import { diogen } from "@/api/supabase.ts";
 import { Header } from "@/components/business/Header.tsx";
 import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
 import { useResizable } from "@/hooks/useResizable.tsx";
@@ -31,7 +31,7 @@ export const Sidebar = () => {
 	const isOpen2 = isOpen ? true : isTablet || isDesktop ? true : false;
 
 	const onLoginWithGithubClick = async () => {
-		const { data, error } = await supabase.auth.signInWithOAuth({
+		const { data, error } = await diogen.auth.signInWithOAuth({
 			provider: "github",
 		});
 		console.log("Authorized: ", data, error);

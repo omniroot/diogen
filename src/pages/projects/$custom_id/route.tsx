@@ -2,7 +2,7 @@ import { HStack, Image, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { useQuery } from "@tanstack/react-query";
 import { createFileRoute, Outlet } from "@tanstack/react-router";
 import { useGetProject } from "@/api/queries/projects.api.ts";
-import { supabase } from "@/api/supabase.ts";
+import { diogen } from "@/api/supabase.ts";
 import { ProjectLinkTabs } from "@/components/business/ProjectLinkTabs.tsx";
 import { useLocationStore } from "@/stores/location.store.tsx";
 
@@ -20,7 +20,7 @@ function RouteComponent() {
 	} = useGetProject({ custom_id });
 	const { data: logo } = useQuery({
 		queryKey: ["logo", project?.id],
-		queryFn: () => supabase.storage.from("logos").getPublicUrl(project?.logo || ""),
+		queryFn: () => diogen.storage.from("logos").getPublicUrl(project?.logo || ""),
 		enabled: !!project?.logo,
 	});
 
