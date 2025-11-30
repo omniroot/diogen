@@ -56,47 +56,6 @@ export type Database = {
         }
         Relationships: []
       }
-      habit_records: {
-        Row: {
-          completed: boolean | null
-          created_at: string
-          date: string | null
-          habit_id: number | null
-          id: number
-          updated_at: string | null
-          user_id: string | null
-          value: number | null
-        }
-        Insert: {
-          completed?: boolean | null
-          created_at?: string
-          date?: string | null
-          habit_id?: number | null
-          id?: number
-          updated_at?: string | null
-          user_id?: string | null
-          value?: number | null
-        }
-        Update: {
-          completed?: boolean | null
-          created_at?: string
-          date?: string | null
-          habit_id?: number | null
-          id?: number
-          updated_at?: string | null
-          user_id?: string | null
-          value?: number | null
-        }
-        Relationships: [
-          {
-            foreignKeyName: "habit_records_habit_id_fkey"
-            columns: ["habit_id"]
-            isOneToOne: false
-            referencedRelation: "habits"
-            referencedColumns: ["id"]
-          },
-        ]
-      }
       habits: {
         Row: {
           color: string | null
@@ -142,6 +101,68 @@ export type Database = {
           unit?: string | null
           updated_at?: string | null
           user_id?: string | null
+        }
+        Relationships: []
+      }
+      habits_records: {
+        Row: {
+          completed: boolean | null
+          created_at: string
+          date: string | null
+          habit_id: number | null
+          id: number
+          updated_at: string | null
+          user_id: string | null
+          value: number | null
+        }
+        Insert: {
+          completed?: boolean | null
+          created_at?: string
+          date?: string | null
+          habit_id?: number | null
+          id?: number
+          updated_at?: string | null
+          user_id?: string | null
+          value?: number | null
+        }
+        Update: {
+          completed?: boolean | null
+          created_at?: string
+          date?: string | null
+          habit_id?: number | null
+          id?: number
+          updated_at?: string | null
+          user_id?: string | null
+          value?: number | null
+        }
+        Relationships: [
+          {
+            foreignKeyName: "habit_records_habit_id_fkey"
+            columns: ["habit_id"]
+            isOneToOne: false
+            referencedRelation: "habits"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      posts: {
+        Row: {
+          created_at: string
+          id: number
+          likes: number | null
+          title: string | null
+        }
+        Insert: {
+          created_at?: string
+          id?: number
+          likes?: number | null
+          title?: string | null
+        }
+        Update: {
+          created_at?: string
+          id?: number
+          likes?: number | null
+          title?: string | null
         }
         Relationships: []
       }

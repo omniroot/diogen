@@ -13,34 +13,31 @@ export const client = new QueryClient({
 const buildKey = (...parts: any[]) => {
 	const clean = (value: any): any => {
 		if (value === null || value === undefined) return undefined;
-
 		// ---------- 1. ТУПЛЫ (["name", value]) ----------
 		if (Array.isArray(value) && value.length === 2 && typeof value[0] === "string") {
 			return { [value[0]]: clean(value[1]) };
 		}
-
 		// ---------- 2. ПУСТЫЕ МАССИВЫ ----------
 		if (Array.isArray(value)) {
 			if (value.length === 0) return undefined;
 			return value.map(clean).filter((v) => v !== undefined);
 		}
-
+		// ---------- HANDLE DATES BEFORE OBJECTS ----------
+		if (value instanceof Date) {
+			return value.toISOString(); // Serialize Date to ISO string for key stability
+		}
 		// ---------- 3. ОБЪЕКТЫ ----------
 		if (typeof value === "object") {
 			const entries = Object.entries(value)
 				.map(([k, v]) => [k, clean(v)])
 				.filter(([_, v]) => v !== undefined)
 				.sort(([a], [b]) => a.localeCompare(b));
-
 			if (entries.length === 0) return undefined;
-
 			return Object.fromEntries(entries);
 		}
-
 		// ---------- 4. ПРИМИТИВЫ ----------
 		return value;
 	};
-
 	return parts.map(clean).filter((v) => v !== undefined); // убираем undefined после чистки
 };
 
@@ -51,6 +48,7 @@ function createKeySection(name: string) {
 		all,
 		list: (...vars: unknown[]) => buildKey(...all, "list", ...vars),
 		one: (...vars: unknown[]) => buildKey(...all, "one", ...vars),
+		create: (...vars: unknown[]) => buildKey(...all, "create", ...vars),
 		update: (...vars: unknown[]) => buildKey(...all, "update", ...vars),
 		delete: (...vars: unknown[]) => buildKey(...all, "delete", ...vars),
 	};
@@ -60,36 +58,17 @@ export const keyFactory = {
 	projects: createKeySection("projects"),
 	issues: createKeySection("issues"),
 	modules: createKeySection("modules"),
+	habits: createKeySection("habits"),
+	habit_records: createKeySection("habit_records"),
+	days_records: createKeySection("days_records"),
 };
 
-// Maybe in future, but now is useless
-
-// export type OverrideQueryOptions<TResult = unknown, TError = unknown, TData = unknown> = Partial<
-// 	UseQueryOptions<TResult, TError, TData>
-// >;
-// export type OverrideMutationOptions<TResult = unknown, TError = unknown, TData = unknown> = Partial<
-// 	UseMutationOptions<TResult, TError, TData>
-// >;
-
-// export const queryBuilder = <TResult = unknown, TError = unknown, TData extends TResult = TResult>(
-// 	queryOptions: UseQueryOptions<TResult, TError, TData>,
-// 	overrideQueryOptions: OverrideQueryOptions<TResult, TError, TData> = {},
-// ) => {
-// 	return useQuery<TResult, TError, TResult>({
-// 		...queryOptions,
-// 		...overrideQueryOptions,
-// 	});
-// };
-
-// export const mutationBuilder = <TResult = unknown, TError = unknown, TData = unknown>(
-// 	mutationOptions: UseMutationOptions<TResult, TError, TData>,
-// 	overrideMutationOptions: OverrideMutationOptions<TResult, TError, TData> = {},
-// ) => {
-// 	return useMutation({
-// 		...mutationOptions,
-// 		...overrideMutationOptions,
-// 	});
-// };
+//
+// REQUIREMENTS FOR API HOOKS
+// HOOKS: useGetProjects, useGetProject, useCreateProject, useUpdateProjects, useDeleteProjects
+// MUTATIONS: return result with query.select().single()
+// ERROR: handle errors with handleError util
+//
 
 export const refetchQuery = (
 	key: (string | number | string[] | null | undefined | any)[],

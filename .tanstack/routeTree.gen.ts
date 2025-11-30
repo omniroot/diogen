@@ -13,6 +13,7 @@ import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
 import { Route as TestIndexRouteImport } from './../src/pages/test/index'
 import { Route as ProjectsIndexRouteImport } from './../src/pages/projects/index'
+import { Route as PostsIndexRouteImport } from './../src/pages/posts/index'
 import { Route as IssuesIndexRouteImport } from './../src/pages/issues/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
 import { Route as IssuesIssue_idRouteImport } from './../src/pages/issues/$issue_id'
@@ -42,6 +43,11 @@ const TestIndexRoute = TestIndexRouteImport.update({
 const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
   id: '/projects/',
   path: '/projects/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PostsIndexRoute = PostsIndexRouteImport.update({
+  id: '/posts/',
+  path: '/posts/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IssuesIndexRoute = IssuesIndexRouteImport.update({
@@ -104,6 +110,7 @@ export interface FileRoutesByFullPath {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
+  '/posts': typeof PostsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
@@ -119,6 +126,7 @@ export interface FileRoutesByTo {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
+  '/posts': typeof PostsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
@@ -136,6 +144,7 @@ export interface FileRoutesById {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues/': typeof IssuesIndexRoute
+  '/posts/': typeof PostsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/test/': typeof TestIndexRoute
   '/users/': typeof UsersIndexRoute
@@ -154,6 +163,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues'
+    | '/posts'
     | '/projects'
     | '/test'
     | '/users'
@@ -169,6 +179,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues'
+    | '/posts'
     | '/projects'
     | '/test'
     | '/users'
@@ -185,6 +196,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues/'
+    | '/posts/'
     | '/projects/'
     | '/test/'
     | '/users/'
@@ -202,6 +214,7 @@ export interface RootRouteChildren {
   IssuesIssue_idRoute: typeof IssuesIssue_idRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   IssuesIndexRoute: typeof IssuesIndexRoute
+  PostsIndexRoute: typeof PostsIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   TestIndexRoute: typeof TestIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
@@ -235,6 +248,13 @@ declare module '@tanstack/react-router' {
       path: '/projects'
       fullPath: '/projects'
       preLoaderRoute: typeof ProjectsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/issues/': {
@@ -341,6 +361,7 @@ const rootRouteChildren: RootRouteChildren = {
   IssuesIssue_idRoute: IssuesIssue_idRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   IssuesIndexRoute: IssuesIndexRoute,
+  PostsIndexRoute: PostsIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   TestIndexRoute: TestIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
