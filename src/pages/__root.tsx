@@ -1,3 +1,4 @@
+import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useMediaQuery } from "@uidotdev/usehooks";
@@ -29,7 +30,12 @@ const RootLayout = () => {
 			<SearchModal />
 			<ModuleModal />
 			<IssueModal />
-			<TanStackRouterDevtools />
+			<ReactQueryDevtools
+				initialIsOpen={false}
+				position="bottom"
+				buttonPosition="top-right"
+			/>
+			<TanStackRouterDevtools position="top-left" />
 		</>
 	);
 };
