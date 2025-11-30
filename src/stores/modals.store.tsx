@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type ModalType = "issue" | "module" | "search";
+type ModalType = "issue" | "module" | "habit" | "search";
 type ModalMode = "create" | "update" | "delete";
 
 interface ModalState {
