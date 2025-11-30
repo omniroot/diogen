@@ -4,6 +4,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
 import { diogen } from "@/api/supabase.ts";
 import { Header } from "@/components/business/Header.tsx";
+import { SidebarMenus } from "@/components/business/Sidebar/SidebarMenu/SidebarMenu.tsx";
 import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
 import { useResizable } from "@/hooks/useResizable.tsx";
 import { useHeaderStore } from "@/stores/header.store.tsx";
@@ -50,6 +51,7 @@ export const Sidebar = () => {
 			zIndex={10}
 		>
 			{!isMobile && <Header />}
+			<SidebarMenus />
 			<SidebarProjects />
 			<VStack w={"100%"} h="auto" mt={"auto"}>
 				<VStack

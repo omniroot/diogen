@@ -1,5 +1,5 @@
 import { HStack, Text, VStack } from "@chakra-ui/react";
-import { IconCalendarWeek, IconChartAreaLine, type ReactNode } from "@tabler/icons-react";
+import { IconHome, type ReactNode } from "@tabler/icons-react";
 import { Link } from "@tanstack/react-router";
 import type { FileRoutesByTo } from "~/.tanstack/routeTree.gen.ts";
 
@@ -11,19 +11,26 @@ interface IMenuList {
 }
 
 const menuList: IMenuList[] = [
-	// { icon: <IconHome />, title: "Home", to: "/" },
+	{ icon: <IconHome />, title: "Home", to: "/" },
 	// { icon: <IconBlocks />, title: "Projects", to: "/projects" },
-	{ icon: <IconCalendarWeek />, title: "Calendar", to: "/" },
-	{ icon: <IconChartAreaLine />, title: "Statistics", to: "/" },
+	// { icon: <IconCalendarWeek />, title: "Calendar", to: "/" },
+	// { icon: <IconChartAreaLine />, title: "Statistics", to: "/" },
 ];
 
-export const SidebarMenu = () => {
+export const SidebarMenus = () => {
 	return (
 		<VStack w={"100%"} alignItems={"start"} gap={"8px"}>
 			<Text color={"subtext"}>Menu</Text>
 
 			{menuList.map((item) => {
-				return <SidebarMenuItem key={item.title} icon={item.icon} title={item.title} to={item.to} />;
+				return (
+					<SidebarMenuItem
+						key={item.title}
+						icon={item.icon}
+						title={item.title}
+						to={item.to}
+					/>
+				);
 			})}
 		</VStack>
 	);
