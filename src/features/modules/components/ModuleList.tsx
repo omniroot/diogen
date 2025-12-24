@@ -21,7 +21,12 @@ export const ModuleList: FC<IModuleListProps> = ({ project_id }) => {
 			title="Modules"
 			orientation="vertical"
 			infoSlot={
-				<Badge size={"lg"} variant={"solid"} transition={"opacity 200ms"} opacity={isFetching ? 1 : 0}>
+				<Badge
+					size={"lg"}
+					variant={"solid"}
+					transition={"opacity 200ms"}
+					opacity={isFetching ? 1 : 0}
+				>
 					Sync
 				</Badge>
 			}

@@ -1,4 +1,4 @@
-import { Query, type QueryTypes } from "appwrite";
+import { Query, } from "appwrite";
 import type { Posts } from "@/api/types/appwrite.js";
 
 // import type { Posts } from "@/api/types/appwrite.js";

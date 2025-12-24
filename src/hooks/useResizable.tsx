@@ -55,7 +55,10 @@ export function useResizable(
       </svg>
     `;
 		// Опционально чуть подсветить иконку
-		(handle.firstElementChild as SVGElement | null)?.setAttribute("style", "opacity:0.6;");
+		(handle.firstElementChild as SVGElement | null)?.setAttribute(
+			"style",
+			"opacity:0.6;",
+		);
 
 		container.appendChild(handle);
 

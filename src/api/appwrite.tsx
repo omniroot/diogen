@@ -1,8 +1,7 @@
-import { useQuery } from "@tanstack/react-query";
-import { Account, Client, type Models, OAuthProvider, TablesDB } from "appwrite";
-import { keyFactory } from "@/api/api.ts";
+
+import { Account, Client, type Models, TablesDB } from "appwrite";
 import { createAppwriteHooks } from "@/api/appwrite.utils.ts";
-import type { Habits, HabitsRecords, Posts } from "@/api/types/appwrite.d.ts";
+import type { Habits, HabitsRecords, } from "@/api/types/appwrite.d.ts";
 import appwriteConfig from "~/appwrite.config.json";
 
 // import { createAppwriteHooks } from "@/api/appwrite.utils.ts";

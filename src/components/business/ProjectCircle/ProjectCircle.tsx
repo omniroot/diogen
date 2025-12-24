@@ -5,7 +5,10 @@ interface IProjectCircleProps {
 	color?: string | undefined;
 	variant?: "outline" | "filled";
 }
-export const ProjectCircle: FC<IProjectCircleProps> = ({ variant = "outline", color }) => {
+export const ProjectCircle: FC<IProjectCircleProps> = ({
+	variant = "outline",
+	color,
+}) => {
 	return (
 		<Box
 			w="15px"

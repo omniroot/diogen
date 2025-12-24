@@ -31,7 +31,11 @@ const items: IItem[] = [
 	{ title: "Feature", value: "feature", color: "purple.600" },
 ];
 
-export const LabelSelect: FC<IProps> = ({ value = "unset", onChange, showTitle = false }) => {
+export const LabelSelect: FC<IProps> = ({
+	value = "unset",
+	onChange,
+	showTitle = false,
+}) => {
 	const id = useId();
 	const { open, onToggle } = useDisclosure();
 	const selectedItem = items.filter((i) => i.value === value)[0] || items[0];
@@ -89,7 +93,12 @@ export const LabelSelect: FC<IProps> = ({ value = "unset", onChange, showTitle =
 					>
 						{items.map((item) => {
 							return (
-								<Menu.Item value={item.value} color={item.color} onSelect={() => onItemSelect(item)} key={item.value}>
+								<Menu.Item
+									value={item.value}
+									color={item.color}
+									onSelect={() => onItemSelect(item)}
+									key={item.value}
+								>
 									<ProjectCircle color={item.color} variant="filled" />
 									{item.title}
 								</Menu.Item>

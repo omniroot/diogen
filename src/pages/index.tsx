@@ -1,16 +1,7 @@
 import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { IconCalendar } from "@tabler/icons-react";
-import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
-import dayjs from "dayjs";
-import { useEffect } from "react";
-import { useGetHabits } from "@/api/appwrite.tsx";
-import {
-	useCreateDayRecord,
-	useGetDayRecordByDate,
-} from "@/api/queries/days_records.api.ts";
 import { HabitList } from "@/features/habits/components/HabitList.tsx";
-import { SleepWidget } from "@/features/habits/components/SleepWidget.tsx";
 import { CreateHabitDrawer } from "@/features/habits/modals/CreateHabitDrawer/CreateHabitDrawer.tsx";
 import { DaySelectDrawer } from "@/features/habits/modals/DaySelectDrawer/DaySelectDrawer.tsx";
 import { useHabitsStore } from "@/stores/habits.store.tsx";

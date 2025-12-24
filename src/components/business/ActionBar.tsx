@@ -31,7 +31,10 @@ export const ActionBar: React.FC = () => {
 			<Portal>
 				<CActionBar.Positioner>
 					<CActionBar.Content>
-						<CActionBar.SelectionTrigger border={"2px solid {colors.outline_variant}"} borderRadius={"md"}>
+						<CActionBar.SelectionTrigger
+							border={"2px solid {colors.outline_variant}"}
+							borderRadius={"md"}
+						>
 							{issues.length} issue{issues.length > 1 ? "s" : ""}
 						</CActionBar.SelectionTrigger>
 						<CActionBar.Separator />

@@ -1,5 +1,4 @@
 import {
-	Badge,
 	Button,
 	Link as ChakraLink,
 	HStack,
@@ -8,13 +7,11 @@ import {
 	Text,
 	VStack,
 } from "@chakra-ui/react";
-import { useDebounceState, useDebounceValue } from "@siberiacancode/reactuse";
-import { useQuery } from "@tanstack/react-query";
+import { useDebounceValue } from "@siberiacancode/reactuse";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { refetcher, refetchQuery } from "@/api/api.ts";
-import { postsApi, postsHooks, usePosts } from "@/api/apis/posts.api.tsx";
-import { habitsCoreApi } from "@/api/wow/wow.tsx";
+import { refetcher } from "@/api/api.ts";
+import { usePosts } from "@/api/apis/posts.api.tsx";
 // import { useGetPosts } from "@/api/appwrite.tsx";
 // import { useGetPosts } from "@/api/utils.ts";
 // import { tablesDB, useGetPosts } from "@/api/appwrite.ts";
@@ -107,8 +104,9 @@ function RouteComponent() {
 							<ChakraLink asChild>
 								<Link
 									to="/posts/$id"
-									params={{ id: post.$id }}
-									search={{ search: JSON.stringify(post) }}
+									params={{
+										id: post.$id,
+									}}
 								>
 									<Image src={post.poster || ""} w={"250px"} h={"120px"} />
 									<Text>{post.title}</Text>

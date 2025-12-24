@@ -8,7 +8,6 @@ import { client, keyFactory } from "@/api/api.ts";
 import {
 	type IHabit,
 	type IHabitInsert,
-	type IHabitsRecords,
 	kaizen,
 } from "@/api/supabase.ts";
 

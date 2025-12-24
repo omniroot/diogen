@@ -18,8 +18,19 @@ export const Section: React.FC<ISection> = ({
 	children,
 }) => {
 	return (
-		<VStack w={"100%"} alignItems={"start"} border={"2px solid {colors.outline}"} borderRadius={"md"}>
-			<HStack w={"100%"} mb={"-10px"} justifyContent={"space-between"} alignItems={"center"} p={2}>
+		<VStack
+			w={"100%"}
+			alignItems={"start"}
+			border={"2px solid {colors.outline}"}
+			borderRadius={"md"}
+		>
+			<HStack
+				w={"100%"}
+				mb={"-10px"}
+				justifyContent={"space-between"}
+				alignItems={"center"}
+				p={2}
+			>
 				<HStack>
 					{icon}
 					<Text fontSize={"lg"} fontWeight={"bold"}>
@@ -29,7 +40,12 @@ export const Section: React.FC<ISection> = ({
 				</HStack>
 				<HStack>{actionsSlot}</HStack>
 			</HStack>
-			<Flex w={"100%"} gap={0} alignItems={"start"} direction={orientation === "vertical" ? "column" : "row"}>
+			<Flex
+				w={"100%"}
+				gap={0}
+				alignItems={"start"}
+				direction={orientation === "vertical" ? "column" : "row"}
+			>
 				{children}
 			</Flex>
 		</VStack>

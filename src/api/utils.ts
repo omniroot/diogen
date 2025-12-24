@@ -4,17 +4,7 @@
 // TVars = Record<string, any>, // Переменные поиска
 // TKeys extends CrudKeys = CrudKeys, // Гибкий тип ключей
 
-import type { SupabaseClient } from "@supabase/supabase-js";
 import { useQuery } from "@tanstack/react-query";
-import {
-	type IKaizenTables,
-	type IPosts,
-	type IPostsInsert,
-	type IPostsUpdate,
-	type KaizenClient,
-	type KaizenDatabase,
-	kaizen,
-} from "@/api/supabase.ts";
 
 interface CreateCrudHooks {
 	table: any;
@@ -24,11 +14,7 @@ interface CreateCrudHooks {
 	// filters?: FilterConfig;
 }
 
-export function createCrudHooks<TRow, TRowInsert, TRowUpdate, TVars>({
-	table,
-	client,
-	dbName,
-}: CreateCrudHooks) {
+export function createCrudHooks<TRow>({ table, client }: CreateCrudHooks) {
 	function useList() {
 		return useQuery<TRow[]>({
 			queryKey: ["get", "posts"],
@@ -48,9 +34,9 @@ export function createCrudHooks<TRow, TRowInsert, TRowUpdate, TVars>({
 	return { useList };
 }
 
-export const { useList: useGetPosts } = createCrudHooks<
-	IPosts,
-	IPostsInsert,
-	IPostsUpdate,
-	any,
->({client: kaizen, table: "posts", dbName: "kaizen"});
+// export const { useList: useGetPosts } = createCrudHooks<
+// 	IPosts,
+// 	IPostsInsert,
+// 	IPostsUpdate,
+// 	any,
+// >({client: kaizen, table: "posts", dbName: "kaizen"});

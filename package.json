@@ -8,7 +8,7 @@
     "prepare-submodules": "git submodule update --init --recursive",
     "dev": "vite dev --port 5173 --host",
     "preview": "vite preview --port 5173 --host",
-    "build:pre": "npm run prepare-submodules && npm run typegen-chakra",
+    "build:pre": "npm run prepare-submodules && npm run typegen:chakra",
     "build": "npm run build:pre && tsc -b && vite build",
     "biome:format": "bunx biome format --write ./src/",
     "biome:lint": "bunx biome lint --write ./src/",

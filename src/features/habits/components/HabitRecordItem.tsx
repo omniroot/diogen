@@ -1,16 +1,13 @@
-import { Box, Button, Text } from "@chakra-ui/react";
+import { Button, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
 import { type MouseEvent, useState } from "react";
-import { keyFactory } from "@/api/api.ts";
 import {
 	useCreateHabitRecord,
 	useGetHabitsRecords,
 	useUpdateHabitRecord,
 } from "@/api/appwrite.tsx";
 import type { HabitsRecords } from "@/api/types/appwrite.js";
-import { useHabitsStore } from "@/stores/habits.store.tsx";
 import { toaster } from "@/theme/components/toaster.tsx";
-import { ddate } from "@/utils/ddate.ts";
 
 interface Props {
 	record: HabitsRecords;

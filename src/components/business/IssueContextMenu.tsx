@@ -52,7 +52,9 @@ interface IProps {
 export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => {
 	// const { data: user } = useGetUser();
 	const { data: projects } = useGetProjects();
-	const { data: modules } = useQuery({ ...getModulesOptions({ project_id: issue?.project_id }) });
+	const { data: modules } = useQuery({
+		...getModulesOptions({ project_id: issue?.project_id }),
+	});
 	const { mutate: deleteIssue } = useMutation(deleteIssuesOptions());
 	// const { mutate: updateIssue } = useMutation(updateIssueOptions());
 
@@ -148,7 +150,11 @@ export const IssueContextMenu: FC<IProps> = ({ issue, pos, open, onChange }) => 
 		<Portal>
 			<VStack p={0} onClick={(e) => e.stopPropagation()}>
 				{/* <HStack>123</HStack> */}
-				<Menu.Root open={open} onInteractOutside={() => onChange?.(false)} onOpenChange={(e) => onChange?.(e.open)}>
+				<Menu.Root
+					open={open}
+					onInteractOutside={() => onChange?.(false)}
+					onOpenChange={(e) => onChange?.(e.open)}
+				>
 					<Menu.Positioner>
 						<Menu.Content
 							// w={"200px"}

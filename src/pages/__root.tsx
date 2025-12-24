@@ -1,6 +1,5 @@
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { TanStackRouterDevtools } from "@tanstack/react-router-devtools";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { Header } from "@/components/business/Header.tsx";
 import { SearchModal } from "@/components/business/SearchModal.tsx";

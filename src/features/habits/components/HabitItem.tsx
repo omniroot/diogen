@@ -1,25 +1,15 @@
 import {
-	Box,
 	Button,
-	Checkbox,
 	CloseButton,
 	Drawer,
 	HStack,
-	Icon,
 	Portal,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
 import { Query } from "appwrite";
 import dayjs from "dayjs";
-import { type FC, useEffect, useState } from "react";
-import { useGetHabitsRecords } from "@/api/appwrite.tsx";
-// import {
-// 	useCreateHabitRecord,
-// 	useGetHabitRecords,
-// 	useUpdateHabitRecord,
-// } from "@/api/queries/habit_records.api.tsx";
-import type { IHabit } from "@/api/supabase.ts";
+import type { FC } from "react";
 import type { Habits, HabitsRecords } from "@/api/types/appwrite.js";
 import { HabitRecordItem } from "@/features/habits/components/HabitRecordItem.tsx";
 import { useHabitsRecords } from "@/features/habits/controllers/useHabitsRecords.tsx";
@@ -78,7 +68,7 @@ export const HabitItem: FC<IProps> = ({ habit }) => {
 	// const { mutate: createHabitRecord } = useCreateHabitRecord();
 	// const { mutate: updateHabitRecord } = useUpdateHabitRecord();
 	const { records } = useHabitsRecords({ habit_id: habit.$id });
-	const [checked, setChecked] = useState(false);
+	// const [checked, setChecked] = useState(false);
 
 	// console.log({ bd: habitRecord?.[0]?.completed, state: checked });
 
@@ -111,7 +101,7 @@ export const HabitItem: FC<IProps> = ({ habit }) => {
 
 	Query.overlaps;
 
-	const onChecked = (a: any) => {};
+	// const onChecked = (a: any) => {};
 
 	return (
 		<Drawer.Root placement={"bottom"}>

@@ -5,7 +5,6 @@ import {
 	useQuery,
 } from "@tanstack/react-query";
 import { ID, type Models, Query, type TablesDB } from "appwrite";
-import type { Posts } from "@/api/types/appwrite.js";
 
 const buildAppwriteQueries = <TVars>(
 	vars: Partial<TVars>,

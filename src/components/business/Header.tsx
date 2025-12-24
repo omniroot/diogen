@@ -1,4 +1,4 @@
-import { HStack, Icon, IconButton, Image, Separator } from "@chakra-ui/react";
+import { HStack, IconButton, Image, Separator } from "@chakra-ui/react";
 import {
 	IconArrowNarrowLeft,
 	IconArrowNarrowRight,

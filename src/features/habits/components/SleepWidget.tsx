@@ -1,8 +1,6 @@
 import {
-	Box,
 	Button,
 	Dialog,
-	Drawer,
 	HStack,
 	Icon,
 	Input,
@@ -13,7 +11,7 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import { useVirtualKeyboard } from "@siberiacancode/reactuse";
-import { IconMoon, IconTriangleSquareCircleFilled } from "@tabler/icons-react";
+import { IconMoon, } from "@tabler/icons-react";
 import { useForm } from "@tanstack/react-form";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";

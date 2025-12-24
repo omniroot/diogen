@@ -23,7 +23,12 @@ interface IItem {
 }
 
 const items: IItem[] = [
-	{ title: "Unset (remove in release)", value: null, color: "#6A6C6F", icon: <IconQuestionMark /> },
+	{
+		title: "Unset (remove in release)",
+		value: null,
+		color: "#6A6C6F",
+		icon: <IconQuestionMark />,
+	},
 	{ title: "Backlog", value: "backlog", color: "#6A6C6F", icon: <BacklogIcon /> },
 	{ title: "Todo", value: "todo", color: "#D3D3D3", icon: <TodoIcon /> },
 	{ title: "Progress", value: "progress", color: "#F0BF0A", icon: <ProgressIcon /> },
@@ -35,7 +40,11 @@ const items: IItem[] = [
 // 	return items.filter((i) => i.value === status)?.[0]?.icon || items.filter((i) => i.value === "backlog")?.[0]?.icon;
 // };
 
-export const StatusSelect: FC<IProps> = ({ value = "backlog", onChange, showTitle = false }) => {
+export const StatusSelect: FC<IProps> = ({
+	value = "backlog",
+	onChange,
+	showTitle = false,
+}) => {
 	const id = useId();
 
 	const { open, onToggle } = useDisclosure();

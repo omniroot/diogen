@@ -1,4 +1,13 @@
-import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
+import {
+	Button,
+	CloseButton,
+	Dialog,
+	HStack,
+	Input,
+	Portal,
+	Separator,
+	Textarea,
+} from "@chakra-ui/react";
 import { useMutation, useQuery } from "@tanstack/react-query";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { type FC, useState } from "react";
@@ -56,7 +65,12 @@ export const IssueCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 							<Dialog.Header>
 								<Dialog.Title>Create Issue</Dialog.Title>
 							</Dialog.Header>
-							<Dialog.Body display={"flex"} flexDirection={"column"} gap={4} maxH={"70dvh"}>
+							<Dialog.Body
+								display={"flex"}
+								flexDirection={"column"}
+								gap={4}
+								maxH={"70dvh"}
+							>
 								{custom_id} {">"} {"modules > "} {module?.title}
 								<HStack gap={0} position={"relative"}>
 									<EmojiPicker onChange={setEmoji} />
@@ -73,7 +87,11 @@ export const IssueCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 								</HStack>
 								<Separator borderWidth={"1.5px"} />
 								<HStack>
-									<StatusSelect value={statusValue} onChange={setStatusValue} showTitle={true} />
+									<StatusSelect
+										value={statusValue}
+										onChange={setStatusValue}
+										showTitle={true}
+									/>
 									{/* <LabelSelect value={labelValue} onChange={setLabelValue} showTitle={true} /> */}
 								</HStack>
 								<Textarea

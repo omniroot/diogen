@@ -15,7 +15,9 @@ export const Route = createFileRoute("/projects/$custom_id/modules/$module_id")(
 function RouteComponent() {
 	const { project_id, module_id } = useLocationStore();
 	const { open: openModal } = useModals("module");
-	const { data: module, isFetching } = useQuery(getModuleOptions({ id: Number(module_id) }));
+	const { data: module, isFetching } = useQuery(
+		getModuleOptions({ id: Number(module_id) }),
+	);
 
 	console.log(useLocationStore());
 
@@ -25,7 +27,13 @@ function RouteComponent() {
 
 	return (
 		<>
-			<VStack w="100%" p="6px" borderRadius={"6px"} alignItems={"start"} border={"2px solid {colors.outline}"}>
+			<VStack
+				w="100%"
+				p="6px"
+				borderRadius={"6px"}
+				alignItems={"start"}
+				border={"2px solid {colors.outline}"}
+			>
 				<HStack w="100%">
 					<VStack w="100%" borderRadius={"6px"} alignItems={"start"}>
 						{/* <Image src={logo?.data.publicUrl} w={"50px"} h={"50px"} borderRadius={"md"} /> */}

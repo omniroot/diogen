@@ -14,10 +14,12 @@ export const postsCoreApi = createCoreApi<Posts>({
 });
 
 // HOOKS
-export const postsHooks = createHooksApi({
+export const postsHooks = createHooksApi<Posts>({
 	name: "posts",
 	coreApis: postsCoreApi,
 });
+
+// const a = postsHooks.useList({ title: { contains: "api" } });
 
 // CONTROLLER
 export function usePosts(queries: DomainHook<Posts>) {
@@ -27,7 +29,15 @@ export function usePosts(queries: DomainHook<Posts>) {
 	const updatePost = useUpdate().mutate;
 	const deletePost = useDelete().mutate;
 	const someBuissinesLogic = () => {};
-	return { posts, isLoading, createPost, updatePost, deletePost, someBuissinesLogic };
+	return {
+		posts,
+		isLoading,
+		useOne,
+		createPost,
+		updatePost,
+		deletePost,
+		someBuissinesLogic,
+	};
 }
 
 // const { createPost } = usePosts();

@@ -1,4 +1,13 @@
-import { Button, CloseButton, Dialog, HStack, Input, Portal, Separator, Textarea } from "@chakra-ui/react";
+import {
+	Button,
+	CloseButton,
+	Dialog,
+	HStack,
+	Input,
+	Portal,
+	Separator,
+	Textarea,
+} from "@chakra-ui/react";
 import { useMutation } from "@tanstack/react-query";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { type FC, useState } from "react";
@@ -51,9 +60,16 @@ export const ModuleCreateModal: FC<IModuleModal> = ({ open, onChange }) => {
 					<Dialog.Content minW={isDesktop ? "1000px" : "90dvw"}>
 						<form onSubmit={handleSubmit(onSubmit)}>
 							<Dialog.Header>
-								<Dialog.Title>{`${mode?.slice(0, 1).toUpperCase()}${mode?.slice(1)}`} Module</Dialog.Title>
+								<Dialog.Title>
+									{`${mode?.slice(0, 1).toUpperCase()}${mode?.slice(1)}`} Module
+								</Dialog.Title>
 							</Dialog.Header>
-							<Dialog.Body display={"flex"} flexDirection={"column"} gap={4} maxH={"70dvh"}>
+							<Dialog.Body
+								display={"flex"}
+								flexDirection={"column"}
+								gap={4}
+								maxH={"70dvh"}
+							>
 								<HStack gap={0} position={"relative"}>
 									<EmojiPicker onChange={setEmoji} />
 

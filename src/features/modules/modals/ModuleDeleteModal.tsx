@@ -15,7 +15,9 @@ export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
 	const navigate = useNavigate();
 
 	const { data: module } = useQuery(getModuleOptions({ id: Number(module_id) }));
-	const { data: issues } = useQuery(getIssuesOptions({ project_id: Number(project_id), module_id: Number(module_id) }));
+	const { data: issues } = useQuery(
+		getIssuesOptions({ project_id: Number(project_id), module_id: Number(module_id) }),
+	);
 	const { mutate: deleteIssues } = useMutation(deleteIssuesOptions());
 	const { mutate: deleteModule } = useMutation(deleteModuleOptions());
 
@@ -29,7 +31,10 @@ export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
 						onSuccess: () => {
 							onChange(false);
 							refetchQuery(keyFactory.modules.list(project_id));
-							navigate({ to: "/projects/$custom_id", params: { custom_id: String(custom_id) } });
+							navigate({
+								to: "/projects/$custom_id",
+								params: { custom_id: String(custom_id) },
+							});
 						},
 					},
 				);
@@ -59,7 +64,13 @@ export const ModuleDeleteModal: FC<IModuleModal> = ({ open, onChange }) => {
 							<Dialog.ActionTrigger asChild>
 								<Button variant="outline">Cancel</Button>
 							</Dialog.ActionTrigger>
-							<Button variant={"primary"} type="submit" bg={"red.500"} color={"black"} onClick={onDeleteClick}>
+							<Button
+								variant={"primary"}
+								type="submit"
+								bg={"red.500"}
+								color={"black"}
+								onClick={onDeleteClick}
+							>
 								Delete
 							</Button>
 						</Dialog.Footer>

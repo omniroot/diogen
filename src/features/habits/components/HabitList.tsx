@@ -1,11 +1,10 @@
-import { IconButton, Skeleton, Text, VStack } from "@chakra-ui/react";
+import { IconButton, Skeleton, } from "@chakra-ui/react";
 import { IconCopyCheck, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
 import { useGetHabits } from "@/api/appwrite.tsx";
 import { Section } from "@/components/business/Section.tsx";
 import { HabitItem } from "@/features/habits/components/HabitItem.tsx";
 import { useHabitsStore } from "@/stores/habits.store.tsx";
-import { useModals } from "@/stores/modals.store.tsx";
 
 export const HabitList = () => {
 	// const { open } = useModals("issue");
