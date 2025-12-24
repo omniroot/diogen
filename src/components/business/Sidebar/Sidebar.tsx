@@ -2,7 +2,6 @@ import { Button, HStack, Text, VStack } from "@chakra-ui/react";
 import { Link } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
-import { diogen } from "@/api/supabase.ts";
 import { Header } from "@/components/business/Header.tsx";
 import { SidebarMenus } from "@/components/business/Sidebar/SidebarMenu/SidebarMenu.tsx";
 import { SidebarProjects } from "@/components/business/Sidebar/SidebarProjects/SidebarProjects";
@@ -30,13 +29,6 @@ export const Sidebar = () => {
 	//   }
 	// };
 	const isOpen2 = isOpen ? true : isTablet || isDesktop ? true : false;
-
-	const onLoginWithGithubClick = async () => {
-		const { data, error } = await diogen.auth.signInWithOAuth({
-			provider: "github",
-		});
-		console.log("Authorized: ", data, error);
-	};
 
 	return (
 		<VStack
@@ -72,8 +64,8 @@ export const Sidebar = () => {
 				<Button w="100%" asChild>
 					<Link to="/test">Test page</Link>
 				</Button>
-				<Button w="100%" onClick={onLoginWithGithubClick}>
-					Login with Github
+				<Button w="100%" asChild>
+					<Link to="/login">Login with Github</Link>
 				</Button>
 			</VStack>
 			{/* <SidebarActions /> */}

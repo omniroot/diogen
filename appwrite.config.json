@@ -1,164 +1,264 @@
 {
-    "projectId": "diogen",
-    "endpoint": "https://fra.cloud.appwrite.io/v1",
-    "projectName": "Diogen",
-    "settings": {
-        "services": {
-            "account": true,
-            "avatars": true,
-            "databases": true,
-            "locale": true,
-            "health": true,
-            "storage": true,
-            "teams": true,
-            "users": true,
-            "sites": true,
-            "functions": true,
-            "graphql": true,
-            "messaging": true
-        },
-        "auth": {
-            "methods": {
-                "jwt": true,
-                "phone": true,
-                "invites": true,
-                "anonymous": true,
-                "email-otp": true,
-                "magic-url": true,
-                "email-password": true
-            },
-            "security": {
-                "duration": 31536000,
-                "limit": 0,
-                "sessionsLimit": 10,
-                "passwordHistory": 0,
-                "passwordDictionary": false,
-                "personalDataCheck": false,
-                "sessionAlerts": false,
-                "mockNumbers": []
-            }
-        }
+  "projectId": "diogen",
+  "endpoint": "https://fra.cloud.appwrite.io/v1",
+  "projectName": "Diogen",
+  "settings": {
+    "services": {
+      "account": true,
+      "avatars": true,
+      "databases": true,
+      "locale": true,
+      "health": true,
+      "storage": true,
+      "teams": true,
+      "users": true,
+      "sites": true,
+      "functions": true,
+      "graphql": true,
+      "messaging": true
     },
-    "tablesDB": [
+    "auth": {
+      "methods": {
+        "jwt": true,
+        "phone": true,
+        "invites": true,
+        "anonymous": true,
+        "email-otp": true,
+        "magic-url": true,
+        "email-password": true
+      },
+      "security": {
+        "duration": 31536000,
+        "limit": 0,
+        "sessionsLimit": 10,
+        "passwordHistory": 0,
+        "passwordDictionary": false,
+        "personalDataCheck": false,
+        "sessionAlerts": false,
+        "mockNumbers": []
+      }
+    }
+  },
+  "tablesDB": [
+    {
+      "$id": "6923a56a000f945ace60",
+      "name": "diogenDB",
+      "enabled": true
+    },
+    {
+      "$id": "6924e361002fab68a29c",
+      "name": "kaizenDB",
+      "enabled": true
+    },
+    {
+      "$id": "69492bb7000348b3632e",
+      "name": "testDB",
+      "enabled": true
+    }
+  ],
+  "tables": [
+    {
+      "$id": "days_records",
+      "$permissions": [
+        "create(\"any\")",
+        "read(\"any\")",
+        "update(\"any\")",
+        "delete(\"any\")"
+      ],
+      "databaseId": "6924e361002fab68a29c",
+      "name": "days_records",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
         {
-            "$id": "6923a56a000f945ace60",
-            "name": "diogenDB",
-            "enabled": true
+          "key": "sleep_start",
+          "type": "datetime",
+          "required": false,
+          "array": false,
+          "format": "",
+          "default": null
         },
         {
-            "$id": "6924e361002fab68a29c",
-            "name": "kaizenDB",
-            "enabled": true
-        }
-    ],
-    "tables": [
-        {
-            "$id": "6923a6c90018e0309d7f",
-            "$permissions": [
-                "create(\"guests\")",
-                "read(\"guests\")",
-                "update(\"guests\")",
-                "delete(\"guests\")"
-            ],
-            "databaseId": "6923a56a000f945ace60",
-            "name": "posts",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "title",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "size": 64,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
-                    "key": "likes",
-                    "type": "integer",
-                    "required": false,
-                    "array": false,
-                    "min": -9223372036854775808,
-                    "max": 9223372036854775807,
-                    "default": null
-                }
-            ],
-            "indexes": []
+          "key": "sleep_end",
+          "type": "datetime",
+          "required": false,
+          "array": false,
+          "format": "",
+          "default": null
         },
         {
-            "$id": "days_records",
-            "$permissions": [
-                "create(\"any\")",
-                "read(\"any\")",
-                "update(\"any\")",
-                "delete(\"any\")"
-            ],
-            "databaseId": "6924e361002fab68a29c",
-            "name": "days_records",
-            "enabled": true,
-            "rowSecurity": false,
-            "columns": [
-                {
-                    "key": "sleep_start",
-                    "type": "datetime",
-                    "required": true,
-                    "array": false,
-                    "format": "",
-                    "default": null
-                },
-                {
-                    "key": "sleep_end",
-                    "type": "datetime",
-                    "required": true,
-                    "array": false,
-                    "format": "",
-                    "default": null
-                },
-                {
-                    "key": "notes",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "size": 255,
-                    "default": null,
-                    "encrypt": false
-                },
-                {
-                    "key": "mood",
-                    "type": "string",
-                    "required": false,
-                    "array": false,
-                    "elements": [
-                        "happy",
-                        "sad",
-                        "neutral",
-                        "energetic",
-                        "tired"
-                    ],
-                    "format": "enum",
-                    "default": null
-                },
-                {
-                    "key": "sleep_score",
-                    "type": "integer",
-                    "required": false,
-                    "array": false,
-                    "min": 0,
-                    "max": 100,
-                    "default": null
-                },
-                {
-                    "key": "date",
-                    "type": "string",
-                    "required": true,
-                    "array": false,
-                    "size": 45,
-                    "default": null,
-                    "encrypt": false
-                }
-            ],
-            "indexes": []
+          "key": "notes",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 255,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "mood",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "elements": ["happy", "sad", "neutral", "energetic", "tired"],
+          "format": "enum",
+          "default": null
+        },
+        {
+          "key": "sleep_score",
+          "type": "integer",
+          "required": false,
+          "array": false,
+          "min": 0,
+          "max": 100,
+          "default": null
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 45,
+          "default": null,
+          "encrypt": false
         }
-    ]
+      ],
+      "indexes": [
+        {
+          "key": "date_unique",
+          "type": "unique",
+          "status": "available",
+          "columns": ["date"],
+          "orders": ["ASC"]
+        }
+      ]
+    },
+    {
+      "$id": "habits",
+      "$permissions": [
+        "create(\"any\")",
+        "read(\"any\")",
+        "update(\"any\")",
+        "delete(\"any\")"
+      ],
+      "databaseId": "6924e361002fab68a29c",
+      "name": "habits",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "title",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "icon",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64,
+          "default": null,
+          "encrypt": false
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "habits_records",
+      "$permissions": [
+        "create(\"any\")",
+        "read(\"any\")",
+        "update(\"any\")",
+        "delete(\"any\")"
+      ],
+      "databaseId": "6924e361002fab68a29c",
+      "name": "habits_records",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "completed",
+          "type": "boolean",
+          "required": false,
+          "array": false,
+          "default": false
+        },
+        {
+          "key": "date",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 32,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "habit_id",
+          "type": "string",
+          "required": true,
+          "array": false,
+          "size": 128,
+          "default": null,
+          "encrypt": false
+        }
+      ],
+      "indexes": []
+    },
+    {
+      "$id": "posts",
+      "$permissions": [
+        "create(\"any\")",
+        "read(\"any\")",
+        "update(\"any\")",
+        "delete(\"any\")"
+      ],
+      "databaseId": "69492bb7000348b3632e",
+      "name": "posts",
+      "enabled": true,
+      "rowSecurity": false,
+      "columns": [
+        {
+          "key": "title",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 64,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "description",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 128,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "content",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 16500,
+          "default": null,
+          "encrypt": false
+        },
+        {
+          "key": "poster",
+          "type": "string",
+          "required": false,
+          "array": false,
+          "size": 256,
+          "default": null,
+          "encrypt": false
+        }
+      ],
+      "indexes": []
+    }
+  ]
 }

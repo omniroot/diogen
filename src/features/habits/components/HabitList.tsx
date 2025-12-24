@@ -1,7 +1,7 @@
 import { IconButton, Skeleton, Text, VStack } from "@chakra-ui/react";
 import { IconCopyCheck, IconPlus } from "@tabler/icons-react";
 import { useState } from "react";
-import { useGetHabits } from "@/api/queries/habits.api.ts";
+import { useGetHabits } from "@/api/appwrite.tsx";
 import { Section } from "@/components/business/Section.tsx";
 import { HabitItem } from "@/features/habits/components/HabitItem.tsx";
 import { useHabitsStore } from "@/stores/habits.store.tsx";
@@ -50,7 +50,7 @@ export const HabitList = () => {
 					console.log("Render ", habit);
 
 					return (
-						<Skeleton key={habit.id} loading={isFetching} w={"100%"}>
+						<Skeleton key={habit.$id} loading={isFetching} w={"100%"}>
 							<HabitItem habit={habit} />
 						</Skeleton>
 					);

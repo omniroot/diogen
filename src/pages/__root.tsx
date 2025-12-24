@@ -8,6 +8,7 @@ import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 // import { IssueModal } from "@/features/issues/components/IssueModal.tsx";
 import { IssueModal } from "@/features/issues/components/IssueModal.tsx";
 import { ModuleModal } from "@/features/modules/components/ModuleModal.tsx";
+import { AuthProvider } from "@/providers/auth.provider.tsx";
 import { useLocationHandler } from "@/stores/location.store.tsx";
 
 const RootLayout = () => {
@@ -20,22 +21,24 @@ const RootLayout = () => {
 
 	return (
 		<>
-			{isMobile && <Header />}
-			<Sidebar />
-			<main className="main">
-				<Outlet />
-			</main>
-			{/* <CreateIssueModal /> */}
-			{/* <CreateModuleModal /> */}
-			<SearchModal />
-			<ModuleModal />
-			<IssueModal />
-			<ReactQueryDevtools
-				initialIsOpen={false}
-				position="bottom"
-				buttonPosition="top-right"
-			/>
-			<TanStackRouterDevtools position="top-left" />
+			<AuthProvider>
+				{isMobile && <Header />}
+				<Sidebar />
+				<main className="main">
+					<Outlet />
+				</main>
+				{/* <CreateIssueModal /> */}
+				{/* <CreateModuleModal /> */}
+				<SearchModal />
+				<ModuleModal />
+				<IssueModal />
+				<ReactQueryDevtools
+					initialIsOpen={false}
+					position="bottom"
+					buttonPosition="top-right"
+				/>
+			</AuthProvider>
+			{/* <TanStackRouterDevtools position="top-left" /> */}
 		</>
 	);
 };

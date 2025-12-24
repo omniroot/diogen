@@ -14,11 +14,13 @@ import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
 import { Route as TestIndexRouteImport } from './../src/pages/test/index'
 import { Route as ProjectsIndexRouteImport } from './../src/pages/projects/index'
 import { Route as PostsIndexRouteImport } from './../src/pages/posts/index'
+import { Route as LoginIndexRouteImport } from './../src/pages/login/index'
 import { Route as IssuesIndexRouteImport } from './../src/pages/issues/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
 import { Route as IssuesIssue_idRouteImport } from './../src/pages/issues/$issue_id'
 import { Route as ProjectsCustom_idRouteRouteImport } from './../src/pages/projects/$custom_id/route'
 import { Route as ProjectsCustom_idIndexRouteImport } from './../src/pages/projects/$custom_id/index'
+import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index'
 import { Route as ProjectsCustom_idTimelineRouteImport } from './../src/pages/projects/$custom_id/timeline'
 import { Route as ProjectsCustom_idTableRouteImport } from './../src/pages/projects/$custom_id/table'
 import { Route as ProjectsCustom_idKanbanRouteImport } from './../src/pages/projects/$custom_id/kanban'
@@ -50,6 +52,11 @@ const PostsIndexRoute = PostsIndexRouteImport.update({
   path: '/posts/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const LoginIndexRoute = LoginIndexRouteImport.update({
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IssuesIndexRoute = IssuesIndexRouteImport.update({
   id: '/issues/',
   path: '/issues/',
@@ -74,6 +81,11 @@ const ProjectsCustom_idIndexRoute = ProjectsCustom_idIndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => ProjectsCustom_idRouteRoute,
+} as any)
+const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
+  id: '/posts/$id/',
+  path: '/posts/$id/',
+  getParentRoute: () => rootRouteImport,
 } as any)
 const ProjectsCustom_idTimelineRoute =
   ProjectsCustom_idTimelineRouteImport.update({
@@ -110,6 +122,7 @@ export interface FileRoutesByFullPath {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
+  '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
@@ -117,6 +130,7 @@ export interface FileRoutesByFullPath {
   '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
   '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
   '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
+  '/posts/$id': typeof PostsIdIndexRoute
   '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
@@ -126,6 +140,7 @@ export interface FileRoutesByTo {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues': typeof IssuesIndexRoute
+  '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
   '/projects': typeof ProjectsIndexRoute
   '/test': typeof TestIndexRoute
@@ -133,6 +148,7 @@ export interface FileRoutesByTo {
   '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
   '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
   '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
+  '/posts/$id': typeof PostsIdIndexRoute
   '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
@@ -144,6 +160,7 @@ export interface FileRoutesById {
   '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/issues/': typeof IssuesIndexRoute
+  '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
   '/projects/': typeof ProjectsIndexRoute
   '/test/': typeof TestIndexRoute
@@ -151,6 +168,7 @@ export interface FileRoutesById {
   '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
   '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
   '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
+  '/posts/$id/': typeof PostsIdIndexRoute
   '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
   '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
   '/projects/$custom_id/modules/': typeof ProjectsCustom_idModulesIndexRoute
@@ -163,6 +181,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues'
+    | '/login'
     | '/posts'
     | '/projects'
     | '/test'
@@ -170,6 +189,7 @@ export interface FileRouteTypes {
     | '/projects/$custom_id/kanban'
     | '/projects/$custom_id/table'
     | '/projects/$custom_id/timeline'
+    | '/posts/$id'
     | '/projects/$custom_id/'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules'
@@ -179,6 +199,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues'
+    | '/login'
     | '/posts'
     | '/projects'
     | '/test'
@@ -186,6 +207,7 @@ export interface FileRouteTypes {
     | '/projects/$custom_id/kanban'
     | '/projects/$custom_id/table'
     | '/projects/$custom_id/timeline'
+    | '/posts/$id'
     | '/projects/$custom_id'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules'
@@ -196,6 +218,7 @@ export interface FileRouteTypes {
     | '/issues/$issue_id'
     | '/users/$user_id'
     | '/issues/'
+    | '/login/'
     | '/posts/'
     | '/projects/'
     | '/test/'
@@ -203,6 +226,7 @@ export interface FileRouteTypes {
     | '/projects/$custom_id/kanban'
     | '/projects/$custom_id/table'
     | '/projects/$custom_id/timeline'
+    | '/posts/$id/'
     | '/projects/$custom_id/'
     | '/projects/$custom_id/modules/$module_id'
     | '/projects/$custom_id/modules/'
@@ -214,10 +238,12 @@ export interface RootRouteChildren {
   IssuesIssue_idRoute: typeof IssuesIssue_idRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   IssuesIndexRoute: typeof IssuesIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
   PostsIndexRoute: typeof PostsIndexRoute
   ProjectsIndexRoute: typeof ProjectsIndexRoute
   TestIndexRoute: typeof TestIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
+  PostsIdIndexRoute: typeof PostsIdIndexRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -257,6 +283,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/issues/': {
       id: '/issues/'
       path: '/issues'
@@ -291,6 +324,13 @@ declare module '@tanstack/react-router' {
       fullPath: '/projects/$custom_id/'
       preLoaderRoute: typeof ProjectsCustom_idIndexRouteImport
       parentRoute: typeof ProjectsCustom_idRouteRoute
+    }
+    '/posts/$id/': {
+      id: '/posts/$id/'
+      path: '/posts/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
     }
     '/projects/$custom_id/timeline': {
       id: '/projects/$custom_id/timeline'
@@ -361,10 +401,12 @@ const rootRouteChildren: RootRouteChildren = {
   IssuesIssue_idRoute: IssuesIssue_idRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   IssuesIndexRoute: IssuesIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
   PostsIndexRoute: PostsIndexRoute,
   ProjectsIndexRoute: ProjectsIndexRoute,
   TestIndexRoute: TestIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
+  PostsIdIndexRoute: PostsIdIndexRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

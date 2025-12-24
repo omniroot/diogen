@@ -1,4 +1,6 @@
 import { QueryClient } from "@tanstack/react-query";
+import { postsHooks } from "@/api/apis/posts.api.tsx";
+import { createRefetcher } from "@/api/utils/tanstack-query.utils.tsx";
 
 export const client = new QueryClient({
 	defaultOptions: {
@@ -62,6 +64,12 @@ export const keyFactory = {
 	habit_records: createKeySection("habit_records"),
 	days_records: createKeySection("days_records"),
 };
+
+export const keyFactoryNew = {
+	posts: postsHooks.queryKeys,
+};
+
+export const refetcher = createRefetcher(client, keyFactoryNew);
 
 //
 // REQUIREMENTS FOR API HOOKS

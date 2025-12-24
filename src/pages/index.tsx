@@ -4,10 +4,12 @@ import { useMutation } from "@tanstack/react-query";
 import { createFileRoute } from "@tanstack/react-router";
 import dayjs from "dayjs";
 import { useEffect } from "react";
+import { useGetHabits } from "@/api/appwrite.tsx";
 import {
 	useCreateDayRecord,
 	useGetDayRecordByDate,
 } from "@/api/queries/days_records.api.ts";
+import { HabitList } from "@/features/habits/components/HabitList.tsx";
 import { SleepWidget } from "@/features/habits/components/SleepWidget.tsx";
 import { CreateHabitDrawer } from "@/features/habits/modals/CreateHabitDrawer/CreateHabitDrawer.tsx";
 import { DaySelectDrawer } from "@/features/habits/modals/DaySelectDrawer/DaySelectDrawer.tsx";
@@ -20,15 +22,16 @@ export const Route = createFileRoute("/")({
 function Index() {
 	const { selectedDate, setDaySelectOpen } = useHabitsStore();
 	// const { data: daysRecords } = useGetDaysRecords({});
-	const {
-		data: dayRecord,
-		isFetched,
-		refetch,
-	} = useGetDayRecordByDate(
-		{ date: dayjs(selectedDate).format("YYYY-MM-DD") },
-		{ enabled: !!selectedDate },
-	);
-	const { mutate: createDayRecord } = useCreateDayRecord();
+	// const {
+	// 	data: dayRecord,
+	// 	isFetched,
+	// 	refetch,
+	// } = useGetDayRecordByDate(
+	// 	{ date: dayjs(selectedDate).format("YYYY-MM-DD") },
+
+	// 	{ enabled: !!selectedDate },
+	// );
+	// const { mutate: createDayRecord } = useCreateDayRecord();
 
 	console.log({ selectedDate });
 
@@ -46,28 +49,23 @@ function Index() {
 	// 	},
 	// });
 
-	useEffect(() => {
-		if (isFetched && !dayRecord) {
-			console.log(selectedDate, "record not found!");
+	// useEffect(() => {
+	// 	if (isFetched && !dayRecord) {
+	// 		console.log(selectedDate, "record not found!");
 
-			createDayRecord(
-				{
-					date: dayjs(selectedDate).format("YYYY-MM-DD"),
-				},
-				{
-					onSuccess: (data) => {
-						refetch();
-						console.log("Created dayRecord", data);
-					},
-				},
-			);
-		}
-	}, [selectedDate, createDayRecord, isFetched, refetch, dayRecord]);
-
-	const { mutate: updateToZero } = useMutation({
-		mutationKey: ["update", "tozero"],
-		mutationFn: async () => {},
-	});
+	// 		createDayRecord(
+	// 			{
+	// 				date: dayjs(selectedDate).format("YYYY-MM-DD"),
+	// 			},
+	// 			{
+	// 				onSuccess: (data) => {
+	// 					refetch();
+	// 					console.log("Created dayRecord", data);
+	// 				},
+	// 			},
+	// 		);
+	// 	}
+	// }, [selectedDate, createDayRecord, isFetched, refetch, dayRecord]);
 
 	return (
 		<>
@@ -92,10 +90,12 @@ function Index() {
 					</Button>
 				</HStack>
 			</HStack>
-			<HStack border={"2px solid {colors.primary}"} p={2} borderRadius={"md"}>
+			<HabitList />
+
+			{/* <HStack border={"2px solid {colors.primary}"} p={2} borderRadius={"md"}>
 				{dayRecord?.date}
-			</HStack>
-			<SleepWidget />
+			</HStack> */}
+			{/* <SleepWidget /> */}
 
 			{/* <VStack w={"100%"}>
 				{daysRecords?.map((dayRecord) => (
