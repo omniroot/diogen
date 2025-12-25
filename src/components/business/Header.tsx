@@ -3,25 +3,26 @@ import {
 	IconArrowNarrowLeft,
 	IconArrowNarrowRight,
 	IconEdit,
-	IconMenu2,
 	IconSearch,
-	IconX,
 } from "@tabler/icons-react";
 import { useCanGoBack, useRouter } from "@tanstack/react-router";
-import { useMediaQuery } from "@uidotdev/usehooks";
-import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
-import { useHeaderStore } from "@/stores/header.store.tsx";
-import { useModals } from "@/stores/modals.store.tsx";
+// import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
+// import { useHeaderStore } from "@/stores/header.store.tsx";
+// import { useModals } from "@/stores/modals.store.tsx";
 
 export const Header = () => {
-	const { open: openIssue } = useModals("issue");
-	const { open: openSearch } = useModals("search");
-	const { isOpen, toggleOpen } = useHeaderStore();
-	const isMobile = useMediaQuery("(max-width: 767px)");
+	// const { open: openIssue } = useModals("issue");
+	// const { open: openSearch } = useModals("search");
+	// const { isOpen, toggleOpen } = useHeaderStore();
+	// const isMobile = useMediaQuery("(max-width: 767px)");
 
 	const canGoBack = useCanGoBack();
-	const canGoForward = useCanGoForward();
+	// const canGoForward = useCanGoForward();
 	const { history } = useRouter();
+
+	const openSearch = (_a: string) => {};
+	const openIssue = (_a: string) => {};
+
 	return (
 		<HStack
 			w="100%"
@@ -33,11 +34,11 @@ export const Header = () => {
 			// borderColor={"colors.outline"}
 		>
 			<HStack gap="8px" alignItems={"center"}>
-				{isMobile && (
+				{/* {isMobile && (
 					<IconButton onClick={() => toggleOpen()}>
 						{isOpen ? <IconX /> : <IconMenu2 />}
 					</IconButton>
-				)}
+				)} */}
 				{/* <div
 					style={{
 						width: "32px",
@@ -62,7 +63,7 @@ export const Header = () => {
 					size="sm"
 					variant="ghost"
 					onClick={() => history.forward()}
-					disabled={!canGoForward}
+					// disabled={!canGoForward}
 				>
 					<IconArrowNarrowRight />
 				</IconButton>

@@ -1,7 +1,4 @@
-
-import { Account, Client, type Models, TablesDB } from "appwrite";
-import { createAppwriteHooks } from "@/api/appwrite.utils.ts";
-import type { Habits, HabitsRecords, } from "@/api/types/appwrite.d.ts";
+import { Account, Client, TablesDB } from "appwrite";
 import appwriteConfig from "~/appwrite.config.json";
 
 // import { createAppwriteHooks } from "@/api/appwrite.utils.ts";
@@ -45,32 +42,32 @@ export const daysRecordsTable = appwriteConfig.tables.find(
 	(i) => i.name === "days_records",
 );
 
-export const { useList: useGetHabits } = createAppwriteHooks<
-	Habits,
-	Omit<Habits, keyof Models.Row>
->({
-	tablesDB,
-	databaseId: String(habitsTable?.databaseId), //"6923a56a000f945ace60",
-	tableId: String(habitsTable?.$id), //"6923a6c90018e0309d7f",
-	filters: {
-		title: "contains",
-		// likes: "equal",
-	},
-});
+// export const { useList: useGetHabits } = createAppwriteHooks<
+// 	Habits,
+// 	Omit<Habits, keyof Models.Row>
+// >({
+// 	tablesDB,
+// 	databaseId: String(habitsTable?.databaseId), //"6923a56a000f945ace60",
+// 	tableId: String(habitsTable?.$id), //"6923a6c90018e0309d7f",
+// 	filters: {
+// 		title: "contains",
+// 		// likes: "equal",
+// 	},
+// });
 
-export const {
-	useList: useGetHabitsRecords,
-	useCreate: useCreateHabitRecord,
-	useUpdate: useUpdateHabitRecord,
-} = createAppwriteHooks<HabitsRecords, Omit<HabitsRecords, keyof Models.Row>>({
-	tablesDB,
-	databaseId: String(habitsRecordsTable?.databaseId), //"6923a56a000f945ace60",
-	tableId: String(habitsRecordsTable?.$id), //"6923a6c90018e0309d7f",
-	filters: {
-		habit_id: "equal",
-		date: "equal",
-	},
-});
+// export const {
+// 	useList: useGetHabitsRecords,
+// 	useCreate: useCreateHabitRecord,
+// 	useUpdate: useUpdateHabitRecord,
+// } = createAppwriteHooks<HabitsRecords, Omit<HabitsRecords, keyof Models.Row>>({
+// 	tablesDB,
+// 	databaseId: String(habitsRecordsTable?.databaseId), //"6923a56a000f945ace60",
+// 	tableId: String(habitsRecordsTable?.$id), //"6923a6c90018e0309d7f",
+// 	filters: {
+// 		habit_id: "equal",
+// 		date: "equal",
+// 	},
+// });
 
 // export const useGetHabitRecords = (vars: ) => {
 // 	return useQuery({

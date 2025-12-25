@@ -1,17 +1,12 @@
-import { Button, HStack, Text, VStack } from "@chakra-ui/react";
-import { IconCalendar } from "@tabler/icons-react";
+import { HStack, Text, VStack } from "@chakra-ui/react";
 import { createFileRoute } from "@tanstack/react-router";
-import { HabitList } from "@/features/habits/components/HabitList.tsx";
-import { CreateHabitDrawer } from "@/features/habits/modals/CreateHabitDrawer/CreateHabitDrawer.tsx";
-import { DaySelectDrawer } from "@/features/habits/modals/DaySelectDrawer/DaySelectDrawer.tsx";
-import { useHabitsStore } from "@/stores/habits.store.tsx";
 
 export const Route = createFileRoute("/")({
 	component: Index,
 });
 
 function Index() {
-	const { selectedDate, setDaySelectOpen } = useHabitsStore();
+	// const { selectedDate, setDaySelectOpen } = useHabitsStore();
 	// const { data: daysRecords } = useGetDaysRecords({});
 	// const {
 	// 	data: dayRecord,
@@ -24,7 +19,7 @@ function Index() {
 	// );
 	// const { mutate: createDayRecord } = useCreateDayRecord();
 
-	console.log({ selectedDate });
+	// console.log({ selectedDate });
 
 	// const { data: currentDayRecord } = useQuery({
 	// 	queryKey: ["day", "record"],
@@ -75,13 +70,13 @@ function Index() {
 					</Text>
 				</VStack>
 				<HStack>
-					<Button onClick={() => setDaySelectOpen(true)}>
+					{/* <Button onClick={() => setDaySelectOpen(true)}>
 						<IconCalendar />
 						{selectedDate.toLocaleDateString("ru")}
-					</Button>
+					</Button> */}
 				</HStack>
 			</HStack>
-			<HabitList />
+			{/* <HabitList /> */}
 
 			{/* <HStack border={"2px solid {colors.primary}"} p={2} borderRadius={"md"}>
 				{dayRecord?.date}
@@ -107,8 +102,8 @@ function Index() {
 				))}
 			</VStack> */}
 			{/* <HabitList /> */}
-			<DaySelectDrawer />
-			<CreateHabitDrawer />
+			{/* <DaySelectDrawer /> */}
+			{/* <CreateHabitDrawer /> */}
 		</>
 	);
 }

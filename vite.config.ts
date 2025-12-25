@@ -9,7 +9,7 @@ import compression from "vite-plugin-compression";
 // https://vite.dev/config/
 export default defineConfig({
 	plugins: [
-		viteBundleAnalyzer({}),
+		viteBundleAnalyzer({ openAnalyzer: false }),
 		unfonts({
 			google: {
 				families: [

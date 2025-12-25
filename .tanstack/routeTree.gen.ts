@@ -11,21 +11,10 @@
 import { Route as rootRouteImport } from './../src/pages/__root'
 import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
-import { Route as TestIndexRouteImport } from './../src/pages/test/index'
-import { Route as ProjectsIndexRouteImport } from './../src/pages/projects/index'
 import { Route as PostsIndexRouteImport } from './../src/pages/posts/index'
 import { Route as LoginIndexRouteImport } from './../src/pages/login/index'
-import { Route as IssuesIndexRouteImport } from './../src/pages/issues/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
-import { Route as IssuesIssue_idRouteImport } from './../src/pages/issues/$issue_id'
-import { Route as ProjectsCustom_idRouteRouteImport } from './../src/pages/projects/$custom_id/route'
-import { Route as ProjectsCustom_idIndexRouteImport } from './../src/pages/projects/$custom_id/index'
 import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index'
-import { Route as ProjectsCustom_idTimelineRouteImport } from './../src/pages/projects/$custom_id/timeline'
-import { Route as ProjectsCustom_idTableRouteImport } from './../src/pages/projects/$custom_id/table'
-import { Route as ProjectsCustom_idKanbanRouteImport } from './../src/pages/projects/$custom_id/kanban'
-import { Route as ProjectsCustom_idModulesIndexRouteImport } from './../src/pages/projects/$custom_id/modules/index'
-import { Route as ProjectsCustom_idModulesModule_idRouteImport } from './../src/pages/projects/$custom_id/modules/$module_id'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
@@ -35,16 +24,6 @@ const IndexRoute = IndexRouteImport.update({
 const UsersIndexRoute = UsersIndexRouteImport.update({
   id: '/users/',
   path: '/users/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TestIndexRoute = TestIndexRouteImport.update({
-  id: '/test/',
-  path: '/test/',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsIndexRoute = ProjectsIndexRouteImport.update({
-  id: '/projects/',
-  path: '/projects/',
   getParentRoute: () => rootRouteImport,
 } as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
@@ -57,191 +36,68 @@ const LoginIndexRoute = LoginIndexRouteImport.update({
   path: '/login/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const IssuesIndexRoute = IssuesIndexRouteImport.update({
-  id: '/issues/',
-  path: '/issues/',
-  getParentRoute: () => rootRouteImport,
-} as any)
 const UsersUser_idRoute = UsersUser_idRouteImport.update({
   id: '/users/$user_id',
   path: '/users/$user_id',
   getParentRoute: () => rootRouteImport,
-} as any)
-const IssuesIssue_idRoute = IssuesIssue_idRouteImport.update({
-  id: '/issues/$issue_id',
-  path: '/issues/$issue_id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsCustom_idRouteRoute = ProjectsCustom_idRouteRouteImport.update({
-  id: '/projects/$custom_id',
-  path: '/projects/$custom_id',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const ProjectsCustom_idIndexRoute = ProjectsCustom_idIndexRouteImport.update({
-  id: '/',
-  path: '/',
-  getParentRoute: () => ProjectsCustom_idRouteRoute,
 } as any)
 const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
   id: '/posts/$id/',
   path: '/posts/$id/',
   getParentRoute: () => rootRouteImport,
 } as any)
-const ProjectsCustom_idTimelineRoute =
-  ProjectsCustom_idTimelineRouteImport.update({
-    id: '/timeline',
-    path: '/timeline',
-    getParentRoute: () => ProjectsCustom_idRouteRoute,
-  } as any)
-const ProjectsCustom_idTableRoute = ProjectsCustom_idTableRouteImport.update({
-  id: '/table',
-  path: '/table',
-  getParentRoute: () => ProjectsCustom_idRouteRoute,
-} as any)
-const ProjectsCustom_idKanbanRoute = ProjectsCustom_idKanbanRouteImport.update({
-  id: '/kanban',
-  path: '/kanban',
-  getParentRoute: () => ProjectsCustom_idRouteRoute,
-} as any)
-const ProjectsCustom_idModulesIndexRoute =
-  ProjectsCustom_idModulesIndexRouteImport.update({
-    id: '/modules/',
-    path: '/modules/',
-    getParentRoute: () => ProjectsCustom_idRouteRoute,
-  } as any)
-const ProjectsCustom_idModulesModule_idRoute =
-  ProjectsCustom_idModulesModule_idRouteImport.update({
-    id: '/modules/$module_id',
-    path: '/modules/$module_id',
-    getParentRoute: () => ProjectsCustom_idRouteRoute,
-  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/projects/$custom_id': typeof ProjectsCustom_idRouteRouteWithChildren
-  '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
-  '/issues': typeof IssuesIndexRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
-  '/projects': typeof ProjectsIndexRoute
-  '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
-  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
-  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
-  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/posts/$id': typeof PostsIdIndexRoute
-  '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
-  '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
-  '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
-  '/issues': typeof IssuesIndexRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
-  '/projects': typeof ProjectsIndexRoute
-  '/test': typeof TestIndexRoute
   '/users': typeof UsersIndexRoute
-  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
-  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
-  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/posts/$id': typeof PostsIdIndexRoute
-  '/projects/$custom_id': typeof ProjectsCustom_idIndexRoute
-  '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
-  '/projects/$custom_id/modules': typeof ProjectsCustom_idModulesIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/projects/$custom_id': typeof ProjectsCustom_idRouteRouteWithChildren
-  '/issues/$issue_id': typeof IssuesIssue_idRoute
   '/users/$user_id': typeof UsersUser_idRoute
-  '/issues/': typeof IssuesIndexRoute
   '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
-  '/projects/': typeof ProjectsIndexRoute
-  '/test/': typeof TestIndexRoute
   '/users/': typeof UsersIndexRoute
-  '/projects/$custom_id/kanban': typeof ProjectsCustom_idKanbanRoute
-  '/projects/$custom_id/table': typeof ProjectsCustom_idTableRoute
-  '/projects/$custom_id/timeline': typeof ProjectsCustom_idTimelineRoute
   '/posts/$id/': typeof PostsIdIndexRoute
-  '/projects/$custom_id/': typeof ProjectsCustom_idIndexRoute
-  '/projects/$custom_id/modules/$module_id': typeof ProjectsCustom_idModulesModule_idRoute
-  '/projects/$custom_id/modules/': typeof ProjectsCustom_idModulesIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/projects/$custom_id'
-    | '/issues/$issue_id'
     | '/users/$user_id'
-    | '/issues'
     | '/login'
     | '/posts'
-    | '/projects'
-    | '/test'
     | '/users'
-    | '/projects/$custom_id/kanban'
-    | '/projects/$custom_id/table'
-    | '/projects/$custom_id/timeline'
     | '/posts/$id'
-    | '/projects/$custom_id/'
-    | '/projects/$custom_id/modules/$module_id'
-    | '/projects/$custom_id/modules'
   fileRoutesByTo: FileRoutesByTo
-  to:
-    | '/'
-    | '/issues/$issue_id'
-    | '/users/$user_id'
-    | '/issues'
-    | '/login'
-    | '/posts'
-    | '/projects'
-    | '/test'
-    | '/users'
-    | '/projects/$custom_id/kanban'
-    | '/projects/$custom_id/table'
-    | '/projects/$custom_id/timeline'
-    | '/posts/$id'
-    | '/projects/$custom_id'
-    | '/projects/$custom_id/modules/$module_id'
-    | '/projects/$custom_id/modules'
+  to: '/' | '/users/$user_id' | '/login' | '/posts' | '/users' | '/posts/$id'
   id:
     | '__root__'
     | '/'
-    | '/projects/$custom_id'
-    | '/issues/$issue_id'
     | '/users/$user_id'
-    | '/issues/'
     | '/login/'
     | '/posts/'
-    | '/projects/'
-    | '/test/'
     | '/users/'
-    | '/projects/$custom_id/kanban'
-    | '/projects/$custom_id/table'
-    | '/projects/$custom_id/timeline'
     | '/posts/$id/'
-    | '/projects/$custom_id/'
-    | '/projects/$custom_id/modules/$module_id'
-    | '/projects/$custom_id/modules/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ProjectsCustom_idRouteRoute: typeof ProjectsCustom_idRouteRouteWithChildren
-  IssuesIssue_idRoute: typeof IssuesIssue_idRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
-  IssuesIndexRoute: typeof IssuesIndexRoute
   LoginIndexRoute: typeof LoginIndexRoute
   PostsIndexRoute: typeof PostsIndexRoute
-  ProjectsIndexRoute: typeof ProjectsIndexRoute
-  TestIndexRoute: typeof TestIndexRoute
   UsersIndexRoute: typeof UsersIndexRoute
   PostsIdIndexRoute: typeof PostsIdIndexRoute
 }
@@ -262,20 +118,6 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/test/': {
-      id: '/test/'
-      path: '/test'
-      fullPath: '/test'
-      preLoaderRoute: typeof TestIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/': {
-      id: '/projects/'
-      path: '/projects'
-      fullPath: '/projects'
-      preLoaderRoute: typeof ProjectsIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/posts/': {
       id: '/posts/'
       path: '/posts'
@@ -290,40 +132,12 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof LoginIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/issues/': {
-      id: '/issues/'
-      path: '/issues'
-      fullPath: '/issues'
-      preLoaderRoute: typeof IssuesIndexRouteImport
-      parentRoute: typeof rootRouteImport
-    }
     '/users/$user_id': {
       id: '/users/$user_id'
       path: '/users/$user_id'
       fullPath: '/users/$user_id'
       preLoaderRoute: typeof UsersUser_idRouteImport
       parentRoute: typeof rootRouteImport
-    }
-    '/issues/$issue_id': {
-      id: '/issues/$issue_id'
-      path: '/issues/$issue_id'
-      fullPath: '/issues/$issue_id'
-      preLoaderRoute: typeof IssuesIssue_idRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/$custom_id': {
-      id: '/projects/$custom_id'
-      path: '/projects/$custom_id'
-      fullPath: '/projects/$custom_id'
-      preLoaderRoute: typeof ProjectsCustom_idRouteRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/projects/$custom_id/': {
-      id: '/projects/$custom_id/'
-      path: '/'
-      fullPath: '/projects/$custom_id/'
-      preLoaderRoute: typeof ProjectsCustom_idIndexRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
     }
     '/posts/$id/': {
       id: '/posts/$id/'
@@ -332,79 +146,14 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof PostsIdIndexRouteImport
       parentRoute: typeof rootRouteImport
     }
-    '/projects/$custom_id/timeline': {
-      id: '/projects/$custom_id/timeline'
-      path: '/timeline'
-      fullPath: '/projects/$custom_id/timeline'
-      preLoaderRoute: typeof ProjectsCustom_idTimelineRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
-    }
-    '/projects/$custom_id/table': {
-      id: '/projects/$custom_id/table'
-      path: '/table'
-      fullPath: '/projects/$custom_id/table'
-      preLoaderRoute: typeof ProjectsCustom_idTableRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
-    }
-    '/projects/$custom_id/kanban': {
-      id: '/projects/$custom_id/kanban'
-      path: '/kanban'
-      fullPath: '/projects/$custom_id/kanban'
-      preLoaderRoute: typeof ProjectsCustom_idKanbanRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
-    }
-    '/projects/$custom_id/modules/': {
-      id: '/projects/$custom_id/modules/'
-      path: '/modules'
-      fullPath: '/projects/$custom_id/modules'
-      preLoaderRoute: typeof ProjectsCustom_idModulesIndexRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
-    }
-    '/projects/$custom_id/modules/$module_id': {
-      id: '/projects/$custom_id/modules/$module_id'
-      path: '/modules/$module_id'
-      fullPath: '/projects/$custom_id/modules/$module_id'
-      preLoaderRoute: typeof ProjectsCustom_idModulesModule_idRouteImport
-      parentRoute: typeof ProjectsCustom_idRouteRoute
-    }
   }
 }
-
-interface ProjectsCustom_idRouteRouteChildren {
-  ProjectsCustom_idKanbanRoute: typeof ProjectsCustom_idKanbanRoute
-  ProjectsCustom_idTableRoute: typeof ProjectsCustom_idTableRoute
-  ProjectsCustom_idTimelineRoute: typeof ProjectsCustom_idTimelineRoute
-  ProjectsCustom_idIndexRoute: typeof ProjectsCustom_idIndexRoute
-  ProjectsCustom_idModulesModule_idRoute: typeof ProjectsCustom_idModulesModule_idRoute
-  ProjectsCustom_idModulesIndexRoute: typeof ProjectsCustom_idModulesIndexRoute
-}
-
-const ProjectsCustom_idRouteRouteChildren: ProjectsCustom_idRouteRouteChildren =
-  {
-    ProjectsCustom_idKanbanRoute: ProjectsCustom_idKanbanRoute,
-    ProjectsCustom_idTableRoute: ProjectsCustom_idTableRoute,
-    ProjectsCustom_idTimelineRoute: ProjectsCustom_idTimelineRoute,
-    ProjectsCustom_idIndexRoute: ProjectsCustom_idIndexRoute,
-    ProjectsCustom_idModulesModule_idRoute:
-      ProjectsCustom_idModulesModule_idRoute,
-    ProjectsCustom_idModulesIndexRoute: ProjectsCustom_idModulesIndexRoute,
-  }
-
-const ProjectsCustom_idRouteRouteWithChildren =
-  ProjectsCustom_idRouteRoute._addFileChildren(
-    ProjectsCustom_idRouteRouteChildren,
-  )
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ProjectsCustom_idRouteRoute: ProjectsCustom_idRouteRouteWithChildren,
-  IssuesIssue_idRoute: IssuesIssue_idRoute,
   UsersUser_idRoute: UsersUser_idRoute,
-  IssuesIndexRoute: IssuesIndexRoute,
   LoginIndexRoute: LoginIndexRoute,
   PostsIndexRoute: PostsIndexRoute,
-  ProjectsIndexRoute: ProjectsIndexRoute,
-  TestIndexRoute: TestIndexRoute,
   UsersIndexRoute: UsersIndexRoute,
   PostsIdIndexRoute: PostsIdIndexRoute,
 }

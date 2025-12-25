@@ -27,6 +27,7 @@
     "erasableSyntaxOnly": false,
     "noFallthroughCasesInSwitch": true,
     "noUncheckedSideEffectImports": true,
+    "tsBuildInfoFile": ".tmp/.tsbuildinfo",
     "baseUrl": ".",
     "paths": {
       "@/*": [

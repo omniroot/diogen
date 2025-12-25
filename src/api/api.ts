@@ -1,6 +1,7 @@
 import { QueryClient } from "@tanstack/react-query";
-import { postsHooks } from "@/api/apis/posts.api.tsx";
+// import { postsHooks } from "@/api/apis/posts.api.tsx";
 import { createRefetcher } from "@/api/utils/tanstack-query.utils.tsx";
+import { postsHooks } from "@/features/posts/api/posts.api.ts";
 
 export const client = new QueryClient({
 	defaultOptions: {

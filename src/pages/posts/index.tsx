@@ -1,9 +1,9 @@
 import {
-	Button,
+	Badge,
 	Link as ChakraLink,
 	HStack,
 	Image,
-	Input,
+	Separator,
 	Text,
 	VStack,
 } from "@chakra-ui/react";
@@ -11,7 +11,8 @@ import { useDebounceValue } from "@siberiacancode/reactuse";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
 import { refetcher } from "@/api/api.ts";
-import { usePosts } from "@/api/apis/posts.api.tsx";
+import { usePosts } from "@/features/posts/controllers/usePosts.tsx";
+import { ddate } from "@/utils/ddate.ts";
 // import { useGetPosts } from "@/api/appwrite.tsx";
 // import { useGetPosts } from "@/api/utils.ts";
 // import { tablesDB, useGetPosts } from "@/api/appwrite.ts";
@@ -25,92 +26,72 @@ function RouteComponent() {
 	const debouncedSearch = useDebounceValue(search, 600);
 	const { posts, createPost } = usePosts({
 		$limit: 1,
-		$select: ["title"],
 		$or: [
 			{
 				title: { contains: debouncedSearch },
 			},
 			{
-				description: { contains: debouncedSearch },
+				author_id: { contains: debouncedSearch },
 			},
 		],
 	});
 
-	const [searchType, setSearchType] = useState<"title" | "likes">("title");
-	// const { data: posts, refetch } = useGetPosts(
-	// 	searchType === "title"
-	// 		? { title: debouncedSearch }
-	// 		: { likes: Number(debouncedSearch) },
-	// 	{ enabled: !!debouncedSearch },
-	// );
-
-	// useEffect(() => {
-	// 	const fetchData = async () => {
-	// 		const { rows, total } = await tablesDB.listRows({
-	//
-	//       queries:[""]
-	// 		});
-
-	// 		console.log("@@@ Rows", { rows, total });
-	// 	};
-	// 	fetchData();
-	// }, []);
-	// console.log();
-
 	const onRefetchClick = () => {
-		refetcher.posts.list({
-			where: { description: { contains: debouncedSearch } },
-			mode: "fuzzy",
-		});
-		// refetchQuery(
-		// 	postsHooks.queryKeys.list({
-		// 		$or: [
-		// 			{
-		// 				title: { contains: debouncedSearch },
-		// 			},
-		// 			{
-		// 				description: { contains: debouncedSearch },
-		// 			},
-		// 		],
-		// 	}),
-		// );
-		// refetch();
+		refetcher.posts.list();
 	};
 
 	return (
 		<>
-			<Text>Posts</Text>
-			<Button onClick={() => onRefetchClick()}>Refetch</Button>
-			<Input value={search} onChange={(e) => setSearch(e.target.value)} />
-			<HStack>
-				<Text>Search type:</Text>
-				<Button
-					variant={searchType === "title" ? "primary" : "outline"}
-					onClick={() => setSearchType("title")}
-				>
-					Title
-				</Button>
-				<Button
-					variant={searchType === "likes" ? "primary" : "outline"}
-					onClick={() => setSearchType("likes")}
-				>
-					Likes
-				</Button>
-			</HStack>
+			<Text fontSize={"2xl"} fontWeight={"bold"}>
+				Posts
+			</Text>
+			<Text fontSize={"lg"}>Posts, news and changelog</Text>
+			<Separator h={"3"} size={"md"} />
+
 			<VStack gap={2} alignItems={"start"}>
 				{posts?.map((post) => {
 					return (
-						<VStack key={post.$id} w={"100%"} border={"2px solid outline"} asChild>
-							<ChakraLink asChild>
+						<VStack
+							key={post.$id}
+							w={"350px"}
+							// h={"250px"}
+							border={`2px solid {colors.outline_variant}`}
+							alignItems={"start"}
+							p={4}
+							borderRadius={"md"}
+							bg={{ _hover: "surface_container_high" }}
+							transition={"backgrounds"}
+							asChild
+						>
+							<ChakraLink asChild textDecoration={"none"}>
 								<Link
 									to="/posts/$id"
 									params={{
 										id: post.$id,
 									}}
 								>
-									<Image src={post.poster || ""} w={"250px"} h={"120px"} />
-									<Text>{post.title}</Text>
-									<Text>{post.description}</Text>
+									<Image
+										src={post.banner_url || ""}
+										w={"100%"}
+										h={"180px"}
+										borderRadius={"md"}
+									/>
+									<HStack w={"100%"} justifyContent={"space-between"}>
+										<Text fontSize={"lg"} fontWeight={"bold"}>
+											{post.title}
+										</Text>
+									</HStack>
+									<HStack w={"100%"} justifyContent={"space-between"}>
+										<Text>{post.author_id?.slice(0, 8)}</Text>
+										<Badge
+											size={"lg"}
+											bg={"blue.300"}
+											color={"black"}
+											variant={"outline"}
+										>
+											{ddate.getDate(post.$createdAt)}
+										</Badge>
+									</HStack>
 								</Link>
 							</ChakraLink>
 							{/* <Badge bg={"primary"}>{post.likes} likes</Badge> */}
