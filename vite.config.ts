@@ -71,7 +71,7 @@ export default defineConfig({
 			"@chakra-ui/react",
 			"@tabler/icons-react",
 		],
-		exclude: ["@tiptap/*", "react-calendar"],
+		exclude: ["@tiptap/*", "react-calendar", "@biomejs/biome"],
 	},
 	resolve: {
 		alias: {
