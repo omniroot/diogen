@@ -5,20 +5,16 @@
 	"type": "module",
 	"scripts": {
 		"analyzer": "bun run analyzer.ts",
-		"preinstall": "git submodule sync --recursive || true",
-		"prepare-submodules": "git submodule update --init --recursive",
 		"dev": "vite dev --port 5173 --host",
 		"preview": "vite preview --port 5173 --host",
-		"build:pre": "npm run prepare-submodules && npm run typegen:chakra",
-		"build": "npm run build:pre && tsc -b && vite build",
+		"build": "bun run ./scripts/build.ts",
 		"biome:format": "bunx biome format --write ./src/",
 		"biome:lint": "bunx biome lint --write ./src/",
 		"lf": "bun run biome:format && bun run biome:lint",
 		"typegen": "bun run typegen:appwrite && bun run typegen:chakra",
 		"typegen:appwrite": "bun appwrite pull tables && bun run appwrite types -l ts ./src/api/types/",
 		"typegen:chakra": "chakra typegen ./src/theme/index.ts",
-		"commit": "cz",
-		"commit:lint": "commitlint --edit"
+		"commit": "cz"
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx,json,md}": [
