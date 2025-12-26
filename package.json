@@ -20,8 +20,8 @@
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx,json,md}": [
-			"bunx biome format --write",
-			"bunx biome lint --apply"
+			"bun run biome:format",
+			"bun run biome:lint"
 		],
 		"*.{css,scss}": [
 			"bunx biome format --write"

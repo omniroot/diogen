@@ -1,2 +1,4 @@
-bun biome:lint
-bun biome:format
+
+
+# Запускаем lint-staged
+bun run lint-staged
