@@ -21,7 +21,7 @@ declare module "@tanstack/react-router" {
 //   enabled: true,
 // });
 
-createRoot(document.getElementById("root") as HTMLElement).render(
+createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<OmnikitProvider>
 			<QueryClientProvider client={client}>
