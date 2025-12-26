@@ -14,9 +14,7 @@
     "biome:format": "bunx biome format --write ./src/",
     "biome:lint": "bunx biome lint --write ./src/",
     "lf": "bun run biome:format && bun run biome:lint",
-    "typegen": "bun run typegen:diogen && bun run typegen:kaizen && bun run typegen:chakra",
-    "typegen:diogen": "npx supabase gen types typescript --project-id ddmwmjqgwvhbjvyifjzs --schema public > ./src/api/diogen.types.ts",
-    "typegen:kaizen": "npx supabase gen types typescript --project-id yifheosdpnrhllqykpon --schema public > ./src/api/kaizen.types.ts",
+    "typegen": "bun run typegen:appwrite && bun run typegen:chakra",
     "typegen:appwrite": "bun appwrite pull tables && bun run appwrite types -l ts ./src/api/types/",
     "typegen:chakra": "chakra typegen ./src/theme/index.ts"
   },
