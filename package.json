@@ -16,7 +16,9 @@
 		"lf": "bun run biome:format && bun run biome:lint",
 		"typegen": "bun run typegen:appwrite && bun run typegen:chakra",
 		"typegen:appwrite": "bun appwrite pull tables && bun run appwrite types -l ts ./src/api/types/",
-		"typegen:chakra": "chakra typegen ./src/theme/index.ts"
+		"typegen:chakra": "chakra typegen ./src/theme/index.ts",
+		"commit": "cz",
+		"commit:lint": "commitlint --edit"
 	},
 	"lint-staged": {
 		"*.{js,jsx,ts,tsx,json,md}": [
@@ -76,17 +78,26 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "^2.2.5",
+		"@commitlint/cli": "^20.2.0",
+		"@commitlint/config-conventional": "^20.2.0",
 		"@types/lodash.throttle": "^4.1.9",
 		"@types/node": "^24.6.2",
 		"@types/react": "^19.2.0",
 		"@types/react-dom": "^19.2.0",
 		"@vitejs/plugin-react": "^5.0.4",
 		"babel-plugin-react-compiler": "^19.1.0-rc.3",
+		"commitizen": "^4.3.1",
+		"cz-conventional-changelog": "^3.3.0",
 		"globals": "^16.4.0",
 		"husky": "^9.1.7",
 		"lint-staged": "^16.2.7",
 		"sass-embedded": "^1.97.1",
 		"typescript": "~5.9.3",
 		"vite": "^7.1.9"
+	},
+	"config": {
+		"commitizen": {
+			"path": "./node_modules/cz-conventional-changelog"
+		}
 	}
 }

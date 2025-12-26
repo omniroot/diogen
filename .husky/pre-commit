@@ -1,4 +1,3 @@
 
-
-# Запускаем lint-staged
-bun run lint-staged
+bun run biome:format
+bun run biome:lint
