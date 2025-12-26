@@ -18,7 +18,6 @@
 		"enabled": true,
 		"rules": {
 			"recommended": true,
-			"a11y": {},
 			"complexity": {
 				"noBannedTypes": "error",
 				"noExtraBooleanCast": "error",
