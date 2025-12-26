@@ -1,12 +1,8 @@
-import { Posts } from "@/api/types/appwrite.js"
+import type { Posts } from "@/api/types/appwrite.js";
 
 interface Props {
-  post: Posts
+	post: Posts;
 }
-export const PostItem: React.FC<Props> = ({post}) => {
-  return (
-    <>
-      
-    </>
-  )
-}
+export const PostItem: React.FC<Props> = ({ post }) => {
+	return <>{post.$id}</>;
+};

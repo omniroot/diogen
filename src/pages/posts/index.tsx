@@ -10,7 +10,6 @@ import {
 import { useDebounceValue } from "@siberiacancode/reactuse";
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { useState } from "react";
-import { refetcher } from "@/api/api.ts";
 import { usePosts } from "@/features/posts/controllers/usePosts.tsx";
 import { ddate } from "@/utils/ddate.ts";
 // import { useGetPosts } from "@/api/appwrite.tsx";
@@ -22,9 +21,9 @@ export const Route = createFileRoute("/posts/")({
 });
 
 function RouteComponent() {
-	const [search, setSearch] = useState("");
+	const [search] = useState("");
 	const debouncedSearch = useDebounceValue(search, 600);
-	const { posts, createPost } = usePosts({
+	const { posts } = usePosts({
 		$limit: 1,
 		$or: [
 			{
@@ -36,9 +35,9 @@ function RouteComponent() {
 		],
 	});
 
-	const onRefetchClick = () => {
-		refetcher.posts.list();
-	};
+	// const onRefetchClick = () => {
+	// 	refetcher.posts.list();
+	// };
 
 	return (
 		<>

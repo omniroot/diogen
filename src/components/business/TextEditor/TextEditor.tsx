@@ -1,7 +1,3 @@
-{
-	/* <span aria-hidden>👋</span> */
-}
-
 import Heading from "@tiptap/extension-heading";
 import TextAlign from "@tiptap/extension-text-align";
 // src/Tiptap.tsx
