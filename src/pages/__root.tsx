@@ -1,9 +1,18 @@
-import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
+// import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
+import { lazy } from "react";
 import { Header } from "@/components/business/Header.tsx";
 import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 import { AuthProvider } from "@/providers/auth.provider.tsx";
+
+const ReactQueryDevtools = import.meta.env.DEV
+	? lazy(() =>
+			import("@tanstack/react-query-devtools").then((m) => ({
+				default: m.ReactQueryDevtools,
+			})),
+		)
+	: () => null;
 
 const RootLayout = () => {
 	const isMobile = useMediaQuery("(max-width: 767px)");
