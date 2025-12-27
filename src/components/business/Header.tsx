@@ -47,7 +47,16 @@ export const Header = () => {
 						borderRadius: "50%",
 					}}
 				></div> */}
-				<Image w={"32px"} h={"32px"} borderRadius={"md"} src="/logo.png" />
+				<Image
+					w={"32px"}
+					h={"32px"}
+					borderRadius={"md"}
+					src="/logo.webp"
+					alt="App Logo"
+					loading="eager"
+					decoding="async"
+					fetchPriority="high"
+				/>
 				<span>Diogen</span>
 			</HStack>
 			<HStack gap="4px" alignItems={"center"}>
