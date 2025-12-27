@@ -1,4 +1,5 @@
 import path from "node:path";
+import { purgeCSSPlugin } from "@fullhuman/postcss-purgecss";
 import { tanstackRouter } from "@tanstack/router-plugin/vite";
 import react from "@vitejs/plugin-react";
 import unfonts from "unplugin-fonts/vite";
@@ -33,9 +34,28 @@ export default defineConfig({
 			},
 		}),
 	],
+	css: {
+		postcss: {
+			plugins: [
+				purgeCSSPlugin({
+					content: ["./**/*.html", "./src/**/*.tsx", "./src/**/*.jsx"],
+					defaultExtractor: (content) => content.match(/[\w-/:]+(?<!:)/g) || [],
+				}),
+			],
+		},
+	},
 	build: {
 		rollupOptions: {
+			treeshake: { preset: "smallest" },
 			output: {
+				// manualChunks: (id) => {
+				// 	if (id.includes("node_modules")) {
+				// 		if (id.includes("chakra")) return "chakra-vendor";
+				// 		if (id.includes("@tanstack")) return "tanstack-vendor";
+				// 		if (id.includes("appwrite")) return "appwrite-vendor";
+				// 		return "vendor";
+				// 	}
+				// },
 				manualChunks: {
 					"chakra-core": ["@chakra-ui/react", "@emotion/react"],
 					"tiptap-core": ["@tiptap/core"],
@@ -51,9 +71,11 @@ export default defineConfig({
 					zustand: ["zustand"],
 					"react-vendor": ["react", "react-dom"],
 				},
+
 				entryFileNames: "assets/[name]-[hash].js",
 				chunkFileNames: "assets/[name]-[hash].js",
 				assetFileNames: "assets/[name]-[hash].[ext]",
+				experimentalMinChunkSize: 10000,
 			},
 		},
 		target: ["es2020", "edge88", "firefox78", "chrome87", "safari14"],
