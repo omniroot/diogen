@@ -13,7 +13,7 @@ const client = new Client()
 // .setDevKey(
 // 	"0b8bf0cd4a4bfeb8c412cc100a05d0149d9e23975eb83818c228c0ba704e87ffcfc3b20830bdb9a04aedbeb73544e075e947167864b066f450c15c636dfa7d1ea22038ed834af908048a22fdd442581814b8088497c98dbe1d3c057959ef349dc6eccb3110418ea4a5c12547e72d64c03b6d7abfdc97e9b7806fe082ce258b78",
 // );
-client.ping();
+// client.ping();
 export const account = new Account(client);
 export const tablesDB = new TablesDB(client);
 
