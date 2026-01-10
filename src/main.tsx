@@ -7,6 +7,12 @@ import { OmnikitProvider } from "@/theme/components/provider.tsx";
 import "./styles/global.css";
 import { client } from "@/api/api.ts";
 import { routeTree } from "~/.tanstack/routeTree.gen.ts";
+import "dayjs/locale/ru";
+import dayjs from "dayjs";
+import relativeTime from "dayjs/plugin/relativeTime";
+
+dayjs.extend(relativeTime);
+dayjs.locale("ru");
 
 const router = createRouter({ routeTree });
 
@@ -25,7 +31,7 @@ createRoot(document.getElementById("root")!).render(
 	<StrictMode>
 		<OmnikitProvider>
 			<QueryClientProvider client={client}>
-				<RouterProvider router={router} />
+				<RouterProvider router={router} scrollRestoration />
 			</QueryClientProvider>
 		</OmnikitProvider>
 	</StrictMode>,
