@@ -43,10 +43,10 @@ body {
 	/* margin-bottom: 3dvh; */
 
 	gap: 6px;
-	padding: 6px;
-	background-color: var(--chakra-colors-surface_container);
-	border: 2px solid var(--chakra-colors-outline);
-	border-radius: var(--chakra-radii-lg);
+	padding: 0px 15px;
+	/* background-color: var(--chakra-colors-surface_container); */
+	/* border: 2px solid var(--chakra-colors-outline); */
+	/* border-radius: var(--chakra-radii-lg); */
 }
 
 ::selection {
