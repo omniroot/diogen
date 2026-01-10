@@ -22,14 +22,15 @@ export const Section: React.FC<ISection> = ({
 			w={"100%"}
 			alignItems={"start"}
 			border={"2px solid {colors.outline}"}
-			borderRadius={"md"}
+			borderRadius={"2xl"}
+			bg={"surface-container"}
+			p={3}
 		>
 			<HStack
 				w={"100%"}
-				mb={"-10px"}
+				// mb={"-10px"}
 				justifyContent={"space-between"}
 				alignItems={"center"}
-				p={2}
 			>
 				<HStack>
 					{icon}

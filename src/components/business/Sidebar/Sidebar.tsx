@@ -1,21 +1,21 @@
 import { VStack } from "@chakra-ui/react";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { useState } from "react";
-import { Header } from "@/components/business/Header.tsx";
+import { Header } from "@/components/Header";
 
 export const Sidebar = () => {
 	// const { isOpen } = useHeaderStore();
 	// const locations = useLocationStore();
 	const isMobile = useMediaQuery("(max-width: 767px)");
-	const isTablet = useMediaQuery("(min-width: 768px)");
-	const isDesktop = useMediaQuery("(min-width: 1280px)");
+	// const isTablet = useMediaQuery("(min-width: 768px)");
+	// const isDesktop = useMediaQuery("(min-width: 1280px)");
 
 	const [size] = useState("330px");
 	// const resizeRef = useResizable() as React.RefObject<HTMLDivElement | null>;
 	// const sidebarRef = useRef<HTMLDivElement>(null);
 	// const resizerRef = useRef<HTMLDivElement>(null);
 	// const isResizing = useRef(false);
-	console.log({ isMobile, isTablet, isDesktop });
+	// console.log({ isMobile, isTablet, isDesktop });
 
 	// const onMouseMove = (event: React.DragEvent<HTMLDivElement>) => {
 	//   if (isResizing) {
@@ -27,6 +27,7 @@ export const Sidebar = () => {
 	return (
 		<VStack
 			w={isMobile ? "100dvw" : size}
+			display={"none"}
 			// display={isOpen2 ? "flex" : "none"}
 			style={isMobile ? { position: "fixed", marginTop: "60px" } : { marginTop: -17 }}
 			h={isMobile ? "90dvh" : "99dvh"}

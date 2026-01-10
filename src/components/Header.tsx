@@ -1,27 +1,27 @@
-import { HStack, IconButton, Image, Separator } from "@chakra-ui/react";
-import {
-	IconArrowNarrowLeft,
-	IconArrowNarrowRight,
-	IconEdit,
-	IconSearch,
-} from "@tabler/icons-react";
-import { useCanGoBack, useRouter } from "@tanstack/react-router";
+import { Link as ChakraLink, HStack, IconButton, Image, Text } from "@chakra-ui/react";
+import { IconMenu2 } from "@tabler/icons-react";
+import { Link, useLocation } from "@tanstack/react-router";
+import { useAuth } from "@/features/auth/hooks/auth.hook.ts";
 // import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
 // import { useHeaderStore } from "@/stores/header.store.tsx";
 // import { useModals } from "@/stores/modals.store.tsx";
 
 export const Header = () => {
+	const { user } = useAuth();
+	const pathname = useLocation().pathname;
+	const isShowAvatar = !(pathname === "/profile" || pathname === "/login");
+
 	// const { open: openIssue } = useModals("issue");
 	// const { open: openSearch } = useModals("search");
 	// const { isOpen, toggleOpen } = useHeaderStore();
 	// const isMobile = useMediaQuery("(max-width: 767px)");
 
-	const canGoBack = useCanGoBack();
+	// const canGoBack = useCanGoBack();
 	// const canGoForward = useCanGoForward();
-	const { history } = useRouter();
+	// const { history } = useRouter();
 
-	const openSearch = (_a: string) => {};
-	const openIssue = (_a: string) => {};
+	// const openSearch = (_a: string) => {};
+	// const openIssue = (_a: string) => {};
 
 	return (
 		<HStack
@@ -29,11 +29,11 @@ export const Header = () => {
 			h={"60px"}
 			// display={{ base: "flex", md: "none" }}
 			justifyContent={"space-between"}
-			// p="12px 6px"
+			p="15px 15px"
 			// borderBottom={"2px solid"}
 			// borderColor={"colors.outline"}
 		>
-			<HStack gap="8px" alignItems={"center"}>
+			<HStack gap="10px" alignItems={"center"}>
 				{/* {isMobile && (
 					<IconButton onClick={() => toggleOpen()}>
 						{isOpen ? <IconX /> : <IconMenu2 />}
@@ -47,7 +47,7 @@ export const Header = () => {
 						borderRadius: "50%",
 					}}
 				></div> */}
-				<Image
+				{/* <Image
 					w={"32px"}
 					h={"32px"}
 					borderRadius={"md"}
@@ -56,11 +56,36 @@ export const Header = () => {
 					loading="eager"
 					decoding="async"
 					fetchPriority="high"
-				/>
-				<span>Diogen</span>
+				/> */}
+				<IconButton
+					bg={"transparent"}
+					color={"on-surface"}
+					w={"24px"}
+					minW={"24px"}
+					h={"24px"}
+					p={"0"}
+				>
+					<IconMenu2 style={{ width: "24px", height: "24px" }} />
+				</IconButton>
+
+				<Text fontSize={"21px"} fontWeight={"bold"} asChild>
+					<Link to="/">Diogen</Link>
+				</Text>
 			</HStack>
 			<HStack gap="4px" alignItems={"center"}>
-				<IconButton
+				{isShowAvatar && (
+					<ChakraLink asChild>
+						<Link to={user?.$id ? "/profile" : "/login"}>
+							<Image
+								src={user?.avatar || "logo.webp"}
+								w={"42px"}
+								h={"42px"}
+								borderRadius={"50%"}
+							/>
+						</Link>
+					</ChakraLink>
+				)}
+				{/* <IconButton
 					size="sm"
 					variant="ghost"
 					onClick={() => history.back()}
@@ -86,7 +111,7 @@ export const Header = () => {
 				</IconButton>
 				<IconButton onClick={() => openIssue("create")}>
 					<IconEdit />
-				</IconButton>
+				</IconButton> */}
 			</HStack>
 		</HStack>
 	);
