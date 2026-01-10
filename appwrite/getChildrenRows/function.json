@@ -1,0 +1,12 @@
+{
+	"id": "getChildrenRows",
+	"name": "getChildrenRows",
+	"entrypoint": "main.ts",
+	"codePath": ".",
+	"activate": true,
+	"runtime": "bun-1.0",
+	"build": {
+		"install": "npm install",
+		"build": "npm run build"
+	}
+}
