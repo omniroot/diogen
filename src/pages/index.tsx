@@ -1,11 +1,53 @@
-import { HStack, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Icon, Tabs, Text, VStack } from "@chakra-ui/react";
+import { IconCalendar, IconChevronDown } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
+import { useState } from "react";
+import { ActivityList } from "@/features/activities/ui/ActivityList.tsx";
+import { useApp } from "@/hooks/useApp.tsx";
+import { ddate } from "@/utils/ddate.ts";
 
 export const Route = createFileRoute("/")({
 	component: Index,
 });
 
+// interface HabitPlan {
+// 	title: string;
+// 	checked: boolean;
+// 	children?: HabitPlan[];
+// }
+
+// const habitsPlan: HabitPlan[] = [
+// 	{
+// 		title: "Habits",
+// 		checked: false,
+// 		children: [
+// 			{
+// 				title: "HabitsList",
+// 				checked: false,
+// 			},
+// 			{
+// 				title: "HabitItem",
+// 				checked: false,
+// 			},
+// 			{
+// 				title: "Journal",
+// 				checked: false,
+// 			},
+// 		],
+// 	},
+// ];
+
 function Index() {
+	const { selectedDate } = useApp();
+	const displayDate = ddate.getRelativeLabel(selectedDate);
+	const displayFullNiceDate = ddate.getFullNiceDate(selectedDate);
+	// const { goals, isLoading } = useGoals({
+	// 	parent_id: {
+	// 		isNull: true,
+	// 	},
+	// });
+	// const { habits, isLoading: hbl } = useHabits({});
+	const [tab, setTab] = useState("configure");
 	// const { selectedDate, setDaySelectOpen } = useHabitsStore();
 	// const { data: daysRecords } = useGetDaysRecords({});
 	// const {
@@ -55,7 +97,136 @@ function Index() {
 
 	return (
 		<>
-			<HStack
+			<Tabs.Root
+				w={"100%"}
+				defaultValue="timeline"
+				value={tab}
+				onValueChange={(v) => setTab(v.value)}
+				variant="plain"
+				css={{
+					"--tabs-indicator-bg": "colors.surface-container",
+					"--tabs-indicator-shadow": "none",
+					"--tabs-trigger-radius": "radii.full",
+					"--transition-duration": "300ms",
+				}}
+			>
+				<Tabs.List w={"100%"} justifyContent={"space-between"}>
+					<Tabs.Trigger w={"100%"} justifyContent={"center"} value="timeline">
+						Timeline
+					</Tabs.Trigger>
+					<Tabs.Trigger w={"100%"} justifyContent={"center"} value="configure">
+						Configure
+					</Tabs.Trigger>
+					<Tabs.Indicator />
+				</Tabs.List>
+				<Tabs.Content
+					value="timeline"
+					css={{
+						"--focus-ring-color": "transparent",
+					}}
+				>
+					<VStack alignItems={"start"} gap={"5px"} py={2}>
+						<Text fontSize={"18px"} fontWeight={"semibold"}>
+							{displayDate}
+						</Text>
+						<Button
+							h={"auto"}
+							variant={"ghost"}
+							alignItems={"center"}
+							px={2}
+							py={1}
+							ml={"-3"}
+							bg={{ _hover: "surface-container" }}
+							borderRadius={"12px"}
+						>
+							<Icon w={"18px"} color={"primary"}>
+								<IconCalendar />
+							</Icon>
+							<Text fontSize={"16px"} color={"on-surface-dark"}>
+								{displayFullNiceDate}
+							</Text>
+							<Icon w={"18px"} color={"on-surface-dark"}>
+								<IconChevronDown />
+							</Icon>
+						</Button>
+						{/* <Spacer minH={"2"} /> */}
+						<HStack gap={"10px"} color={"on-surface-dark"}>
+							<HStack fontSize={"16px"}>
+								<Box w={"5px"} h={"5px"} bg={"primary"} borderRadius={"50%"} /> 1/4 tasks
+							</HStack>
+							<HStack fontSize={"16px"}>
+								<Box w={"5px"} h={"5px"} bg={"outline"} borderRadius={"50%"} /> 1 notes
+							</HStack>
+						</HStack>
+					</VStack>
+					<Text fontSize={"16px"} color={"on-surface-dark"}>
+						Задачи
+					</Text>
+
+					<VStack></VStack>
+				</Tabs.Content>
+				<Tabs.Content
+					value="configure"
+					css={{
+						"--focus-ring-color": "transparent",
+					}}
+				>
+					{/* <Loader visible={isLoading} /> */}
+					{/* <Text>Goals: {goals?.length}</Text> */}
+					{/* {goals?.map((goal) => {
+						if (goal.parent_id) return null;
+						return <GoalItem key={goal.$id} goal={goal} />;
+					})}
+					<Text>habits: {habits?.length}</Text>
+					{habits?.map((habit) => {
+						// if (habit.parent_id) return null;
+						return <HabitItem key={habit.$id} habit={habit} />;
+					})} */}
+				</Tabs.Content>
+			</Tabs.Root>
+			<ActivityList />
+			{/* <HabitList /> */}
+			{/* <KaizenCard.Root>
+				<KaizenCard.Header>
+					<VStack gap={"0"}>
+						<KaizenCard.Title>Habits plan</KaizenCard.Title>
+						<KaizenCard.Description>Description</KaizenCard.Description>
+					</VStack>
+				</KaizenCard.Header>
+				<KaizenCard.Body>
+					{habitsPlan.map((root) => {
+						return (
+							<>
+								<Checkbox.Root key={root.title} checked={"indeterminate"}>
+									<Checkbox.HiddenInput />
+									<Checkbox.Control />
+									<Checkbox.Label>{root.title}</Checkbox.Label>
+								</Checkbox.Root>
+								{root.children?.map((children) => {
+									return (
+										<Checkbox.Root key={children.title} checked={false} ml={6}>
+											<Checkbox.HiddenInput />
+											<Checkbox.Control />
+											<Checkbox.Label>{children.title}</Checkbox.Label>
+										</Checkbox.Root>
+									);
+								})}
+							</>
+						);
+					})}
+				</KaizenCard.Body>
+				<KaizenCard.Footer justifyContent={"end"}>
+					<IconButton
+						color={"on-surface"}
+						bg={"surface-container-high"}
+						borderRadius={"full"}
+					>
+						<IconShare2 />
+					</IconButton>
+				</KaizenCard.Footer>
+			</KaizenCard.Root> */}
+
+			{/* <HStack
 				w={"100%"}
 				p={2}
 				gap={1}
@@ -70,12 +241,12 @@ function Index() {
 					</Text>
 				</VStack>
 				<HStack>
-					{/* <Button onClick={() => setDaySelectOpen(true)}>
+					<Button onClick={() => setDaySelectOpen(true)}>
 						<IconCalendar />
 						{selectedDate.toLocaleDateString("ru")}
-					</Button> */}
+					</Button>
 				</HStack>
-			</HStack>
+			</HStack> */}
 			{/* <HabitList /> */}
 
 			{/* <HStack border={"2px solid {colors.primary}"} p={2} borderRadius={"md"}>

@@ -2,8 +2,8 @@
 import { createRootRoute, Outlet } from "@tanstack/react-router";
 import { useMediaQuery } from "@uidotdev/usehooks";
 import { lazy } from "react";
-import { Header } from "@/components/business/Header.tsx";
 import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
+import { Header } from "@/components/Header";
 import { AuthProvider } from "@/providers/auth.provider.tsx";
 
 const ReactQueryDevtools = import.meta.env.DEV
@@ -38,7 +38,7 @@ const RootLayout = () => {
 				<ReactQueryDevtools
 					initialIsOpen={false}
 					position="bottom"
-					buttonPosition="top-right"
+					buttonPosition="bottom-right"
 				/>
 			</AuthProvider>
 			{/* <TanStackRouterDevtools position="top-left" /> */}
