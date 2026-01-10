@@ -8,149 +8,203 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./../src/pages/__root";
-import { Route as IndexRouteImport } from "./../src/pages/index";
-import { Route as UsersIndexRouteImport } from "./../src/pages/users/index";
-import { Route as PostsIndexRouteImport } from "./../src/pages/posts/index";
-import { Route as LoginIndexRouteImport } from "./../src/pages/login/index";
-import { Route as UsersUser_idRouteImport } from "./../src/pages/users/$user_id";
-import { Route as PostsIdIndexRouteImport } from "./../src/pages/posts/$id/index";
+import { Route as rootRouteImport } from './../src/pages/__root'
+import { Route as ConfigreRouteImport } from './../src/pages/configre'
+import { Route as IndexRouteImport } from './../src/pages/index'
+import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
+import { Route as ProfileIndexRouteImport } from './../src/pages/profile/index'
+import { Route as PostsIndexRouteImport } from './../src/pages/posts/index'
+import { Route as LoginIndexRouteImport } from './../src/pages/login/index'
+import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
+import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index'
 
+const ConfigreRoute = ConfigreRouteImport.update({
+  id: '/configre',
+  path: '/configre',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsersIndexRoute = UsersIndexRouteImport.update({
-	id: "/users/",
-	path: "/users/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ProfileIndexRoute = ProfileIndexRouteImport.update({
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
-	id: "/posts/",
-	path: "/posts/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
-	id: "/login/",
-	path: "/login/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsersUser_idRoute = UsersUser_idRouteImport.update({
-	id: "/users/$user_id",
-	path: "/users/$user_id",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/users/$user_id',
+  path: '/users/$user_id',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
-	id: "/posts/$id/",
-	path: "/posts/$id/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/$id/',
+  path: '/posts/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login": typeof LoginIndexRoute;
-	"/posts": typeof PostsIndexRoute;
-	"/users": typeof UsersIndexRoute;
-	"/posts/$id": typeof PostsIdIndexRoute;
+  '/': typeof IndexRoute
+  '/configre': typeof ConfigreRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/login': typeof LoginIndexRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/posts/$id': typeof PostsIdIndexRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login": typeof LoginIndexRoute;
-	"/posts": typeof PostsIndexRoute;
-	"/users": typeof UsersIndexRoute;
-	"/posts/$id": typeof PostsIdIndexRoute;
+  '/': typeof IndexRoute
+  '/configre': typeof ConfigreRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/login': typeof LoginIndexRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/posts/$id': typeof PostsIdIndexRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login/": typeof LoginIndexRoute;
-	"/posts/": typeof PostsIndexRoute;
-	"/users/": typeof UsersIndexRoute;
-	"/posts/$id/": typeof PostsIdIndexRoute;
+  __root__: typeof rootRouteImport
+  '/': typeof IndexRoute
+  '/configre': typeof ConfigreRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/login/': typeof LoginIndexRoute
+  '/posts/': typeof PostsIndexRoute
+  '/profile/': typeof ProfileIndexRoute
+  '/users/': typeof UsersIndexRoute
+  '/posts/$id/': typeof PostsIdIndexRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths: "/" | "/users/$user_id" | "/login" | "/posts" | "/users" | "/posts/$id";
-	fileRoutesByTo: FileRoutesByTo;
-	to: "/" | "/users/$user_id" | "/login" | "/posts" | "/users" | "/posts/$id";
-	id:
-		| "__root__"
-		| "/"
-		| "/users/$user_id"
-		| "/login/"
-		| "/posts/"
-		| "/users/"
-		| "/posts/$id/";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/'
+    | '/configre'
+    | '/users/$user_id'
+    | '/login'
+    | '/posts'
+    | '/profile'
+    | '/users'
+    | '/posts/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/'
+    | '/configre'
+    | '/users/$user_id'
+    | '/login'
+    | '/posts'
+    | '/profile'
+    | '/users'
+    | '/posts/$id'
+  id:
+    | '__root__'
+    | '/'
+    | '/configre'
+    | '/users/$user_id'
+    | '/login/'
+    | '/posts/'
+    | '/profile/'
+    | '/users/'
+    | '/posts/$id/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	UsersUser_idRoute: typeof UsersUser_idRoute;
-	LoginIndexRoute: typeof LoginIndexRoute;
-	PostsIndexRoute: typeof PostsIndexRoute;
-	UsersIndexRoute: typeof UsersIndexRoute;
-	PostsIdIndexRoute: typeof PostsIdIndexRoute;
+  IndexRoute: typeof IndexRoute
+  ConfigreRoute: typeof ConfigreRoute
+  UsersUser_idRoute: typeof UsersUser_idRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+  PostsIndexRoute: typeof PostsIndexRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
+  UsersIndexRoute: typeof UsersIndexRoute
+  PostsIdIndexRoute: typeof PostsIdIndexRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/users/": {
-			id: "/users/";
-			path: "/users";
-			fullPath: "/users";
-			preLoaderRoute: typeof UsersIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/posts/": {
-			id: "/posts/";
-			path: "/posts";
-			fullPath: "/posts";
-			preLoaderRoute: typeof PostsIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/login/": {
-			id: "/login/";
-			path: "/login";
-			fullPath: "/login";
-			preLoaderRoute: typeof LoginIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/users/$user_id": {
-			id: "/users/$user_id";
-			path: "/users/$user_id";
-			fullPath: "/users/$user_id";
-			preLoaderRoute: typeof UsersUser_idRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/posts/$id/": {
-			id: "/posts/$id/";
-			path: "/posts/$id";
-			fullPath: "/posts/$id";
-			preLoaderRoute: typeof PostsIdIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/configre': {
+      id: '/configre'
+      path: '/configre'
+      fullPath: '/configre'
+      preLoaderRoute: typeof ConfigreRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/': {
+      id: '/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof IndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/$user_id': {
+      id: '/users/$user_id'
+      path: '/users/$user_id'
+      fullPath: '/users/$user_id'
+      preLoaderRoute: typeof UsersUser_idRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/$id/': {
+      id: '/posts/$id/'
+      path: '/posts/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	UsersUser_idRoute: UsersUser_idRoute,
-	LoginIndexRoute: LoginIndexRoute,
-	PostsIndexRoute: PostsIndexRoute,
-	UsersIndexRoute: UsersIndexRoute,
-	PostsIdIndexRoute: PostsIdIndexRoute,
-};
+  IndexRoute: IndexRoute,
+  ConfigreRoute: ConfigreRoute,
+  UsersUser_idRoute: UsersUser_idRoute,
+  LoginIndexRoute: LoginIndexRoute,
+  PostsIndexRoute: PostsIndexRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
+  UsersIndexRoute: UsersIndexRoute,
+  PostsIdIndexRoute: PostsIdIndexRoute,
+}
 export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
