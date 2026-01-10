@@ -1,18 +1,28 @@
-import { postsTable, tablesDB } from "@/api/appwrite.tsx";
+// import { postsTable } from "@/api/appwrite.tables.ts";
+import { client } from "@/api/api.ts";
+import { postsTable, tablesDB } from "@/api/appwrite.ts";
 import type { Posts } from "@/api/types/appwrite.js";
 import { createCoreApi, createHooksApi } from "@/api/utils/appwrite.utils.tsx";
 
 // API
 export const postsCoreApi = createCoreApi<Posts>({
-	tablesDB,
-	databaseId: String(postsTable?.databaseId),
-	tableId: String(postsTable?.$id),
+	tablesDB: tablesDB,
+	databaseId: postsTable?.databaseId,
+	tableId: postsTable?.$id,
 });
 
 // HOOKS
-export const postsHooks = createHooksApi<Posts>({
+export const {
+	useList: useGetPosts,
+	useOne: useGetPost,
+	useCreate: useCreatePost,
+	useUpdate: useUpdatePost,
+	useDelete: useDeletePost,
+	queryKeys: postsQueryKeys,
+} = createHooksApi<Posts>({
 	name: "posts",
 	coreApis: postsCoreApi,
+	queryClient: client,
 });
 
 // const a = postsHooks.useList({ title: { contains: "api" } });
