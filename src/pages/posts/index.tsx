@@ -1,17 +1,5 @@
-import {
-	Badge,
-	Link as ChakraLink,
-	HStack,
-	Image,
-	Separator,
-	Text,
-	VStack,
-} from "@chakra-ui/react";
-import { useDebounceValue } from "@siberiacancode/reactuse";
-import { createFileRoute, Link } from "@tanstack/react-router";
-import { useState } from "react";
-import { usePosts } from "@/features/posts/controllers/usePosts.tsx";
-import { ddate } from "@/utils/ddate.ts";
+import { Separator, Text, VStack } from "@chakra-ui/react";
+import { createFileRoute } from "@tanstack/react-router";
 // import { useGetPosts } from "@/api/appwrite.tsx";
 // import { useGetPosts } from "@/api/utils.ts";
 // import { tablesDB, useGetPosts } from "@/api/appwrite.ts";
@@ -21,19 +9,19 @@ export const Route = createFileRoute("/posts/")({
 });
 
 function RouteComponent() {
-	const [search] = useState("");
-	const debouncedSearch = useDebounceValue(search, 600);
-	const { posts } = usePosts({
-		$limit: 1,
-		$or: [
-			{
-				title: { contains: debouncedSearch },
-			},
-			{
-				author_id: { contains: debouncedSearch },
-			},
-		],
-	});
+	// const [search] = useState("");
+	// const debouncedSearch = useDebounceValue(search, 600);
+	// const { posts } = usePosts({
+	// 	$limit: 1,
+	// 	$or: [
+	// 		{
+	// 			title: { contains: debouncedSearch },
+	// 		},
+	// 		{
+	// 			author_id: { contains: debouncedSearch },
+	// 		},
+	// 	],
+	// });
 
 	// const onRefetchClick = () => {
 	// 	refetcher.posts.list();
@@ -48,7 +36,7 @@ function RouteComponent() {
 			<Separator h={"3"} size={"md"} />
 
 			<VStack gap={2} alignItems={"start"}>
-				{posts?.map((post) => {
+				{/* {posts?.map((post) => {
 					return (
 						<VStack
 							key={post.$id}
@@ -93,10 +81,9 @@ function RouteComponent() {
 									</HStack>
 								</Link>
 							</ChakraLink>
-							{/* <Badge bg={"primary"}>{post.likes} likes</Badge> */}
 						</VStack>
 					);
-				})}
+				})} */}
 			</VStack>
 		</>
 	);
