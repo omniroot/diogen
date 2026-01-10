@@ -1,4 +1,6 @@
 import {
+	type QueryClient,
+	type RefetchOptions as RQRefetchOptions,
 	type UseMutationOptions,
 	type UseQueryOptions,
 	useMutation,
@@ -7,6 +9,7 @@ import {
 import { ID, type Models, Query, type QueryTypes, type TablesDB } from "appwrite";
 import { generateUniqueId } from "@/utils/generateRandomId.tsx";
 
+// TODO: add generic to hooks for typing data external, like select: (data) => data[0]
 // TODO: При использовании select не меняется возращаемый тип в tanstack query, реально ли это сделать :@ ?
 // TODO: Добавить обработку ошибок и типы для них
 // TODO: Переписать типы самостоятельно,  я их вообще нихуя не понимаю :( ?
@@ -20,6 +23,7 @@ interface SystemFilters<TData> {
 	$offset?: number;
 	$orderAsc?: keyof TData;
 	$orderDesc?: keyof TData;
+	$transactionId?: string;
 }
 
 interface Filters<TValue> {
@@ -29,6 +33,8 @@ interface Filters<TValue> {
 	contains?: string | any[];
 	lessThan?: QueryTypes;
 	greaterThan?: QueryTypes;
+	isNull?: boolean;
+	isNotNull?: boolean;
 	test?: TValue;
 
 	// другие операторы...
@@ -50,8 +56,8 @@ export type Queries<TData> = FieldFilters<TData> &
 
 interface Config {
 	tablesDB: TablesDB;
-	databaseId: string;
-	tableId: string;
+	databaseId: string | undefined;
+	tableId: string | undefined;
 }
 
 export function parseQueries<T>(filters: Queries<T>): string[] {
@@ -92,78 +98,90 @@ export function parseQueries<T>(filters: Queries<T>): string[] {
 						return Query.lessThan(key, value as any);
 					case "greaterThan":
 						return Query.greaterThan(key, value as any);
+					case "isNull":
+						return Query.isNull(key);
+					case "isNotNull":
+						return Query.isNotNull(key);
+
 					default:
 						return "";
 				}
 			})
 			.filter(Boolean);
-
-		// // 2. Если значение — примитив (sugar для equal)
-		// if (typeof value !== "object" || Array.isArray(value)) {
-		// 	return [Query.equal(key, value as any)];
-		// }
 	});
 }
 
-type UpdateDataTyped<TData> = TData & Models.Row extends Models.DefaultRow
-	? Partial<Models.Row> & Record<string, any>
-	: Partial<Models.Row> & Omit<TData & Models.Row, keyof Models.Row>;
+export type UpdateDataTyped<TData = any> = Partial<Models.Row> &
+	Omit<TData, keyof Models.Row>;
+
+// Дополнительные "Domain" экспортируем как простые дубляжи, как ты просил:
+export type DomainUpdate<TData = any> = UpdateDataTyped<TData>;
+export type DomainRow<TData = any> = TData & Models.Row;
 
 interface Options {
-	total?: boolean;
+	total: boolean;
 }
 
 export function createCoreApi<TData>({ tablesDB, databaseId, tableId }: Config) {
+	if (!databaseId) throw new Error("DatabaseId not found");
+
+	if (!tableId) {
+		throw new Error("tableID not found");
+	}
+
 	async function $list(queries: Queries<TData>, options: Options = { total: false }) {
 		const _queries = parseQueries(queries);
 		const { rows } = await tablesDB.listRows<TData & Models.Row>({
-			databaseId,
-			tableId,
+			databaseId: databaseId!,
+			tableId: tableId!,
 			queries: _queries,
 			total: options.total,
+			transactionId: queries.$transactionId,
 		});
 		return rows;
 	}
 
-	async function $one(data: Partial<UpdateDataTyped<TData>>, queries: Queries<TData>) {
-		if (!data.$id) return;
+	async function $one($id: string, queries: Queries<TData>) {
+		if (!$id) return;
 		const _queries = parseQueries(queries);
 		const result = await tablesDB.getRow<TData & Models.Row>({
-			databaseId,
-			tableId,
-			rowId: data.$id,
+			databaseId: databaseId!,
+			tableId: tableId!,
+			rowId: $id,
 			queries: _queries,
+			transactionId: queries.$transactionId,
 		});
 		return result;
 	}
 
 	async function $create(data: UpdateDataTyped<TData>) {
 		const result = await tablesDB.createRow<TData & Models.Row>({
-			databaseId,
-			tableId,
-			rowId: ID.unique(),
-			data: data,
+			databaseId: databaseId!,
+			tableId: tableId!,
+			rowId: data.$id || ID.unique(),
+			data: data as any,
+			permissions: data.$permissions,
 		});
 		return result;
 	}
 
-	async function $update(data: UpdateDataTyped<TData>) {
+	async function $update(data: UpdateDataTyped<Partial<TData>>) {
 		if (!data.$id) return;
 		const result = await tablesDB.updateRow<TData & Models.Row>({
-			databaseId,
-			tableId,
+			databaseId: databaseId!,
+			tableId: tableId!,
 			rowId: data.$id,
-			data: data,
+			data: data as any,
 		});
 		return result;
 	}
 
-	async function $delete(data: UpdateDataTyped<TData>) {
-		if (!data.$id) return;
+	async function $delete($id: string) {
+		if (!$id) return;
 		await tablesDB.deleteRow({
-			databaseId,
-			tableId,
-			rowId: data.$id,
+			databaseId: databaseId!,
+			tableId: tableId!,
+			rowId: $id,
 		});
 		return undefined;
 	}
@@ -191,43 +209,64 @@ function normalizeQuery(value: unknown): unknown {
 	return value;
 }
 
-// const buildKey = (...parts: any[]) => {
-// 	const clean = (value: any): any => {
-// 		if (value === null || value === undefined) return undefined;
-// 		// ---------- 1. ТУПЛЫ (["name", value]) ----------
-// 		if (Array.isArray(value) && value.length === 2 && typeof value[0] === "string") {
-// 			return { [value[0]]: clean(value[1]) };
-// 		}
-// 		// ---------- 2. ПУСТЫЕ МАССИВЫ ----------
-// 		if (Array.isArray(value)) {
-// 			if (value.length === 0) return undefined;
-// 			return value.map(clean).filter((v) => v !== undefined);
-// 		}
-// 		// ---------- HANDLE DATES BEFORE OBJECTS ----------
-// 		if (value instanceof Date) {
-// 			return value.toISOString(); // Serialize Date to ISO string for key stability
-// 		}
-// 		// ---------- 3. ОБЪЕКТЫ ----------
-// 		if (typeof value === "object") {
-// 			const entries = Object.entries(value)
-// 				.map(([k, v]) => [k, clean(v)])
-// 				.filter(([_, v]) => v !== undefined)
-// 				.sort(([a], [b]) => a.localeCompare(b));
-// 			if (entries.length === 0) return undefined;
-// 			return Object.fromEntries(entries);
-// 		}
-// 		// ---------- 4. ПРИМИТИВЫ ----------
-// 		return value;
-// 	};
-// 	return parts.map(clean).filter((v) => v !== undefined); // убираем undefined после чистки
-// };
+function isDeepSubset(source: any, subset: any): boolean {
+	if (source === subset) return true;
+	if (
+		typeof source !== typeof subset ||
+		source === null ||
+		subset === null ||
+		source === undefined ||
+		subset === undefined
+	) {
+		return false;
+	}
+	if (subset instanceof Date && source instanceof Date) {
+		return subset.getTime() === source.getTime();
+	}
+	if (Array.isArray(subset)) {
+		if (!Array.isArray(source)) return false;
+		return subset.every((subItem) =>
+			source.some((sourceItem) => isDeepSubset(sourceItem, subItem)),
+		);
+	}
+	if (typeof subset === "object") {
+		return Object.keys(subset).every((key) => {
+			const subValue = subset[key];
+			if (!Object.hasOwn(source, key)) return false;
+			return isDeepSubset(source[key], subValue);
+		});
+	}
+	return source === subset;
+}
+
+function containsDeeply(source: any, subset: any): boolean {
+	if (isDeepSubset(source, subset)) return true;
+	if (typeof source === "object" && source !== null) {
+		return Object.values(source).some((val) => containsDeeply(val, subset));
+	}
+	return false;
+}
+
+// --- REFETCHER TYPES ---
+
+type CustomRefetchOptions<TArgs> = RQRefetchOptions & {
+	where?: TArgs;
+	mode?: "exact" | "fuzzy";
+};
+
+export type DomainUpdateType<TData> = UpdateDataTyped<TData>;
 
 interface CreateHooksApiConfig<TData> {
 	name: string;
 	coreApis: ReturnType<typeof createCoreApi<TData>>;
+	queryClient: QueryClient;
 }
 
-export function createHooksApi<TData>({ name, coreApis }: CreateHooksApiConfig<TData>) {
+export function createHooksApi<TData>({
+	name,
+	coreApis,
+	queryClient,
+}: CreateHooksApiConfig<TData>) {
 	const queryKeys = {
 		all: name,
 		list: (queries?: Queries<TData>) => [queryKeys.all, "list", normalizeQuery(queries)],
@@ -238,9 +277,9 @@ export function createHooksApi<TData>({ name, coreApis }: CreateHooksApiConfig<T
 	};
 	function useList(
 		queries: Queries<TData>,
-		overrides?: Partial<UseQueryOptions<TData[], null, TData[]>>,
+		overrides?: Partial<UseQueryOptions<(TData & Models.Row)[], null, TData[]>>,
 	) {
-		return useQuery<TData[], null, TData[]>({
+		return useQuery<(TData & Models.Row)[], null, TData[]>({
 			queryKey: queryKeys.list(queries),
 			queryFn: async () => {
 				return await coreApis.list(queries);
@@ -250,37 +289,45 @@ export function createHooksApi<TData>({ name, coreApis }: CreateHooksApiConfig<T
 	}
 
 	function useOne(
-		data: Partial<UpdateDataTyped<TData>>,
+		$id: string,
 		queries?: Queries<TData>,
 		overrides?: Partial<UseQueryOptions<(TData & Models.Row) | undefined, null, TData>>,
 	) {
 		return useQuery<(TData & Models.Row) | undefined, null, TData>({
 			queryKey: queryKeys.one(queries),
 			queryFn: async () => {
-				return await coreApis.one(data, queries || {});
+				return await coreApis.one($id, queries || {});
 			},
 			...overrides,
 		});
 	}
 
 	function useCreate(
-		// overrides?: Partial<UseMutationOptions<TData, null, UpdateDataTyped<TData>>>,
+		overrides?: Partial<UseMutationOptions<Partial<TData>, null, UpdateDataTyped<TData>>>,
 	) {
 		return useMutation<Partial<TData>, null, UpdateDataTyped<TData>>({
 			mutationKey: queryKeys.create(),
 			mutationFn: async (data) => {
 				return await coreApis.create(data);
 			},
-			// ...overrides,
+			...overrides,
 		});
 	}
 
 	function useUpdate(
 		overrides?: Partial<
-			UseMutationOptions<(TData & Models.Row) | undefined, null, UpdateDataTyped<TData>>
+			UseMutationOptions<
+				(TData & Models.Row) | undefined,
+				null,
+				UpdateDataTyped<Partial<TData>>
+			>
 		>,
 	) {
-		return useMutation<(TData & Models.Row) | undefined, null, UpdateDataTyped<TData>>({
+		return useMutation<
+			(TData & Models.Row) | undefined,
+			null,
+			UpdateDataTyped<Partial<TData>>
+		>({
 			mutationKey: queryKeys.update(),
 			mutationFn: async (data) => {
 				return await coreApis.update(data);
@@ -290,21 +337,123 @@ export function createHooksApi<TData>({ name, coreApis }: CreateHooksApiConfig<T
 	}
 
 	function useDelete(
-		overrides?: Partial<UseMutationOptions<undefined, null, UpdateDataTyped<TData>>>,
+		overrides?: Partial<UseMutationOptions<undefined, null, { $id: string }>>,
 	) {
-		return useMutation<undefined, null, UpdateDataTyped<TData>>({
+		return useMutation<undefined, null, { $id: string }>({
 			mutationKey: queryKeys.delete(),
 			mutationFn: async (data) => {
-				return await coreApis.delete(data);
+				return await coreApis.delete(data.$id);
 			},
 			...overrides,
 		});
 	}
 
-	return { useList, useOne, useCreate, useUpdate, useDelete, queryKeys };
+	const refetch = {
+		/**
+		 * Рефетч списков (list).
+		 * @param options Опции рефетча, включая фильтры (where) и режим (exact/fuzzy)
+		 */
+		list: async (options: CustomRefetchOptions<Queries<TData>> = {}) => {
+			const { where, mode = "exact", ...rqOptions } = options;
+
+			if (mode === "exact") {
+				const queryKey = where ? queryKeys.list(where) : [name, "list"];
+				return queryClient.refetchQueries({
+					queryKey,
+					exact: !!where,
+					...rqOptions,
+				});
+			}
+
+			// Fuzzy Mode
+			if (mode === "fuzzy") {
+				return queryClient.refetchQueries({
+					...rqOptions,
+					predicate: (query) => {
+						const [qScope, qMethod, qFilters] = query.queryKey as [
+							string,
+							string,
+							unknown,
+						];
+
+						// 1. Проверяем Scope и Method
+						if (qScope !== name || qMethod !== "list") return false;
+
+						// 2. Если where не задан, рефетчим все списки этой сущности
+						if (!where) return true;
+
+						// 3. Если в запросе нет фильтров, но мы ищем конкретный where, то не совпало
+						if (!qFilters) return false;
+
+						// 4. Глубокий поиск
+						return containsDeeply(qFilters, where);
+					},
+				});
+			}
+		},
+
+		/**
+		 * Рефетч одиночных записей (one).
+		 * @param options Опции рефетча, включая фильтры (where) и режим (exact/fuzzy)
+		 */
+		one: async (options: CustomRefetchOptions<Queries<TData>> = {}) => {
+			const { where, mode = "exact", ...rqOptions } = options;
+
+			if (mode === "exact") {
+				const queryKey = where ? queryKeys.one(where) : [name, "one"];
+				return queryClient.refetchQueries({
+					queryKey,
+					exact: !!where,
+					...rqOptions,
+				});
+			}
+
+			if (mode === "fuzzy") {
+				return queryClient.refetchQueries({
+					...rqOptions,
+					predicate: (query) => {
+						const [qScope, qMethod, qFilters] = query.queryKey as [
+							string,
+							string,
+							unknown,
+						];
+						if (qScope !== name || qMethod !== "one") return false;
+						if (!where) return true;
+						if (!qFilters) return false;
+						return containsDeeply(qFilters, where);
+					},
+				});
+			}
+		},
+	};
+
+	return { useList, useOne, useCreate, useUpdate, useDelete, refetch, queryKeys };
 }
 
-export type DomainHook<TData> = Queries<TData>;
+export type DomainHook<TData> = {
+	queries: Queries<TData>;
+	overrides: Partial<UseQueryOptions<(TData & Models.Row) | undefined, null, TData>>;
+};
+
+export type DomainHookMultiple<TData> = {
+	queries: Queries<TData>;
+	overrides: Partial<UseQueryOptions<(TData & Models.Row)[], null, TData[]>>;
+};
+
+interface UseCreateTransaction {
+	tablesDB: TablesDB;
+	name: string;
+}
+
+export const useCreateTransaction = ({ tablesDB, name }: UseCreateTransaction) => {
+	const { data: transaction } = useQuery({
+		queryKey: ["transaction", "create", name],
+		queryFn: () => {
+			return tablesDB.createTransaction();
+		},
+	});
+	return transaction;
+};
 
 // type Singular<P extends string> = P extends `${infer S}s` ? S : P;
 
