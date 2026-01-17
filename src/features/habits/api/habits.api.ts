@@ -1,7 +1,7 @@
 // import { habitsTable } from "@/api/appwrite.tables.ts";
 import { client } from "@/api/api.ts";
 import { habitsTable, tablesDB } from "@/api/appwrite.ts";
-import type { Habits } from "@/api/types/appwrite.js";
+import type { Habits } from "@/api/types/appwrite.d.ts";
 import {
 	createCoreApi,
 	createHooksApi,

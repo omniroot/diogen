@@ -1,7 +1,7 @@
 // import { postsTable } from "@/api/appwrite.tables.ts";
 import { client } from "@/api/api.ts";
 import { postsTable, tablesDB } from "@/api/appwrite.ts";
-import type { Posts } from "@/api/types/appwrite.js";
+import type { Posts } from "@/api/types/appwrite.d.ts";
 import { createCoreApi, createHooksApi } from "@/api/utils/appwrite.utils.tsx";
 
 // API

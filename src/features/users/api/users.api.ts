@@ -1,6 +1,6 @@
 import { client } from "@/api/api.ts";
 import { tablesDB, usersTable } from "@/api/appwrite.ts";
-import type { Users } from "@/api/types/appwrite.js";
+import type { Users } from "@/api/types/appwrite.d.ts";
 import { createCoreApi, createHooksApi } from "@/api/utils/appwrite.utils.tsx";
 
 export const usersCoreApi = createCoreApi<Users>({

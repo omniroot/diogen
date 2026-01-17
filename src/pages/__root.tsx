@@ -38,7 +38,7 @@ const RootLayout = () => {
 				<ReactQueryDevtools
 					initialIsOpen={false}
 					position="bottom"
-					buttonPosition="bottom-right"
+					buttonPosition="top-left"
 				/>
 			</AuthProvider>
 			{/* <TanStackRouterDevtools position="top-left" /> */}

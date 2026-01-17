@@ -1,9 +1,12 @@
 import { Box, Button, HStack, Icon, Tabs, Text, VStack } from "@chakra-ui/react";
-import { IconCalendar, IconChevronDown } from "@tabler/icons-react";
+import { IconCalendar, IconChevronDown, IconPlus } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { ActivityDrawer } from "@/features/activities/modals/ActivityDrawer.tsx";
+import { DaySelectModal } from "@/features/activities/modals/DaySelectModal.tsx";
 import { ActivityList } from "@/features/activities/ui/ActivityList.tsx";
 import { useApp } from "@/hooks/useApp.tsx";
+import { useDrawers } from "@/hooks/useDrawers";
 import { ddate } from "@/utils/ddate.ts";
 
 export const Route = createFileRoute("/")({
@@ -47,7 +50,9 @@ function Index() {
 	// 	},
 	// });
 	// const { habits, isLoading: hbl } = useHabits({});
-	const [tab, setTab] = useState("configure");
+	const [tab, setTab] = useState("timeline");
+	const { toggle: toggleDaySelectDrawer } = useDrawers("day-select");
+	const { toggle: toggleActivityDrawer } = useDrawers("activity");
 	// const { selectedDate, setDaySelectOpen } = useHabitsStore();
 	// const { data: daysRecords } = useGetDaysRecords({});
 	// const {
@@ -138,6 +143,7 @@ function Index() {
 							ml={"-3"}
 							bg={{ _hover: "surface-container" }}
 							borderRadius={"12px"}
+							onClick={() => toggleDaySelectDrawer("view")}
 						>
 							<Icon w={"18px"} color={"primary"}>
 								<IconCalendar />
@@ -185,6 +191,21 @@ function Index() {
 				</Tabs.Content>
 			</Tabs.Root>
 			<ActivityList />
+			<DaySelectModal />
+			<ActivityDrawer />
+			<HStack w={"100%"} justifyContent={"end"}>
+				<Button
+					w={"fit-content"}
+					color={"on-surface-dark"}
+					bg={{ base: "surface-container", _hover: "surface-container-high" }}
+					borderRadius={"full"}
+					onClick={() => toggleActivityDrawer("create")}
+				>
+					<IconPlus />
+					Create activity
+				</Button>
+			</HStack>
+
 			{/* <HabitList /> */}
 			{/* <KaizenCard.Root>
 				<KaizenCard.Header>

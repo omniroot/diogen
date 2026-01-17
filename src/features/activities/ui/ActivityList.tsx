@@ -1,4 +1,4 @@
-import type { Activities } from "@/api/types/appwrite.js";
+import type { Activities } from "@/api/types/appwrite.d.ts";
 import type { DomainHookMultiple } from "@/api/utils/appwrite.utils.tsx";
 import { useActivities } from "@/features/activities/api/activities.api.ts";
 import { ActivityItem } from "@/features/activities/ui/ActivityItem.tsx";
@@ -8,7 +8,8 @@ interface Props {
 	queries?: DomainHookMultiple<Activities>["queries"];
 }
 export const ActivityList: React.FC<Props> = ({ queries = {} }) => {
-	const { activities } = useActivities(queries);
+	const { activities } = useActivities({ type: "list", queries });
+
 	return (
 		// <VStack
 		// 	w={"100%"}
@@ -37,7 +38,7 @@ export const ActivityList: React.FC<Props> = ({ queries = {} }) => {
 				return (
 					<KaizenList.Item key={activity.$id} asChild>
 						{/* <KaizenList.Content> */}
-						<ActivityItem key={activity.$id} activity={activity} />
+						<ActivityItem activity={activity} />
 						{/* </KaizenList.Content> */}
 					</KaizenList.Item>
 				);

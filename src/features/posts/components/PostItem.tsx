@@ -1,4 +1,4 @@
-import type { Posts } from "@/api/types/appwrite.js";
+import type { Posts } from "@/api/types/appwrite.d.ts";
 
 interface Props {
 	post: Posts;

@@ -9,7 +9,7 @@ import {
 } from "@chakra-ui/react";
 import { Query } from "appwrite";
 import type { FC } from "react";
-import type { Habits } from "@/api/types/appwrite.js";
+import type { Habits } from "@/api/types/appwrite.d.ts";
 import { EmojiPicker } from "@/theme/components/EmojiPicker.tsx";
 import { ddate } from "@/utils/ddate.ts";
 

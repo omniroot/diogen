@@ -9,7 +9,7 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './../src/pages/__root'
-import { Route as ConfigreRouteImport } from './../src/pages/configre'
+import { Route as TestRouteImport } from './../src/pages/test'
 import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
 import { Route as ProfileIndexRouteImport } from './../src/pages/profile/index'
@@ -18,9 +18,9 @@ import { Route as LoginIndexRouteImport } from './../src/pages/login/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
 import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index'
 
-const ConfigreRoute = ConfigreRouteImport.update({
-  id: '/configre',
-  path: '/configre',
+const TestRoute = TestRouteImport.update({
+  id: '/test',
+  path: '/test',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,7 +61,7 @@ const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/configre': typeof ConfigreRoute
+  '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
@@ -71,7 +71,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/configre': typeof ConfigreRoute
+  '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
@@ -82,7 +82,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/configre': typeof ConfigreRoute
+  '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
@@ -94,7 +94,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/configre'
+    | '/test'
     | '/users/$user_id'
     | '/login'
     | '/posts'
@@ -104,7 +104,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/configre'
+    | '/test'
     | '/users/$user_id'
     | '/login'
     | '/posts'
@@ -114,7 +114,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/configre'
+    | '/test'
     | '/users/$user_id'
     | '/login/'
     | '/posts/'
@@ -125,7 +125,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  ConfigreRoute: typeof ConfigreRoute
+  TestRoute: typeof TestRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   LoginIndexRoute: typeof LoginIndexRoute
   PostsIndexRoute: typeof PostsIndexRoute
@@ -136,11 +136,11 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
-    '/configre': {
-      id: '/configre'
-      path: '/configre'
-      fullPath: '/configre'
-      preLoaderRoute: typeof ConfigreRouteImport
+    '/test': {
+      id: '/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof TestRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,7 +197,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  ConfigreRoute: ConfigreRoute,
+  TestRoute: TestRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   LoginIndexRoute: LoginIndexRoute,
   PostsIndexRoute: PostsIndexRoute,

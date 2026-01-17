@@ -6,25 +6,39 @@ import {
 	IconButton,
 	Portal,
 	Text,
+	useDisclosure,
 	VStack,
 } from "@chakra-ui/react";
 import { IconEdit, IconTrash } from "@tabler/icons-react";
-import type { Activities } from "@/api/types/appwrite.js";
-import { useActivityEntries } from "@/features/activities/api/activities.api.ts";
+import { useEffect } from "react";
+import type { Activities } from "@/api/types/appwrite.d.ts";
+import { useActivityEntries } from "@/features/activities/api/activity-entries.api.ts";
 import { ActivityEntryList } from "@/features/activities/ui/ActivityEntryList.tsx";
+import { useApp } from "@/hooks/useApp.tsx";
+import { useDrawers } from "@/hooks/useDrawers.tsx";
 
 interface Props {
 	activity: Activities;
 }
 export const ActivityItem: React.FC<Props> = ({ activity }) => {
+	const { open, setOpen } = useDisclosure();
+	const { setSelectedActivity } = useApp();
 	const { activityEntries } = useActivityEntries({
 		activity_id: { equal: activity.$id },
 	});
 
+	const { toggle } = useDrawers("activity");
+
+	useEffect(() => {
+		if (open) {
+			setSelectedActivity(activity);
+		}
+		return () => setSelectedActivity(null);
+	}, [open, setSelectedActivity, activity, activity.$id]);
 	// console.log(normalizeActivityEntries(activityEntries, 5));
 
 	return (
-		<Drawer.Root placement={"bottom"}>
+		<Drawer.Root placement={"bottom"} open={open} onOpenChange={(v) => setOpen(v.open)}>
 			<Drawer.Trigger asChild>
 				<HStack
 					w={"100%"}
@@ -32,14 +46,15 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 					bg={{ base: "surface-container", _hover: "surface-container-high" }}
 					borderRadius={"21px"}
 					justifyContent={"space-between"}
-					css={{
-						"&:hover .activity-item-type-badge": {
-							bg: "{colors.surface-container-highest}",
-						},
-						// "&:hover .activity-entry-item": {
-						// 	bg: "{colors.surface-container-highest}",
-						// },
-					}}
+					className="activity-item"
+					css={
+						{
+							// "&:hover .activity-item-type-badge": {},
+							// "&:hover .activity-entry-item": {
+							// 	bg: "{colors.surface-container-highest}",
+							// },
+						}
+					}
 				>
 					<VStack alignItems={"start"}>
 						<Text fontSize={"16px"} fontWeight={"bold"}>
@@ -51,7 +66,11 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 							px={2}
 							borderRadius={"full"}
 							fontSize={"14px"}
-							className="activity-item-type-badge"
+							css={{
+								".activity-item:hover &": {
+									bg: "{colors.surface-container-highest}",
+								},
+							}}
 						>
 							{activity.type}
 						</Badge>
@@ -59,6 +78,7 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 					<HStack>
 						{activity.type === "habit" && (
 							<ActivityEntryList
+								activity_id={activity.$id}
 								activityEntries={activityEntries}
 								direction={"horizontal"}
 								length={5}
@@ -96,24 +116,37 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 							<Drawer.Title>{activity.title}</Drawer.Title>
 						</Drawer.Header>
 						<Drawer.Body>
-							<Text>{activity.description}</Text>
+							<VStack alignItems={"start"}>
+								<Text>{activity.description}</Text>
 
-							{activity.type === "habit" && (
-								<HStack w={"100%"} justifyContent={"end"}>
+								{activity.type === "habit" && (
 									<ActivityEntryList
+										activity_id={activity.$id}
 										activityEntries={activityEntries}
 										direction={"vertical"}
-										length={31}
+										length={58}
 									/>
-								</HStack>
-							)}
+								)}
+							</VStack>
 						</Drawer.Body>
 						<Drawer.Footer justifyContent={"space-between"}>
 							<HStack>
-								<IconButton variant="ghost">
+								<IconButton
+									variant="ghost"
+									onClick={() => {
+										// setOpen(false);
+										toggle("delete", "replace");
+									}}
+								>
 									<IconTrash />
 								</IconButton>
-								<IconButton variant="ghost">
+								<IconButton
+									variant="ghost"
+									onClick={() => {
+										// setOpen(false);
+										toggle("update", "replace");
+									}}
+								>
 									<IconEdit />
 								</IconButton>
 							</HStack>

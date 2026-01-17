@@ -10,7 +10,7 @@ import {
 	VStack,
 } from "@chakra-ui/react";
 import { IconChevronRight } from "@tabler/icons-react";
-import type { Goals } from "@/api/types/appwrite.js";
+import type { Goals } from "@/api/types/appwrite.d.ts";
 import { useGoals } from "@/features/goals/api/goals.api.ts";
 
 interface Props {

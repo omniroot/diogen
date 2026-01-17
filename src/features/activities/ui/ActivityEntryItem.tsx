@@ -1,13 +1,18 @@
 import { Box, Text } from "@chakra-ui/react";
 import dayjs from "dayjs";
-import type { ActivityEntries } from "@/api/types/appwrite.js";
-import { useActivityEntry } from "@/features/activities/api/activities.api.ts";
+import type { MouseEvent } from "react";
+import type { ActivityEntries } from "@/api/types/appwrite.d.ts";
+import { useActivityEntry } from "@/features/activities/api/activity-entries.api.ts";
+import { Tooltip } from "@/theme/ui/KaizenTooltip.tsx";
 
 interface Props {
+	activity_id: string;
+
 	activityEntry: ActivityEntries;
 	showDay?: "inside" | "above";
 }
 export const ActivityEntryItem: React.FC<Props> = ({
+	activity_id,
 	activityEntry,
 	showDay = false,
 }) => {
@@ -22,9 +27,10 @@ export const ActivityEntryItem: React.FC<Props> = ({
 
 	// console.log({ activityEntry });
 
-	const onEntryClick = () => {
+	const onEntryClick = (event: MouseEvent<HTMLDivElement>) => {
+		event.stopPropagation();
 		const nextState = !completed;
-		updateOrCreate({ ...activityEntry, $id, completed: nextState });
+		updateOrCreate({ ...activityEntry, activity_id, $id, completed: nextState });
 		// upd(
 		// 	{ $id, completed: nextState },
 		// 	{
@@ -45,35 +51,42 @@ export const ActivityEntryItem: React.FC<Props> = ({
 	// }, [activityEntry, completed, updateOrCreate]);
 
 	return (
-		<Box
-			// key={activityEntry.$id}
-			w={"30px"}
-			h={"30px"}
-			bg={completed ? "primary" : "surface-container-high"}
-			borderRadius={"md"}
-			position={"relative"}
-			justifyContent={"center"}
-			alignItems={"center"}
-			as={"button"}
-			className="activity-entry-item"
-			onClick={onEntryClick}
-			cursor={"pointer"}
-		>
-			<Text
-				color={
-					showDay === "inside"
-						? completed
-							? "on-primary"
-							: "on-surface-darkest"
-						: "on-surface"
-				}
-				position={showDay === "inside" ? "initial" : "absolute"}
-				top={"-25px"}
-				left={"50%"}
-				translate={showDay === "above" ? "-50%" : "0"}
+		<Tooltip content={activity_id}>
+			<Box
+				// key={activityEntry.$id}
+				w={"30px"}
+				h={"30px"}
+				bg={completed ? "primary" : "surface-container-high"}
+				borderRadius={"md"}
+				position={"relative"}
+				justifyContent={"center"}
+				alignItems={"center"}
+				as={"button"}
+				className="activity-entry-item"
+				onClick={onEntryClick}
+				cursor={"pointer"}
+				css={{
+					".activity-item:hover &": {
+						bg: completed ? "primary" : "{colors.surface-container-highest}",
+					},
+				}}
 			>
-				{dayjs(activityEntry.date).date()}
-			</Text>
-		</Box>
+				<Text
+					color={
+						showDay === "inside"
+							? completed
+								? "on-primary"
+								: "on-surface-darkest"
+							: "on-surface"
+					}
+					position={showDay === "inside" ? "initial" : "absolute"}
+					top={"-25px"}
+					left={"50%"}
+					translate={showDay === "above" ? "-50%" : "0"}
+				>
+					{dayjs(activityEntry.date).date()}
+				</Text>
+			</Box>
+		</Tooltip>
 	);
 };

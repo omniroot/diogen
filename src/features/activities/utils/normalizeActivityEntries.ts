@@ -1,5 +1,5 @@
 import dayjs from "dayjs";
-import type { ActivityEntries } from "@/api/types/appwrite.js";
+import type { ActivityEntries } from "@/api/types/appwrite.d.ts";
 import { ddate } from "@/utils/ddate.ts";
 import { generateUniqueId } from "@/utils/generateRandomId.tsx";
 

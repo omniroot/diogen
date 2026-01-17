@@ -1,6 +1,6 @@
 import { client } from "@/api/api.ts";
 import { goalsTable, tablesDB } from "@/api/appwrite.ts";
-import type { Goals } from "@/api/types/appwrite.js";
+import type { Goals } from "@/api/types/appwrite.d.ts";
 import {
 	createCoreApi,
 	createHooksApi,
