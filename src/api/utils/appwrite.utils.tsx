@@ -41,6 +41,8 @@ interface Filters<TValue> {
 }
 // Query.limit();
 
+export type OmitAppwrite<T> = Omit<T, keyof Models.Row>;
+
 // 1. Определяем тип только для полей данных
 type FieldFilters<TData> = {
 	[K in keyof TData]?: TData[K] | Filters<TData[K]>;
@@ -303,9 +305,11 @@ export function createHooksApi<TData>({
 	}
 
 	function useCreate(
-		overrides?: Partial<UseMutationOptions<Partial<TData>, null, UpdateDataTyped<TData>>>,
+		overrides?: Partial<
+			UseMutationOptions<Partial<TData>, null, UpdateDataTyped<TData>, TData & Models.Row>
+		>,
 	) {
-		return useMutation<Partial<TData>, null, UpdateDataTyped<TData>>({
+		return useMutation<Partial<TData>, null, UpdateDataTyped<TData>, TData & Models.Row>({
 			mutationKey: queryKeys.create(),
 			mutationFn: async (data) => {
 				return await coreApis.create(data);
@@ -319,14 +323,16 @@ export function createHooksApi<TData>({
 			UseMutationOptions<
 				(TData & Models.Row) | undefined,
 				null,
-				UpdateDataTyped<Partial<TData>>
+				UpdateDataTyped<Partial<TData>>,
+				(TData & Models.Row) | undefined
 			>
 		>,
 	) {
 		return useMutation<
 			(TData & Models.Row) | undefined,
 			null,
-			UpdateDataTyped<Partial<TData>>
+			UpdateDataTyped<Partial<TData>>,
+			(TData & Models.Row) | undefined
 		>({
 			mutationKey: queryKeys.update(),
 			mutationFn: async (data) => {
