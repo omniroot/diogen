@@ -50,7 +50,7 @@ type UseJournalEntries =
 export const useJournal = ({
 	type,
 	queries,
-	values,
+	// values,
 }: Partial<UseJournalEntries> = {}) => {
 	const raw = journalEntriesHooksApi;
 	const { mutate: _createJournalEntry } = raw.useCreate();
