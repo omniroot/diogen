@@ -34,7 +34,7 @@ export const ActivityEntryList: React.FC<Props> = ({
 			flexShrink={"1"}
 			alignItems={"start"}
 			flexWrap={"wrap"}
-			px={2}
+			px={0}
 			gap={1}
 		>
 			{normalizedActivityEntries.map((activityEntry, index) => {

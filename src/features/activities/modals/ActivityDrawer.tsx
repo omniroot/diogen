@@ -42,13 +42,16 @@ export const ActivityDrawer: React.FC<Props> = () => {
 	switch (currentDrawer?.type) {
 		case "create": {
 			defaultValues = {
-				title: selectedActivity?.title,
-				type: selectedActivity?.type ?? "habit",
+				title: "",
+				type: "habit",
 			};
 			break;
 		}
 		case "update": {
-			defaultValues = { title: "123", type: "habit" };
+			defaultValues = {
+				title: selectedActivity?.title,
+				type: selectedActivity?.type ?? "habit",
+			};
 			break;
 		}
 	}

@@ -61,3 +61,17 @@ export type ActivityEntries = Models.Row & {
 	completed?: boolean;
 	user_id?: string;
 };
+
+export type JournalEntries = Models.Row & {
+	user_id: string;
+	content?: string;
+	activity_entry_id?: string;
+	date?: string;
+};
+
+export type SleepMetrics = Models.Row & {
+	user_id: string;
+	start_at?: string;
+	end_at?: string;
+	score?: number;
+};

@@ -1,10 +1,12 @@
-import { Box, Button, HStack, Icon, Tabs, Text, VStack } from "@chakra-ui/react";
+import { Box, Button, HStack, Icon, Text, VStack } from "@chakra-ui/react";
 import { IconCalendar, IconChevronDown, IconPlus } from "@tabler/icons-react";
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { ChartTest } from "@/components/ChartTest.tsx";
 import { ActivityDrawer } from "@/features/activities/modals/ActivityDrawer.tsx";
 import { DaySelectModal } from "@/features/activities/modals/DaySelectModal.tsx";
 import { ActivityList } from "@/features/activities/ui/ActivityList.tsx";
+import { JournalDrawer } from "@/features/journal/ui/JournalDrawer.tsx";
+import { JournalEntryList } from "@/features/journal/ui/JournalEntryList.tsx";
 import { useApp } from "@/hooks/useApp.tsx";
 import { useDrawers } from "@/hooks/useDrawers";
 import { ddate } from "@/utils/ddate.ts";
@@ -50,9 +52,10 @@ function Index() {
 	// 	},
 	// });
 	// const { habits, isLoading: hbl } = useHabits({});
-	const [tab, setTab] = useState("timeline");
+	// const [tab, setTab] = useState("timeline");
 	const { toggle: toggleDaySelectDrawer } = useDrawers("day-select");
 	const { toggle: toggleActivityDrawer } = useDrawers("activity");
+	const { toggle: toggleJournalDrawer } = useDrawers("journal");
 	// const { selectedDate, setDaySelectOpen } = useHabitsStore();
 	// const { data: daysRecords } = useGetDaysRecords({});
 	// const {
@@ -102,97 +105,45 @@ function Index() {
 
 	return (
 		<>
-			<Tabs.Root
-				w={"100%"}
-				defaultValue="timeline"
-				value={tab}
-				onValueChange={(v) => setTab(v.value)}
-				variant="plain"
-				css={{
-					"--tabs-indicator-bg": "colors.surface-container",
-					"--tabs-indicator-shadow": "none",
-					"--tabs-trigger-radius": "radii.full",
-					"--transition-duration": "300ms",
-				}}
-			>
-				<Tabs.List w={"100%"} justifyContent={"space-between"}>
-					<Tabs.Trigger w={"100%"} justifyContent={"center"} value="timeline">
-						Timeline
-					</Tabs.Trigger>
-					<Tabs.Trigger w={"100%"} justifyContent={"center"} value="configure">
-						Configure
-					</Tabs.Trigger>
-					<Tabs.Indicator />
-				</Tabs.List>
-				<Tabs.Content
-					value="timeline"
-					css={{
-						"--focus-ring-color": "transparent",
-					}}
+			<VStack alignItems={"start"} gap={"5px"} py={2}>
+				<Text fontSize={"18px"} fontWeight={"semibold"}>
+					{displayDate}
+				</Text>
+				<Button
+					h={"auto"}
+					variant={"ghost"}
+					alignItems={"center"}
+					px={2}
+					py={1}
+					ml={"-3"}
+					bg={{ _hover: "surface-container" }}
+					borderRadius={"12px"}
+					onClick={() => toggleDaySelectDrawer("view")}
 				>
-					<VStack alignItems={"start"} gap={"5px"} py={2}>
-						<Text fontSize={"18px"} fontWeight={"semibold"}>
-							{displayDate}
-						</Text>
-						<Button
-							h={"auto"}
-							variant={"ghost"}
-							alignItems={"center"}
-							px={2}
-							py={1}
-							ml={"-3"}
-							bg={{ _hover: "surface-container" }}
-							borderRadius={"12px"}
-							onClick={() => toggleDaySelectDrawer("view")}
-						>
-							<Icon w={"18px"} color={"primary"}>
-								<IconCalendar />
-							</Icon>
-							<Text fontSize={"16px"} color={"on-surface-dark"}>
-								{displayFullNiceDate}
-							</Text>
-							<Icon w={"18px"} color={"on-surface-dark"}>
-								<IconChevronDown />
-							</Icon>
-						</Button>
-						{/* <Spacer minH={"2"} /> */}
-						<HStack gap={"10px"} color={"on-surface-dark"}>
-							<HStack fontSize={"16px"}>
-								<Box w={"5px"} h={"5px"} bg={"primary"} borderRadius={"50%"} /> 1/4 tasks
-							</HStack>
-							<HStack fontSize={"16px"}>
-								<Box w={"5px"} h={"5px"} bg={"outline"} borderRadius={"50%"} /> 1 notes
-							</HStack>
-						</HStack>
-					</VStack>
+					<Icon w={"18px"} color={"primary"}>
+						<IconCalendar />
+					</Icon>
 					<Text fontSize={"16px"} color={"on-surface-dark"}>
-						Задачи
+						{displayFullNiceDate}
 					</Text>
-
-					<VStack></VStack>
-				</Tabs.Content>
-				<Tabs.Content
-					value="configure"
-					css={{
-						"--focus-ring-color": "transparent",
-					}}
-				>
-					{/* <Loader visible={isLoading} /> */}
-					{/* <Text>Goals: {goals?.length}</Text> */}
-					{/* {goals?.map((goal) => {
-						if (goal.parent_id) return null;
-						return <GoalItem key={goal.$id} goal={goal} />;
-					})}
-					<Text>habits: {habits?.length}</Text>
-					{habits?.map((habit) => {
-						// if (habit.parent_id) return null;
-						return <HabitItem key={habit.$id} habit={habit} />;
-					})} */}
-				</Tabs.Content>
-			</Tabs.Root>
+					<Icon w={"18px"} color={"on-surface-dark"}>
+						<IconChevronDown />
+					</Icon>
+				</Button>
+				{/* <Spacer minH={"2"} /> */}
+				<HStack gap={"10px"} color={"on-surface-dark"}>
+					<HStack fontSize={"16px"}>
+						<Box w={"5px"} h={"5px"} bg={"primary"} borderRadius={"50%"} /> 1/4 tasks
+					</HStack>
+					<HStack fontSize={"16px"}>
+						<Box w={"5px"} h={"5px"} bg={"outline"} borderRadius={"50%"} /> 1 notes
+					</HStack>
+				</HStack>
+			</VStack>
+			<Text fontSize={"18px"} fontWeight={"bold"} color={"on-surface"}>
+				Habits
+			</Text>
 			<ActivityList />
-			<DaySelectModal />
-			<ActivityDrawer />
 			<HStack w={"100%"} justifyContent={"end"}>
 				<Button
 					w={"fit-content"}
@@ -205,7 +156,28 @@ function Index() {
 					Create activity
 				</Button>
 			</HStack>
+			<Text fontSize={"18px"} fontWeight={"bold"} color={"on-surface"}>
+				Journal
+			</Text>
+			<JournalEntryList queries={{ date: { equal: selectedDate } }} />
+			<HStack w={"100%"} justifyContent={"end"}>
+				<Button
+					w={"fit-content"}
+					color={"on-surface-dark"}
+					bg={{ base: "surface-container", _hover: "surface-container-high" }}
+					borderRadius={"full"}
+					onClick={() => toggleJournalDrawer("create")}
+				>
+					<IconPlus />
+					Create journal
+				</Button>
+			</HStack>
 
+			<ChartTest />
+
+			<ActivityDrawer />
+			<JournalDrawer />
+			<DaySelectModal />
 			{/* <HabitList /> */}
 			{/* <KaizenCard.Root>
 				<KaizenCard.Header>

@@ -75,7 +75,7 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 							{activity.type}
 						</Badge>
 					</VStack>
-					<HStack>
+					<HStack justifyContent={"end"}>
 						{activity.type === "habit" && (
 							<ActivityEntryList
 								activity_id={activity.$id}
@@ -124,7 +124,7 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 										activity_id={activity.$id}
 										activityEntries={activityEntries}
 										direction={"vertical"}
-										length={58}
+										length={52}
 									/>
 								)}
 							</VStack>

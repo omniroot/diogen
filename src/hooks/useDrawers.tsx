@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { create } from "zustand";
 
-type DrawerName = "activity" | "day-select";
+type DrawerName = "activity" | "journal" | "day-select";
 type DrawerType = "view" | "create" | "update" | "delete";
 
 interface Drawer {

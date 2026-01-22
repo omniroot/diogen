@@ -39,6 +39,14 @@ export const activitityEntriesTable = appwriteConfig.tables.find(
 	(i) => i.name === "activity_entries",
 );
 
+export const journalEntriesTable = appwriteConfig.tables.find(
+	(i) => i.name === "journal_entries",
+);
+
+export const sleepMetricsTable = appwriteConfig.tables.find(
+	(i) => i.name === "sleep_metrics",
+);
+
 export const getChildrenRowsFunction = appwriteConfig.functions.find(
 	(i) => i.name === "getChildrenRows",
 );
