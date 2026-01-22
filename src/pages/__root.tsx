@@ -4,6 +4,7 @@ import { useMediaQuery } from "@uidotdev/usehooks";
 import { lazy } from "react";
 import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 import { Header } from "@/components/Header";
+import { NavBar } from "@/components/NavBar.tsx";
 import { AuthProvider } from "@/providers/auth.provider.tsx";
 
 const ReactQueryDevtools = import.meta.env.DEV
@@ -35,6 +36,7 @@ const RootLayout = () => {
 				{/* <SearchModal /> */}
 				{/* <ModuleModal /> */}
 				{/* <IssueModal /> */}
+				<NavBar />
 				<ReactQueryDevtools
 					initialIsOpen={false}
 					position="bottom"

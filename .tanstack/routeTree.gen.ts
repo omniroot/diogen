@@ -10,6 +10,7 @@
 
 import { Route as rootRouteImport } from './../src/pages/__root'
 import { Route as TestRouteImport } from './../src/pages/test'
+import { Route as TasksRouteImport } from './../src/pages/tasks'
 import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
 import { Route as ProfileIndexRouteImport } from './../src/pages/profile/index'
@@ -21,6 +22,11 @@ import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const TasksRoute = TasksRouteImport.update({
+  id: '/tasks',
+  path: '/tasks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -61,6 +67,7 @@ const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
@@ -71,6 +78,7 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
@@ -82,6 +90,7 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login/': typeof LoginIndexRoute
@@ -94,6 +103,7 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
+    | '/tasks'
     | '/test'
     | '/users/$user_id'
     | '/login'
@@ -104,6 +114,7 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
+    | '/tasks'
     | '/test'
     | '/users/$user_id'
     | '/login'
@@ -114,6 +125,7 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
+    | '/tasks'
     | '/test'
     | '/users/$user_id'
     | '/login/'
@@ -125,6 +137,7 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  TasksRoute: typeof TasksRoute
   TestRoute: typeof TestRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   LoginIndexRoute: typeof LoginIndexRoute
@@ -141,6 +154,13 @@ declare module '@tanstack/react-router' {
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/tasks': {
+      id: '/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof TasksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -197,6 +217,7 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  TasksRoute: TasksRoute,
   TestRoute: TestRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   LoginIndexRoute: LoginIndexRoute,
