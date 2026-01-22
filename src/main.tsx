@@ -8,6 +8,7 @@ import "./styles/global.css";
 import { client } from "@/api/api.ts";
 import { routeTree } from "~/.tanstack/routeTree.gen.ts";
 import "dayjs/locale/ru";
+import { SpeedInsights } from "@vercel/speed-insights/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
 
@@ -34,5 +35,6 @@ createRoot(document.getElementById("root")!).render(
 				<RouterProvider router={router} scrollRestoration />
 			</QueryClientProvider>
 		</OmnikitProvider>
+		<SpeedInsights />
 	</StrictMode>,
 );
