@@ -1,18 +1,17 @@
 @font-face {
-  font-family: "Kaizen-Heading";
-  src: url("../assets/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
-  font-weight: 700;
-  font-style: normal;
-  font-display: swap;
+	font-family: "Kaizen-Heading";
+	src: url("../assets/fonts/Montserrat/Montserrat-Bold.ttf") format("truetype");
+	font-weight: 700;
+	font-style: normal;
+	font-display: swap;
 }
 
 @font-face {
-  font-family: "Kaizen-Body";
-  src: url("../assets/fonts/Montserrat/Montserrat-Medium.ttf")
-    format("truetype");
-  font-weight: 500;
-  font-style: normal;
-  font-display: swap;
+	font-family: "Kaizen-Body";
+	src: url("../assets/fonts/Montserrat/Montserrat-Medium.ttf") format("truetype");
+	font-weight: 500;
+	font-style: normal;
+	font-display: swap;
 }
 
 /* @font-face {
@@ -25,17 +24,17 @@
 } */
 
 * {
-  box-sizing: border-box;
-  /* font-family:
+	box-sizing: border-box;
+	/* font-family:
     "Buvera-Bold", "Buvera-Regular", system-ui, Avenir, Helvetica, Arial,
     sans-serif; */
 }
 
 html,
 body {
-  /* display: flex; */
-  /* gap: 12px; */
-  /* background-color: var(--chakra-colors-text);
+	/* display: flex; */
+	/* gap: 12px; */
+	/* background-color: var(--chakra-colors-text);
   background-color: var(--chakra-colors-surface);
   transition:
     background-color 200ms,
@@ -45,47 +44,47 @@ body {
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale; */
-  overflow: hidden;
+	overflow: hidden;
 
-  /* font-family: "Inter"; */
-  margin: 0;
-  padding: 0;
+	/* font-family: "Inter"; */
+	margin: 0;
+	padding: 0;
 
-  scrollbar-color: var(--chakra-colors-primary) transparent;
+	scrollbar-color: var(--chakra-colors-primary) transparent;
 }
 #root {
-  display: flex;
-  width: 100%;
-  height: 100%;
+	display: flex;
+	width: 100%;
+	height: 100%;
 
-  /* gap: 12px; */
-  padding: 6px;
+	/* gap: 12px; */
+	padding: 6px;
 }
 
 .main {
-  display: flex;
-  flex-direction: column;
-  width: 100%;
-  height: 98.5dvh;
+	display: flex;
+	flex-direction: column;
+	width: 100%;
+	height: 98.5dvh;
 
-  overflow-y: scroll;
-  /* margin-bottom: 3dvh; */
+	overflow-y: scroll;
+	/* margin-bottom: 3dvh; */
 
-  gap: 6px;
-  padding: 0px 15px;
-  /* background-color: var(--chakra-colors-surface_container); */
-  /* border: 2px solid var(--chakra-colors-outline); */
-  /* border-radius: var(--chakra-radii-lg); */
+	gap: 6px;
+	padding: 0px 15px;
+	/* background-color: var(--chakra-colors-surface_container); */
+	/* border: 2px solid var(--chakra-colors-outline); */
+	/* border-radius: var(--chakra-radii-lg); */
 }
 
 @media screen and (max-width: 768px) {
-  #root {
-    flex-direction: column;
-    /* padding: 16px; */
-  }
+	#root {
+		flex-direction: column;
+		/* padding: 16px; */
+	}
 
-  .main {
-    height: 92dvh;
-    padding-bottom: 100px;
-  }
+	.main {
+		height: 92dvh;
+		padding-bottom: 100px;
+	}
 }
