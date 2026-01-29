@@ -1,7 +1,7 @@
 // interface Props {
 
 import { HStack } from "@chakra-ui/react";
-import { IconBriefcase, IconHome } from "@tabler/icons-react";
+import { IconBriefcase, IconHome, IconUser } from "@tabler/icons-react";
 import { Link, useLocation } from "@tanstack/react-router";
 import { useLayoutEffect, useRef, useState } from "react";
 
@@ -13,6 +13,11 @@ const paths = [
 	{
 		icon: <IconBriefcase />,
 		link: "/tasks",
+	},
+	{
+		icon: <IconUser />,
+		link: "/profile",
+		whileOpen: true,
 	},
 ];
 
@@ -134,15 +139,18 @@ export const NavBar = () => {
 
 			{/* Nav items */}
 			{paths.map((path, index) => {
+				if (path.whileOpen !== undefined && path.whileOpen && path.link !== current_path)
+					return null;
 				return (
 					<HStack
 						key={path.link}
+						// display={}
 						ref={(el) => {
 							itemsRef.current[index] = el;
 						}}
 						asChild
 						py={3}
-						px={8}
+						px={6}
 						color={current_path === path.link ? "on-primary" : "on-surface"}
 						transition={"all 200ms"}
 						position={"relative"}
