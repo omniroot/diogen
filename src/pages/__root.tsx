@@ -1,6 +1,5 @@
 // import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { createRootRoute, Outlet } from "@tanstack/react-router";
-import { useMediaQuery } from "@uidotdev/usehooks";
 import { lazy } from "react";
 import { Sidebar } from "@/components/business/Sidebar/Sidebar.tsx";
 import { Header } from "@/components/Header";
@@ -16,17 +15,13 @@ const ReactQueryDevtools = import.meta.env.DEV
 	: () => null;
 
 const RootLayout = () => {
-	const isMobile = useMediaQuery("(max-width: 767px)");
-	// const isTablet = useMediaQuery("(min-width: 768px)");
-	// const isDesktop = useMediaQuery("(min-width: 1280px)");
-
 	// useLocationHandler();
 	// useModalsStore();
 
 	return (
 		<>
 			<AuthProvider>
-				{isMobile && <Header />}
+				<Header />
 				<Sidebar />
 				<main className="main">
 					<Outlet />
