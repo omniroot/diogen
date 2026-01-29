@@ -11,6 +11,7 @@ import "dayjs/locale/ru";
 import { SpeedInsights } from "@vercel/speed-insights/react";
 import dayjs from "dayjs";
 import relativeTime from "dayjs/plugin/relativeTime";
+import "@/api/appwrite.ts";
 
 dayjs.extend(relativeTime);
 dayjs.locale("ru");

@@ -58,18 +58,23 @@ export default defineConfig({
 				// },
 				manualChunks: {
 					"chakra-core": ["@chakra-ui/react", "@emotion/react"],
-					"tiptap-core": ["@tiptap/core"],
-					"tiptap-extensions": [
-						"@tiptap/starter-kit",
-						// "@tiptap/extension-*", // Все расширения отдельно
-					],
-					"tabler-icons": ["@tabler/icons-react"],
-					"tanstack-core": ["@tanstack/react-query", "@tanstack/react-router"],
-					editor: ["react-calendar", "marked", "turndown"],
-					utils: ["dayjs", "lodash.throttle", "magic-string"],
 					appwrite: ["appwrite"],
-					zustand: ["zustand"],
-					"react-vendor": ["react", "react-dom"],
+					"tanstack-core": ["@tanstack/react-query", "@tanstack/react-router"],
+					editor: [
+						"@tiptap/core",
+						"@tiptap/starter-kit",
+						"react-calendar",
+						"marked",
+						"turndown",
+					],
+					utils: [
+						"zustand",
+						"@tabler/icons-react",
+						"dayjs",
+						"lodash.throttle",
+						"magic-string",
+					],
+					// "react-vendor": ["react", "react-dom"],
 				},
 
 				entryFileNames: "assets/[name]-[hash].js",
