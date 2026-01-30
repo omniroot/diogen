@@ -1,8 +1,17 @@
-import { Link as ChakraLink, HStack, IconButton, Image, Text } from "@chakra-ui/react";
-import { IconMenu2 } from "@tabler/icons-react";
-import { Link } from "@tanstack/react-router";
+import {
+	Button,
+	Link as ChakraLink,
+	HStack,
+	IconButton,
+	Image,
+	Loader,
+	Text,
+} from "@chakra-ui/react";
+import { IconFlare, IconMenu2 } from "@tabler/icons-react";
+import { ClientOnly, Link } from "@tanstack/react-router";
 import { useAuth } from "@/features/auth/hooks/auth.hook.ts";
 import { KaizenLoader } from "@/theme/ui/KaizenLoader.tsx";
+
 // import { useCanGoForward } from "@/hooks/useCanGoForward.tsx";
 // import { useHeaderStore } from "@/stores/header.store.tsx";
 // import { useModals } from "@/stores/modals.store.tsx";
@@ -73,12 +82,28 @@ export const Header = () => {
 					<Link to="/">Diogen</Link>
 				</Text>
 			</HStack>
-			<HStack gap="4px" alignItems={"center"}>
+			<HStack gap="8px" alignItems={"center"}>
 				{/* {isShowAvatar && ( */}
+				<ChakraLink asChild>
+					<Link to={"/profile"}>
+						<Button
+							borderRadius={"full"}
+							gap={"4px"}
+							_icon={{ w: "16px", h: "16px" }}
+							// h={"35px"}
+							size={"sm"}
+						>
+							<IconFlare />
+							<Text>100</Text>
+						</Button>
+					</Link>
+				</ChakraLink>
 				<ChakraLink asChild>
 					<Link to={user?.$id ? "/profile" : "/login"}>
 						{isLoading ? (
-							<KaizenLoader />
+							<ClientOnly fallback={<Loader visible={isLoading} />}>
+								<KaizenLoader />
+							</ClientOnly>
 						) : (
 							<Image
 								src={user?.avatar || "logo.webp"}
