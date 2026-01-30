@@ -38,6 +38,7 @@
 		"@emotion/react": "^11.14.0",
 		"@lottiefiles/dotlottie-react": "^0.17.12",
 		"@m3e/loading-indicator": "^1.1.6",
+		"@react-spring/web": "^10.0.3",
 		"@siberiacancode/reactuse": "^0.2.35",
 		"@supabase/supabase-js": "^2.91.0",
 		"@tabler/icons-react": "^3.36.0",
