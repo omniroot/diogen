@@ -37,6 +37,9 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 	}, [open, setSelectedActivity, activity, activity.$id]);
 	// console.log(normalizeActivityEntries(activityEntries, 5));
 
+	// write anything
+	// TODO: refactoring this component
+
 	return (
 		<Drawer.Root placement={"bottom"} open={open} onOpenChange={(v) => setOpen(v.open)}>
 			<Drawer.Trigger asChild>
@@ -60,6 +63,7 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 						<Text fontSize={"16px"} fontWeight={"bold"}>
 							{activity.title}
 						</Text>
+						{/* <Text>{activity.}</Text> */}
 						<Badge
 							bg={"surface-container-high"}
 							py={1}
@@ -81,7 +85,7 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 								activity_id={activity.$id}
 								activityEntries={activityEntries}
 								direction={"horizontal"}
-								length={5}
+								length={4}
 							/>
 						)}
 						{/* {activity.type === "habit" &&
@@ -124,7 +128,8 @@ export const ActivityItem: React.FC<Props> = ({ activity }) => {
 										activity_id={activity.$id}
 										activityEntries={activityEntries}
 										direction={"vertical"}
-										length={52}
+										length={42}
+										size="md"
 									/>
 								)}
 							</VStack>

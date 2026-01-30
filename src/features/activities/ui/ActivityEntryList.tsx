@@ -11,12 +11,16 @@ interface Props {
 	activityEntries?: ActivityEntries[];
 	direction?: "horizontal" | "vertical";
 	length?: number;
+	showDay?: "inside" | "above";
+	size?: "sm" | "md" | "lg";
 }
 export const ActivityEntryList: React.FC<Props> = ({
 	activity_id,
 	activityEntries,
 	direction = "horizontal",
+	showDay = "inside",
 	length = 31,
+	size = "md",
 }) => {
 	const { selectedDate } = useApp();
 	const normalizedActivityEntries = normalizeActivityEntries(
@@ -50,7 +54,8 @@ export const ActivityEntryList: React.FC<Props> = ({
 						<ActivityEntryItem
 							activity_id={activity_id}
 							activityEntry={activityEntry}
-							showDay="inside"
+							showDay={showDay}
+							size={size}
 						/>
 					</Fragment>
 				);

@@ -7,14 +7,15 @@ import { Tooltip } from "@/theme/ui/KaizenTooltip.tsx";
 
 interface Props {
 	activity_id: string;
-
+	size?: "sm" | "md" | "lg";
 	activityEntry: ActivityEntries;
 	showDay?: "inside" | "above";
 }
 export const ActivityEntryItem: React.FC<Props> = ({
 	activity_id,
 	activityEntry,
-	showDay = false,
+	size = "md",
+	showDay = "inside",
 }) => {
 	const { $id, completed } = activityEntry;
 	const { updateOrCreate } = useActivityEntry(activityEntry.$id, undefined, {
@@ -54,10 +55,10 @@ export const ActivityEntryItem: React.FC<Props> = ({
 		<Tooltip content={activity_id}>
 			<Box
 				// key={activityEntry.$id}
-				w={"30px"}
-				h={"30px"}
+				w={size === "sm" ? "30px" : size === "md" ? "35px" : "50px"}
+				h={size === "sm" ? "30px" : size === "md" ? "35px" : "50px"}
 				bg={completed ? "primary" : "surface-container-high"}
-				borderRadius={"md"}
+				borderRadius={completed ? "lg" : "full"}
 				position={"relative"}
 				justifyContent={"center"}
 				alignItems={"center"}
@@ -77,7 +78,7 @@ export const ActivityEntryItem: React.FC<Props> = ({
 							? completed
 								? "on-primary"
 								: "on-surface-darkest"
-							: "on-surface"
+							: "on-surface-darkest"
 					}
 					position={showDay === "inside" ? "initial" : "absolute"}
 					top={"-25px"}
