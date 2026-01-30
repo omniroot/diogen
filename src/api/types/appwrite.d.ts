@@ -53,6 +53,7 @@ export type Activities = Models.Row & {
 	type: ActivitiesType;
 	icon?: string;
 	user_id: string;
+	external_json?: string;
 };
 
 export type ActivityEntries = Models.Row & {

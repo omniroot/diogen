@@ -509,6 +509,15 @@
                     "size": 64,
                     "default": null,
                     "encrypt": false
+                },
+                {
+                    "key": "external_json",
+                    "type": "string",
+                    "required": false,
+                    "array": false,
+                    "size": 64000,
+                    "default": null,
+                    "encrypt": false
                 }
             ],
             "indexes": []
