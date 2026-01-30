@@ -6,6 +6,7 @@ import unfonts from "unplugin-fonts/vite";
 import { defineConfig } from "vite";
 import viteBundleAnalyzer from "vite-bundle-analyzer";
 import compression from "vite-plugin-compression";
+import { VitePWA } from "vite-plugin-pwa";
 
 // https://vite.dev/config/
 export default defineConfig({
@@ -31,6 +32,28 @@ export default defineConfig({
 		react({
 			babel: {
 				plugins: [["babel-plugin-react-compiler"]],
+			},
+		}),
+		VitePWA({
+			registerType: "autoUpdate",
+			includeAssets: ["logo.webp"],
+			manifest: {
+				name: "Diogen",
+				short_name: "Diogen",
+				theme_color: "#F8BB71",
+				background_color: "#16130F",
+				display: "standalone",
+				start_url: "/",
+				icons: [
+					{
+						src: "logo.webp",
+						sizes: "512x512",
+						type: "image/webp",
+					},
+				],
+			},
+			devOptions: {
+				enabled: true,
 			},
 		}),
 	],
