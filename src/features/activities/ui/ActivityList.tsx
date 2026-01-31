@@ -33,7 +33,7 @@ export const ActivityList: React.FC<Props> = ({ queries = {} }) => {
 		// 		},
 		// 	}}
 		// >
-		<KaizenList.Root>
+		<KaizenList.Root w={"100%"}>
 			{activities?.map((activity) => {
 				return (
 					<KaizenList.Item key={activity.$id} asChild>
