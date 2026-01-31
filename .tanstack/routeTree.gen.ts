@@ -10,23 +10,18 @@
 
 import { Route as rootRouteImport } from './../src/pages/__root'
 import { Route as TestRouteImport } from './../src/pages/test'
-import { Route as TasksRouteImport } from './../src/pages/tasks'
 import { Route as IndexRouteImport } from './../src/pages/index'
 import { Route as UsersIndexRouteImport } from './../src/pages/users/index'
 import { Route as ProfileIndexRouteImport } from './../src/pages/profile/index'
 import { Route as PostsIndexRouteImport } from './../src/pages/posts/index'
 import { Route as LoginIndexRouteImport } from './../src/pages/login/index'
 import { Route as UsersUser_idRouteImport } from './../src/pages/users/$user_id'
+import { Route as appTasksRouteImport } from './../src/pages/(app)/tasks'
 import { Route as PostsIdIndexRouteImport } from './../src/pages/posts/$id/index'
 
 const TestRoute = TestRouteImport.update({
   id: '/test',
   path: '/test',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TasksRoute = TasksRouteImport.update({
-  id: '/tasks',
-  path: '/tasks',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -59,6 +54,11 @@ const UsersUser_idRoute = UsersUser_idRouteImport.update({
   path: '/users/$user_id',
   getParentRoute: () => rootRouteImport,
 } as any)
+const appTasksRoute = appTasksRouteImport.update({
+  id: '/(app)/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
   id: '/posts/$id/',
   path: '/posts/$id/',
@@ -67,8 +67,8 @@ const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
-  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
+  '/tasks': typeof appTasksRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
@@ -78,8 +78,8 @@ export interface FileRoutesByFullPath {
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
-  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
+  '/tasks': typeof appTasksRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login': typeof LoginIndexRoute
   '/posts': typeof PostsIndexRoute
@@ -90,8 +90,8 @@ export interface FileRoutesByTo {
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
-  '/tasks': typeof TasksRoute
   '/test': typeof TestRoute
+  '/(app)/tasks': typeof appTasksRoute
   '/users/$user_id': typeof UsersUser_idRoute
   '/login/': typeof LoginIndexRoute
   '/posts/': typeof PostsIndexRoute
@@ -103,8 +103,8 @@ export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
   fullPaths:
     | '/'
-    | '/tasks'
     | '/test'
+    | '/tasks'
     | '/users/$user_id'
     | '/login'
     | '/posts'
@@ -114,8 +114,8 @@ export interface FileRouteTypes {
   fileRoutesByTo: FileRoutesByTo
   to:
     | '/'
-    | '/tasks'
     | '/test'
+    | '/tasks'
     | '/users/$user_id'
     | '/login'
     | '/posts'
@@ -125,8 +125,8 @@ export interface FileRouteTypes {
   id:
     | '__root__'
     | '/'
-    | '/tasks'
     | '/test'
+    | '/(app)/tasks'
     | '/users/$user_id'
     | '/login/'
     | '/posts/'
@@ -137,8 +137,8 @@ export interface FileRouteTypes {
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
-  TasksRoute: typeof TasksRoute
   TestRoute: typeof TestRoute
+  appTasksRoute: typeof appTasksRoute
   UsersUser_idRoute: typeof UsersUser_idRoute
   LoginIndexRoute: typeof LoginIndexRoute
   PostsIndexRoute: typeof PostsIndexRoute
@@ -154,13 +154,6 @@ declare module '@tanstack/react-router' {
       path: '/test'
       fullPath: '/test'
       preLoaderRoute: typeof TestRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/tasks': {
-      id: '/tasks'
-      path: '/tasks'
-      fullPath: '/tasks'
-      preLoaderRoute: typeof TasksRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -205,6 +198,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof UsersUser_idRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/(app)/tasks': {
+      id: '/(app)/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof appTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/posts/$id/': {
       id: '/posts/$id/'
       path: '/posts/$id'
@@ -217,8 +217,8 @@ declare module '@tanstack/react-router' {
 
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
-  TasksRoute: TasksRoute,
   TestRoute: TestRoute,
+  appTasksRoute: appTasksRoute,
   UsersUser_idRoute: UsersUser_idRoute,
   LoginIndexRoute: LoginIndexRoute,
   PostsIndexRoute: PostsIndexRoute,

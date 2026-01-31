@@ -45,7 +45,7 @@ export type HabitsRecords = Models.Row & {
 	habit_id: string;
 };
 
-export type ActivitiesType = "task" | "habit";
+export type ActivitiesType = "task" | "goal";
 
 export type Activities = Models.Row & {
 	title?: string;

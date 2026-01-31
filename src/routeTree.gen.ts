@@ -8,232 +8,224 @@
 // You should NOT make any changes in this file as it will be overwritten.
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
-import { Route as rootRouteImport } from "./pages/__root";
-import { Route as TestRouteImport } from "./pages/test";
-import { Route as TasksRouteImport } from "./pages/tasks";
-import { Route as IndexRouteImport } from "./pages/index";
-import { Route as UsersIndexRouteImport } from "./pages/users/index";
-import { Route as ProfileIndexRouteImport } from "./pages/profile/index";
-import { Route as PostsIndexRouteImport } from "./pages/posts/index";
-import { Route as LoginIndexRouteImport } from "./pages/login/index";
-import { Route as UsersUser_idRouteImport } from "./pages/users/$user_id";
-import { Route as PostsIdIndexRouteImport } from "./pages/posts/$id/index";
+import { Route as rootRouteImport } from './pages/__root'
+import { Route as UsersIndexRouteImport } from './pages/users/index'
+import { Route as ProfileIndexRouteImport } from './pages/profile/index'
+import { Route as PostsIndexRouteImport } from './pages/posts/index'
+import { Route as LoginIndexRouteImport } from './pages/login/index'
+import { Route as appIndexRouteImport } from './pages/(app)/index'
+import { Route as UsersUser_idRouteImport } from './pages/users/$user_id'
+import { Route as appTestRouteImport } from './pages/(app)/test'
+import { Route as appTasksRouteImport } from './pages/(app)/tasks'
+import { Route as PostsIdIndexRouteImport } from './pages/posts/$id/index'
 
-const TestRoute = TestRouteImport.update({
-	id: "/test",
-	path: "/test",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const TasksRoute = TasksRouteImport.update({
-	id: "/tasks",
-	path: "/tasks",
-	getParentRoute: () => rootRouteImport,
-} as any);
-const IndexRoute = IndexRouteImport.update({
-	id: "/",
-	path: "/",
-	getParentRoute: () => rootRouteImport,
-} as any);
 const UsersIndexRoute = UsersIndexRouteImport.update({
-	id: "/users/",
-	path: "/users/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/users/',
+  path: '/users/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ProfileIndexRoute = ProfileIndexRouteImport.update({
-	id: "/profile/",
-	path: "/profile/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/profile/',
+  path: '/profile/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIndexRoute = PostsIndexRouteImport.update({
-	id: "/posts/",
-	path: "/posts/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/',
+  path: '/posts/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const LoginIndexRoute = LoginIndexRouteImport.update({
-	id: "/login/",
-	path: "/login/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/login/',
+  path: '/login/',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const appIndexRoute = appIndexRouteImport.update({
+  id: '/(app)/',
+  path: '/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const UsersUser_idRoute = UsersUser_idRouteImport.update({
-	id: "/users/$user_id",
-	path: "/users/$user_id",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/users/$user_id',
+  path: '/users/$user_id',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const appTestRoute = appTestRouteImport.update({
+  id: '/(app)/test',
+  path: '/test',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const appTasksRoute = appTasksRouteImport.update({
+  id: '/(app)/tasks',
+  path: '/tasks',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const PostsIdIndexRoute = PostsIdIndexRouteImport.update({
-	id: "/posts/$id/",
-	path: "/posts/$id/",
-	getParentRoute: () => rootRouteImport,
-} as any);
+  id: '/posts/$id/',
+  path: '/posts/$id/',
+  getParentRoute: () => rootRouteImport,
+} as any)
 
 export interface FileRoutesByFullPath {
-	"/": typeof IndexRoute;
-	"/tasks": typeof TasksRoute;
-	"/test": typeof TestRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login/": typeof LoginIndexRoute;
-	"/posts/": typeof PostsIndexRoute;
-	"/profile/": typeof ProfileIndexRoute;
-	"/users/": typeof UsersIndexRoute;
-	"/posts/$id/": typeof PostsIdIndexRoute;
+  '/tasks': typeof appTasksRoute
+  '/test': typeof appTestRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/': typeof appIndexRoute
+  '/login': typeof LoginIndexRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/posts/$id': typeof PostsIdIndexRoute
 }
 export interface FileRoutesByTo {
-	"/": typeof IndexRoute;
-	"/tasks": typeof TasksRoute;
-	"/test": typeof TestRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login": typeof LoginIndexRoute;
-	"/posts": typeof PostsIndexRoute;
-	"/profile": typeof ProfileIndexRoute;
-	"/users": typeof UsersIndexRoute;
-	"/posts/$id": typeof PostsIdIndexRoute;
+  '/tasks': typeof appTasksRoute
+  '/test': typeof appTestRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/': typeof appIndexRoute
+  '/login': typeof LoginIndexRoute
+  '/posts': typeof PostsIndexRoute
+  '/profile': typeof ProfileIndexRoute
+  '/users': typeof UsersIndexRoute
+  '/posts/$id': typeof PostsIdIndexRoute
 }
 export interface FileRoutesById {
-	__root__: typeof rootRouteImport;
-	"/": typeof IndexRoute;
-	"/tasks": typeof TasksRoute;
-	"/test": typeof TestRoute;
-	"/users/$user_id": typeof UsersUser_idRoute;
-	"/login/": typeof LoginIndexRoute;
-	"/posts/": typeof PostsIndexRoute;
-	"/profile/": typeof ProfileIndexRoute;
-	"/users/": typeof UsersIndexRoute;
-	"/posts/$id/": typeof PostsIdIndexRoute;
+  __root__: typeof rootRouteImport
+  '/(app)/tasks': typeof appTasksRoute
+  '/(app)/test': typeof appTestRoute
+  '/users/$user_id': typeof UsersUser_idRoute
+  '/(app)/': typeof appIndexRoute
+  '/login/': typeof LoginIndexRoute
+  '/posts/': typeof PostsIndexRoute
+  '/profile/': typeof ProfileIndexRoute
+  '/users/': typeof UsersIndexRoute
+  '/posts/$id/': typeof PostsIdIndexRoute
 }
 export interface FileRouteTypes {
-	fileRoutesByFullPath: FileRoutesByFullPath;
-	fullPaths:
-		| "/"
-		| "/tasks"
-		| "/test"
-		| "/users/$user_id"
-		| "/login/"
-		| "/posts/"
-		| "/profile/"
-		| "/users/"
-		| "/posts/$id/";
-	fileRoutesByTo: FileRoutesByTo;
-	to:
-		| "/"
-		| "/tasks"
-		| "/test"
-		| "/users/$user_id"
-		| "/login"
-		| "/posts"
-		| "/profile"
-		| "/users"
-		| "/posts/$id";
-	id:
-		| "__root__"
-		| "/"
-		| "/tasks"
-		| "/test"
-		| "/users/$user_id"
-		| "/login/"
-		| "/posts/"
-		| "/profile/"
-		| "/users/"
-		| "/posts/$id/";
-	fileRoutesById: FileRoutesById;
+  fileRoutesByFullPath: FileRoutesByFullPath
+  fullPaths:
+    | '/tasks'
+    | '/test'
+    | '/users/$user_id'
+    | '/'
+    | '/login'
+    | '/posts'
+    | '/profile'
+    | '/users'
+    | '/posts/$id'
+  fileRoutesByTo: FileRoutesByTo
+  to:
+    | '/tasks'
+    | '/test'
+    | '/users/$user_id'
+    | '/'
+    | '/login'
+    | '/posts'
+    | '/profile'
+    | '/users'
+    | '/posts/$id'
+  id:
+    | '__root__'
+    | '/(app)/tasks'
+    | '/(app)/test'
+    | '/users/$user_id'
+    | '/(app)/'
+    | '/login/'
+    | '/posts/'
+    | '/profile/'
+    | '/users/'
+    | '/posts/$id/'
+  fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
-	IndexRoute: typeof IndexRoute;
-	TasksRoute: typeof TasksRoute;
-	TestRoute: typeof TestRoute;
-	UsersUser_idRoute: typeof UsersUser_idRoute;
-	LoginIndexRoute: typeof LoginIndexRoute;
-	PostsIndexRoute: typeof PostsIndexRoute;
-	ProfileIndexRoute: typeof ProfileIndexRoute;
-	UsersIndexRoute: typeof UsersIndexRoute;
-	PostsIdIndexRoute: typeof PostsIdIndexRoute;
+  appTasksRoute: typeof appTasksRoute
+  appTestRoute: typeof appTestRoute
+  UsersUser_idRoute: typeof UsersUser_idRoute
+  appIndexRoute: typeof appIndexRoute
+  LoginIndexRoute: typeof LoginIndexRoute
+  PostsIndexRoute: typeof PostsIndexRoute
+  ProfileIndexRoute: typeof ProfileIndexRoute
+  UsersIndexRoute: typeof UsersIndexRoute
+  PostsIdIndexRoute: typeof PostsIdIndexRoute
 }
 
-declare module "@tanstack/react-router" {
-	interface FileRoutesByPath {
-		"/test": {
-			id: "/test";
-			path: "/test";
-			fullPath: "/test";
-			preLoaderRoute: typeof TestRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/tasks": {
-			id: "/tasks";
-			path: "/tasks";
-			fullPath: "/tasks";
-			preLoaderRoute: typeof TasksRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/": {
-			id: "/";
-			path: "/";
-			fullPath: "/";
-			preLoaderRoute: typeof IndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/users/": {
-			id: "/users/";
-			path: "/users";
-			fullPath: "/users/";
-			preLoaderRoute: typeof UsersIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/profile/": {
-			id: "/profile/";
-			path: "/profile";
-			fullPath: "/profile/";
-			preLoaderRoute: typeof ProfileIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/posts/": {
-			id: "/posts/";
-			path: "/posts";
-			fullPath: "/posts/";
-			preLoaderRoute: typeof PostsIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/login/": {
-			id: "/login/";
-			path: "/login";
-			fullPath: "/login/";
-			preLoaderRoute: typeof LoginIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/users/$user_id": {
-			id: "/users/$user_id";
-			path: "/users/$user_id";
-			fullPath: "/users/$user_id";
-			preLoaderRoute: typeof UsersUser_idRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-		"/posts/$id/": {
-			id: "/posts/$id/";
-			path: "/posts/$id";
-			fullPath: "/posts/$id/";
-			preLoaderRoute: typeof PostsIdIndexRouteImport;
-			parentRoute: typeof rootRouteImport;
-		};
-	}
+declare module '@tanstack/react-router' {
+  interface FileRoutesByPath {
+    '/users/': {
+      id: '/users/'
+      path: '/users'
+      fullPath: '/users'
+      preLoaderRoute: typeof UsersIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/profile/': {
+      id: '/profile/'
+      path: '/profile'
+      fullPath: '/profile'
+      preLoaderRoute: typeof ProfileIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/': {
+      id: '/posts/'
+      path: '/posts'
+      fullPath: '/posts'
+      preLoaderRoute: typeof PostsIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login/': {
+      id: '/login/'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(app)/': {
+      id: '/(app)/'
+      path: '/'
+      fullPath: '/'
+      preLoaderRoute: typeof appIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/users/$user_id': {
+      id: '/users/$user_id'
+      path: '/users/$user_id'
+      fullPath: '/users/$user_id'
+      preLoaderRoute: typeof UsersUser_idRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(app)/test': {
+      id: '/(app)/test'
+      path: '/test'
+      fullPath: '/test'
+      preLoaderRoute: typeof appTestRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/(app)/tasks': {
+      id: '/(app)/tasks'
+      path: '/tasks'
+      fullPath: '/tasks'
+      preLoaderRoute: typeof appTasksRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/posts/$id/': {
+      id: '/posts/$id/'
+      path: '/posts/$id'
+      fullPath: '/posts/$id'
+      preLoaderRoute: typeof PostsIdIndexRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+  }
 }
 
 const rootRouteChildren: RootRouteChildren = {
-	IndexRoute: IndexRoute,
-	TasksRoute: TasksRoute,
-	TestRoute: TestRoute,
-	UsersUser_idRoute: UsersUser_idRoute,
-	LoginIndexRoute: LoginIndexRoute,
-	PostsIndexRoute: PostsIndexRoute,
-	ProfileIndexRoute: ProfileIndexRoute,
-	UsersIndexRoute: UsersIndexRoute,
-	PostsIdIndexRoute: PostsIdIndexRoute,
-};
-export const routeTree = rootRouteImport
-	._addFileChildren(rootRouteChildren)
-	._addFileTypes<FileRouteTypes>();
-
-import type { getRouter } from "./router.tsx";
-declare module "@tanstack/react-start" {
-	interface Register {
-		ssr: true;
-		router: Awaited<ReturnType<typeof getRouter>>;
-	}
+  appTasksRoute: appTasksRoute,
+  appTestRoute: appTestRoute,
+  UsersUser_idRoute: UsersUser_idRoute,
+  appIndexRoute: appIndexRoute,
+  LoginIndexRoute: LoginIndexRoute,
+  PostsIndexRoute: PostsIndexRoute,
+  ProfileIndexRoute: ProfileIndexRoute,
+  UsersIndexRoute: UsersIndexRoute,
+  PostsIdIndexRoute: PostsIdIndexRoute,
 }
+export const routeTree = rootRouteImport
+  ._addFileChildren(rootRouteChildren)
+  ._addFileTypes<FileRouteTypes>()
