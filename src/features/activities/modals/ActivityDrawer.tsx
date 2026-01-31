@@ -22,7 +22,7 @@ const activityTypeList = createListCollection<{
 	value: Activities["type"];
 }>({
 	items: [
-		{ label: "Habit", value: "habit" },
+		{ label: "Goal", value: "goal" },
 		{ label: "Task", value: "task" },
 		// { label: "Goal", value: "goal" },
 	],
@@ -43,14 +43,14 @@ export const ActivityDrawer: React.FC<Props> = () => {
 		case "create": {
 			defaultValues = {
 				title: "",
-				type: "habit",
+				type: "task",
 			};
 			break;
 		}
 		case "update": {
 			defaultValues = {
 				title: selectedActivity?.title,
-				type: selectedActivity?.type ?? "habit",
+				type: selectedActivity?.type ?? "task",
 			};
 			break;
 		}
