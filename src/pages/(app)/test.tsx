@@ -3,7 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useDrawers } from "@/hooks/useDrawers";
 // import { ResponsiveOverlay } from "@/components/ResponsiveOverlay.tsx";
 
-export const Route = createFileRoute("/test")({
+export const Route = createFileRoute("/(app)/test")({
 	component: RouteComponent,
 });
 
